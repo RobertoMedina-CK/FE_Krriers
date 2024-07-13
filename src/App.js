@@ -4,6 +4,9 @@ import Axios from "axios";
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Swal from 'sweetalert2';
+
+
 function App() {
 
   const[nombre, setNombre] = useState("");
@@ -34,7 +37,22 @@ function App() {
       anios:anios
     }).then(()=>{
         getEmpleados();
-      alert("Empleado Registrado");
+        limpiarCampos();
+        Swal.fire({
+          title: "<strong>Registro Existo!!!</strong>",
+          html: "<i>El Empleado <strong>"+nombre+"</strong> fue Registrado con Exito!!!</i>",
+          icon: 'success',
+          timer:3000
+        });
+    }).catch(function(error){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se logró Dar de Alta al empleado!",
+        footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
+        timer: 3000
+      });
+
     });
 
   }
@@ -50,10 +68,74 @@ function App() {
       anios:anios
     }).then(()=>{
         getEmpleados();
-        alert("Empleado Actualizado");
-    });
+        limpiarCampos();
+        Swal.fire({
+          title: "<strong>Actualización Exitosa!!!</strong>",
+          html: "<i>El Empleado <strong>"+nombre+"</strong> fue Actualizado con Exito!!!</i>",
+          icon: 'success',
+          timer:3000
+        });
+    }).catch(function(error){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se logró Actualizar al empleado!",
+        footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
+        timer: 3000
+      });
+
+    })
 
   }
+
+  const deleteEmple = (val)=> {
+
+    Swal.fire({
+      title: "Confirmar Eliminar?",
+      html: "<i>Realmente desea eliminar a <strong>"+val.nombre+"</strong></i>",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminarlo!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Axios.delete(`http://localhost:3001/delete/${val.id}`).then(()=>{
+          getEmpleados();
+          limpiarCampos();
+          Swal.fire({
+            icon: "success",
+            title: val.nombre+ ' fue eliminado',
+            showConfirmButton: false,
+            timer: 2000
+          });
+      }).catch(function(error){
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se logró Eliminar al empleado!",
+          footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
+          timer: 3000
+        });
+
+      })
+        
+      }
+    });
+   
+  }
+
+  const limpiarCampos = ()=> {
+    setNombre("");
+    setEdad("");
+    setPais("");
+    setCargo("");
+    setAnios("");
+    setId("");
+    setEditar(false);
+  }
+
 const editarEmpleado = (val)=>{
   setEditar(true);
 
@@ -63,6 +145,7 @@ const editarEmpleado = (val)=>{
   setCargo(val.cargo);
   setPais(val.pais);
   setAnios(val.anios);
+  
   
 
 }
@@ -88,7 +171,7 @@ const editarEmpleado = (val)=>{
          onChange={(event)=>{
           setNombre(event.target.value);
           }}
-         className="form-control" value={nombre} placeholder="Ingrese Un Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={nombre} placeholder="Ingrese un Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -115,7 +198,7 @@ const editarEmpleado = (val)=>{
          onChange={(event)=>{
           setCargo(event.target.value);
           }}
-         className="form-control" value={cargo} placeholder="Ingrese Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={cargo} placeholder="Ingrese su Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       
       <div className="input-group mb-3">
@@ -124,7 +207,7 @@ const editarEmpleado = (val)=>{
          onChange={(event)=>{
           setAnios(event.target.value);
           }}
-         className="form-control" value={anios} placeholder="Ingrese los años" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={anios} placeholder="Ingrese años de Experiencia" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
                
@@ -134,14 +217,15 @@ const editarEmpleado = (val)=>{
               editar? 
               <div>
                 <button className='btn btn-warning m-2' onClick={update}>Actualizar</button> 
-              <button className='btn btn-info m-2' onClick={add}>Cancelar</button>
+              <button className='btn btn-info m-2' onClick={limpiarCampos}>Cancelar</button>
                 </div>
               :<button className='btn btn-success' onClick={add}>Registrar</button>
           }
+          
 
     
   </div>
-  
+    
 <table className="table table-striped">
     <thead>
         <tr>
@@ -170,11 +254,11 @@ const editarEmpleado = (val)=>{
                           <button type="button" 
                           onClick={()=>{
                             editarEmpleado(val);
-
-
-                          }}   
+                            }}   
                           className="btn btn-info">Editar</button>
-                          <button type="button" className="btn btn-danger">Eliminar</button>
+                          <button type="button" onClick={()=>{
+                            deleteEmple(val);
+                          }} className="btn btn-danger">Eliminar</button>
                         </div>
                           </td>
                 </tr>
