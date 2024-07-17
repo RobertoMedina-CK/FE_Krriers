@@ -7,39 +7,42 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 
 
-function Clientes() {
+function Subastas() {
 
   const[telefono, setTelefono] = useState("");
   const[nombre, setNombre] = useState();
-  const[buyer, setBuyer] = useState("");
-  const[foldernum, setFoldernum] = useState("");
+  const[direccion, setDireccion] = useState("");
+  const[subasta, setSubasta] = useState("");
+  const[precio, setPrecio] = useState();
   const[id, setId] = useState();
-  
+    
 
   const[editar, setEditar] = useState(false);
 
-  const [clientesList,setClientes] = useState([]);
+  const [subastasList,setSubastas] = useState([]);
 
   useEffect(() => {
-    getClientes();
+    getSubastas();
   }, [])
 
   const add = ()=> {
-    if (!telefono || !nombre || !buyer || !foldernum){
+    if (!telefono || !nombre || !direccion || !subasta || !precio){
       return;
     }
-    Axios.post("http://localhost:3001/clientes",{
+    Axios.post("http://localhost:3001/subastas",{
 
       telefono:telefono,
       nombre:nombre,
-      buyer:buyer,
-      foldernum:foldernum
+      direccion:direccion,
+      subasta:subasta,
+      precio:precio
+
     }).then(()=>{
-        getClientes();
+        getSubastas();
         limpiarCampos();
         Swal.fire({
           title: "<strong>Registro Existo!!!</strong>",
-          html: "<i>El Cliente <strong>"+nombre+"</strong> fue Registrado con Exito!!!</i>",
+          html: "<i>La Subasta <strong>"+nombre+"</strong> fue Registrada con Exito!!!</i>",
           icon: 'success',
           timer:3000
         });
@@ -47,7 +50,7 @@ function Clientes() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No se logró Dar de Alta al cliente!",
+        text: "No se logró Dar de Alta la subasta!",
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
@@ -57,19 +60,21 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/clientes",{
+    Axios.put("http://localhost:3001/subastas",{
 
-        id:id,
-        telefono:telefono,
-        nombre:nombre,
-        buyer:buyer,
-        foldernum:foldernum
+      id:id,
+      telefono:telefono,
+      nombre:nombre,
+      direccion:direccion,
+      subasta:subasta,
+      precio:precio
+      
     }).then(()=>{
-        getClientes();
+        getSubastas();
         limpiarCampos();
         Swal.fire({
           title: "<strong>Actualización Exitosa!!!</strong>",
-          html: "<i>El Cliente <strong>"+nombre+"</strong> fue Actualizado con Exito!!!</i>",
+          html: "<i>La subasta <strong>"+nombre+"</strong> fue Actualizada con Exito!!!</i>",
           icon: 'success',
           timer:3000
         });
@@ -77,7 +82,7 @@ function Clientes() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No se logró Actualizar al cliente!",
+        text: "No se logró Actualizar la subasta!",
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
@@ -86,7 +91,7 @@ function Clientes() {
 
   }
 
-  const deleteCliente = (val)=> {
+  const deleteSubasta = (val)=> {
 
     Swal.fire({
       title: "Confirmar Eliminar?",
@@ -99,8 +104,8 @@ function Clientes() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/clientes/${val.id}`).then(()=>{
-          getClientes();
+        Axios.delete(`http://localhost:3001/subastas/${val.id}`).then(()=>{
+          getSubastas();
           limpiarCampos();
           Swal.fire({
             icon: "success",
@@ -112,7 +117,7 @@ function Clientes() {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "No se logró Eliminar al cliente!",
+          text: "No se logró Eliminar la subasta!",
           footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
           timer: 3000
         });
@@ -126,28 +131,31 @@ function Clientes() {
 
   const limpiarCampos = ()=> {
     setNombre("");
-    setBuyer("");
-    setFoldernum("");
+    setDireccion("");
+    setSubasta("");
+    setPrecio("");
     setTelefono("");
     setId("");
     setEditar(false);
   }
 
-const editarCliente = (val)=>{
+const editarSubasta = (val)=>{
   setEditar(true);
 
   setId(val.id);
   setTelefono(val.telefono);
   setNombre(val.nombre);
-  setBuyer(val.buyer);
-  setFoldernum(val.foldernum);
+  setDireccion(val.direccion);
+  setSubasta(val.subasta);
+  setPrecio(val.precio);
+  
     
 
 }
 
-  const getClientes = ()=> {
-    Axios.get("http://localhost:3001/clientes").then((response)=>{
-        setClientes(response.data);
+  const getSubastas = ()=> {
+    Axios.get("http://localhost:3001/subastas").then((response)=>{
+        setSubastas(response.data);
     });
 
   } 
@@ -157,7 +165,7 @@ const editarCliente = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE CLIENTES de KRRIERS
+     MANTENIMIENTO DE BASE DE DATOS DE SUBASTAS de KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
@@ -181,26 +189,36 @@ const editarCliente = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Buyer:</span>
+          <span className="input-group-text" id="basic-addon1">Direccion:</span>
          <input type="text" 
-         maxLength={10}
+         maxLength={100}
          onChange={(event)=>{
-          setBuyer(event.target.value);
+          setDireccion(event.target.value);
           }}
-         className="form-control" value={buyer} placeholder="Ingrese Numero de Buyer" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={direccion} placeholder="Ingrese Direccion Calle, Ciudad, Estado, C.P." aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Numero de Folder:</span>
+          <span className="input-group-text" id="basic-addon1">Subasta:</span>
          <input type="text" 
+         maxLength={12}
+         onChange={(event)=>{
+          setSubasta(event.target.value);
+          }}
+         className="form-control" value={subasta} placeholder="Tipo de Subasta Copart, IAAI, Manheim" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
+
+      <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Precio:</span>
+         <input type="number" 
          maxLength={4}
          onChange={(event)=>{
-          setFoldernum(event.target.value);
+          setPrecio(event.target.value);
           }}
-         className="form-control" value={foldernum} placeholder="Ingrese Numero de Folder" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={precio} placeholder="Precio de Venta" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
-      
-                     
+
+                           
     </div>
     <div className="card-footer text-muted">
           {
@@ -222,30 +240,32 @@ const editarCliente = (val)=>{
           <th scope="col">id</th>
           <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Numero de Buyer</th>
-          <th scope="col">Numero de Folder</th>
-          
+          <th scope="col">Direccion</th>
+          <th scope="col">Subasta</th>
+          <th scope="col">Precio</th>
+                    
         </tr>
       </thead>
       <tbody>
 
     {
-      clientesList.map((val,key)=>{
+      subastasList.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.id}</th>
                         <td>{val.telefono}</td>
                         <td>{val.nombre}</td>
-                        <td>{val.buyer}</td>
-                        <td>{val.foldernum}</td>
+                        <td>{val.direccion}</td>
+                        <td>{val.subasta}</td>
+                        <td>{val.precio}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
                           onClick={()=>{
-                            editarCliente(val);
+                            editarSubasta(val);
                             }}   
                           className="btn btn-info">Editar</button>
                           <button type="button" onClick={()=>{
-                            deleteCliente(val);
+                            deleteSubasta(val);
                           }} className="btn btn-danger">Eliminar</button>
                         </div>
                           </td>
@@ -272,5 +292,5 @@ const editarCliente = (val)=>{
 );
 }
 
-export default Clientes;
+export default Subastas;
 

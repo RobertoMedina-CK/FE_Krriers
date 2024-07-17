@@ -7,39 +7,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 
 
-function Clientes() {
+function Transportistas() {
 
   const[telefono, setTelefono] = useState("");
   const[nombre, setNombre] = useState();
-  const[buyer, setBuyer] = useState("");
-  const[foldernum, setFoldernum] = useState("");
+  const[dot, setDot] = useState("");
   const[id, setId] = useState();
-  
+    
 
   const[editar, setEditar] = useState(false);
 
-  const [clientesList,setClientes] = useState([]);
+  const [transportistasList,setTransportistas] = useState([]);
 
   useEffect(() => {
-    getClientes();
+    getTransportistas();
   }, [])
 
   const add = ()=> {
-    if (!telefono || !nombre || !buyer || !foldernum){
+    if (!telefono || !nombre || !dot){
       return;
     }
-    Axios.post("http://localhost:3001/clientes",{
+    Axios.post("http://localhost:3001/transportistas",{
 
       telefono:telefono,
       nombre:nombre,
-      buyer:buyer,
-      foldernum:foldernum
+      dot:dot
     }).then(()=>{
-        getClientes();
+        getTransportistas();
         limpiarCampos();
         Swal.fire({
           title: "<strong>Registro Existo!!!</strong>",
-          html: "<i>El Cliente <strong>"+nombre+"</strong> fue Registrado con Exito!!!</i>",
+          html: "<i>El Transportista <strong>"+nombre+"</strong> fue Registrado con Exito!!!</i>",
           icon: 'success',
           timer:3000
         });
@@ -47,7 +45,7 @@ function Clientes() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No se logró Dar de Alta al cliente!",
+        text: "No se logró Dar de Alta al transportista!",
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
@@ -57,19 +55,19 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/clientes",{
+    Axios.put("http://localhost:3001/transportistas",{
 
-        id:id,
-        telefono:telefono,
-        nombre:nombre,
-        buyer:buyer,
-        foldernum:foldernum
+      id:id,
+      telefono:telefono,
+      nombre:nombre,
+      dot:dot
+      
     }).then(()=>{
-        getClientes();
+        getTransportistas();
         limpiarCampos();
         Swal.fire({
           title: "<strong>Actualización Exitosa!!!</strong>",
-          html: "<i>El Cliente <strong>"+nombre+"</strong> fue Actualizado con Exito!!!</i>",
+          html: "<i>El Transportista <strong>"+nombre+"</strong> fue Actualizado con Exito!!!</i>",
           icon: 'success',
           timer:3000
         });
@@ -77,7 +75,7 @@ function Clientes() {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No se logró Actualizar al cliente!",
+        text: "No se logró Actualizar al transportista!",
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
@@ -86,7 +84,7 @@ function Clientes() {
 
   }
 
-  const deleteCliente = (val)=> {
+  const deleteTransportista = (val)=> {
 
     Swal.fire({
       title: "Confirmar Eliminar?",
@@ -99,8 +97,8 @@ function Clientes() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/clientes/${val.id}`).then(()=>{
-          getClientes();
+        Axios.delete(`http://localhost:3001/transportistas/${val.id}`).then(()=>{
+          getTransportistas();
           limpiarCampos();
           Swal.fire({
             icon: "success",
@@ -112,7 +110,7 @@ function Clientes() {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "No se logró Eliminar al cliente!",
+          text: "No se logró Eliminar al transportista!",
           footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
           timer: 3000
         });
@@ -126,28 +124,26 @@ function Clientes() {
 
   const limpiarCampos = ()=> {
     setNombre("");
-    setBuyer("");
-    setFoldernum("");
+    setDot("");
     setTelefono("");
-    setId("");
     setEditar(false);
   }
 
-const editarCliente = (val)=>{
+const editarTransportista = (val)=>{
   setEditar(true);
 
   setId(val.id);
   setTelefono(val.telefono);
   setNombre(val.nombre);
-  setBuyer(val.buyer);
-  setFoldernum(val.foldernum);
+  setDot(val.dot);
+  
     
 
 }
 
-  const getClientes = ()=> {
-    Axios.get("http://localhost:3001/clientes").then((response)=>{
-        setClientes(response.data);
+  const getTransportistas = ()=> {
+    Axios.get("http://localhost:3001/transportistas").then((response)=>{
+        setTransportistas(response.data);
     });
 
   } 
@@ -157,7 +153,7 @@ const editarCliente = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE CLIENTES de KRRIERS
+     MANTENIMIENTO DE BASE DE DATOS DE TRANSPORTISTAS de KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
@@ -181,26 +177,16 @@ const editarCliente = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Buyer:</span>
+          <span className="input-group-text" id="basic-addon1">Dot:</span>
          <input type="text" 
-         maxLength={10}
+         maxLength={15}
          onChange={(event)=>{
-          setBuyer(event.target.value);
+          setDot(event.target.value);
           }}
-         className="form-control" value={buyer} placeholder="Ingrese Numero de Buyer" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={dot} placeholder="Ingrese Numero de DOT" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
-      <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Numero de Folder:</span>
-         <input type="text" 
-         maxLength={4}
-         onChange={(event)=>{
-          setFoldernum(event.target.value);
-          }}
-         className="form-control" value={foldernum} placeholder="Ingrese Numero de Folder" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      
-                     
+                           
     </div>
     <div className="card-footer text-muted">
           {
@@ -222,30 +208,28 @@ const editarCliente = (val)=>{
           <th scope="col">id</th>
           <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Numero de Buyer</th>
-          <th scope="col">Numero de Folder</th>
-          
+          <th scope="col">Numero de Dot</th>
+                    
         </tr>
       </thead>
       <tbody>
 
     {
-      clientesList.map((val,key)=>{
+      transportistasList.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.id}</th>
                         <td>{val.telefono}</td>
                         <td>{val.nombre}</td>
-                        <td>{val.buyer}</td>
-                        <td>{val.foldernum}</td>
+                        <td>{val.dot}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
                           onClick={()=>{
-                            editarCliente(val);
+                            editarTransportista(val);
                             }}   
                           className="btn btn-info">Editar</button>
                           <button type="button" onClick={()=>{
-                            deleteCliente(val);
+                            deleteTransportista(val);
                           }} className="btn btn-danger">Eliminar</button>
                         </div>
                           </td>
@@ -272,5 +256,5 @@ const editarCliente = (val)=>{
 );
 }
 
-export default Clientes;
+export default Transportistas;
 
