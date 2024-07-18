@@ -202,13 +202,24 @@ const editarTransportista = (val)=>{
     
   </div>
     
-<table className="table table-striped">
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}> 
     <thead>
         <tr>
-          <th scope="col">id</th>
+          <td>{''}</td>
           <th scope="col">Telefono</th>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
           <th scope="col">Nombre</th>
-          <th scope="col">Numero de Dot</th>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <td>{''}</td>
+          <th scope="col">Dot</th>
                     
         </tr>
       </thead>
@@ -217,9 +228,20 @@ const editarTransportista = (val)=>{
     {
       transportistasList.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.id}</th>
-                        <td>{val.telefono}</td>
+                        <td>{''}</td>
+                        <th scope="row">{val.telefono}</th>
+                        <td>{''}</td>
+                        <td>{''}</td>
                         <td>{val.nombre}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
+                        <td>{''}</td>
                         <td>{val.dot}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">

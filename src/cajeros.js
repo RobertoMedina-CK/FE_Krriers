@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 function Cajeros() {
 
   const[nombre, setNombre] = useState("");
-  const[password, setPassword] = useState();
+  const[password, setPassword] = useState("");
   const[id, setId] = useState();
     
 
@@ -26,6 +26,9 @@ function Cajeros() {
     if (!nombre || !password){
       return;
     }
+    if (password.length < 6){
+        return;
+      }
     Axios.post("http://localhost:3001/cajeros",{
 
       nombre:nombre,
@@ -163,12 +166,12 @@ return (
 
     <div className="input-group mb-3">
         <span className="input-group-text" id="basic-addon1">Password:</span>
-       <input type="text" 
+       <input type="password" 
        maxLength={8}
        onChange={(event)=>{
         setPassword(event.target.value);
         }}
-       className="form-control" value={password} placeholder="Ingrese contraseña" aria-label="Username" aria-describedby="basic-addon1"/>
+       className="form-control" value={password} placeholder="Ingrese contraseña, mínimo 6 y máximo 8" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
                    
   </div>
@@ -186,10 +189,22 @@ return (
   
 </div>
   
-<table className="table table-striped">
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
   <thead>
       <tr>
-        <th scope="col">Nombre</th>
+      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <th scope="col">Nombre</th>
      </tr>
     </thead>
     <tbody>
@@ -197,6 +212,18 @@ return (
   {
     cajerosList.map((val,key)=>{
               return <tr key={val.id}>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
+                      <td>{''}</td>
                       <th scope="row">{val.nombre}</th>
                       <td>
                       <div className="btn-group" role="group" aria-label="Basic example">

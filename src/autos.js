@@ -217,10 +217,9 @@ const editarAuto = (val)=>{
     
   </div>
     
-<table className="table table-striped">
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
     <thead>
         <tr>
-          <th scope="col">id</th>
           <th scope="col">Marca</th>
           <th scope="col">Modelo</th>
           <th scope="col">Año</th>
@@ -232,8 +231,7 @@ const editarAuto = (val)=>{
     {
       autosList.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.id}</th>
-                        <td>{val.marca}</td>
+                        <th scope="row">{val.marca}</th>
                         <td>{val.modelo}</td>
                         <td>{val.anio}</td>
                         <td>{val.fee}</td>

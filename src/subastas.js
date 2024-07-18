@@ -234,10 +234,9 @@ const editarSubasta = (val)=>{
     
   </div>
     
-<table className="table table-striped">
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}> 
     <thead>
         <tr>
-          <th scope="col">id</th>
           <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
           <th scope="col">Direccion</th>
@@ -251,8 +250,7 @@ const editarSubasta = (val)=>{
     {
       subastasList.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.id}</th>
-                        <td>{val.telefono}</td>
+                        <th scope="row">{val.telefono}</th>
                         <td>{val.nombre}</td>
                         <td>{val.direccion}</td>
                         <td>{val.subasta}</td>

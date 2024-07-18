@@ -38,14 +38,6 @@ function NotFound() {
   );
 }
 
-function Pedidos() {
-    return (
-        <div>
-            <script src="https://whatsform.com/webhooktest"></script>
-        </div>
-    );
-  }
-
 function App() {
   const logoUrl = './logo.png'; 
   return (
@@ -71,7 +63,7 @@ function App() {
                             <NavDropdown.Item as={Link} to="/llegada">
                                 Llegada de Autos
                             </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/pedidos">
+                            <NavDropdown.Item as={Link} to="https://whatsform.com/webhooktest" target="_blank" rel="noreferrer noopener">
                                 Captura Pedidos
                             </NavDropdown.Item>
                             </NavDropdown>

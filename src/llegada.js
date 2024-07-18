@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from "react"
 import Axios from "axios";
 import React from 'react';
+import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Swal from 'sweetalert2';
@@ -191,7 +192,7 @@ const editarLlegada = (val)=>{
            
   </div>
     
-<table className="table table-striped">
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
     <thead>
         <tr>
           <th scope="col">Nombre</th>
@@ -214,7 +215,7 @@ const editarLlegada = (val)=>{
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
                         <td>{val.subasta}</td>
-                        <td>{val.fecha}</td>
+                        <td>{moment(val.fecha).format("MMM Do YY")}</td>
                         <td>{val.precio}</td>
                         <td>{val.fees}</td>
                         <td>{val.titulo}</td>
@@ -237,12 +238,7 @@ const editarLlegada = (val)=>{
                    
       </tbody>
 </table>
-
- 
 </div>
-
-
-
 
     </div>
 // 
