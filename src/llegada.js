@@ -27,6 +27,12 @@ function Llegada() {
   const[notas, setNotas] = useState("");
   const[fechafinal, setFechaFinal] = useState("");
   const[id, setId] = useState();
+  const[deposito, setDeposito] = useState("");
+  const[fechallegada, setFechaLlegada] = useState("");
+  const[feescarrier, setFeesCarrier] = useState("");
+  const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
+  const[nombrecarrier, setNombreCarrier] = useState("");
+  
 
   const[editar, setEditar] = useState(false);
 
@@ -56,7 +62,13 @@ function Llegada() {
       fees:fees,
       titulo:titulo,
       notas:notas,
-      fechafinal:fechafinal
+      fechafinal:fechafinal,
+      deposito:deposito,
+      fechallegada:fechallegada,
+      feescarrier:feescarrier,
+      fechaasignacarrier:fechaasignacarrier,
+      nombrecarrier:nombrecarrier
+
     }).then(()=>{
         getLlegada();
         limpiarCampos();
@@ -98,6 +110,11 @@ const limpiarCampos = ()=> {
   setTitulo("");
   setNotas("");
   setFechaFinal("");
+  setDeposito("");
+  setFechaLlegada("");
+  setFeesCarrier("");
+  setFechaAsignaCarrier("");
+  setNombreCarrier("");
   setEditar(false);
   }
 
@@ -121,6 +138,12 @@ const editarLlegada = (val)=>{
   setTitulo(val.titulo);
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
+  setDeposito(val.deposito);
+  setFechaLlegada(val.fechallegada);
+  setFeesCarrier(val.feescarrier);
+  setFechaAsignaCarrier(val.fechaasignacarrier);
+  setNombreCarrier(val.nombrecarrier);
+  
  
   
 }
@@ -159,6 +182,15 @@ const editarLlegada = (val)=>{
           }}
          className="form-control" value={fees} placeholder="Ingrese Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
+      <div className="input-group mb-3">
+         <span className="input-group-text" id="basic-addon1">Fees pagado por Transportista:</span>
+         <input type="text" 
+         maxLength={10}
+         onChange={(event)=>{
+          setFee(event.target.value);
+          }}
+         className="form-control" value={feescarrier} placeholder="Ingrese Fees pagados por Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
       
       <div className="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Notas:</span>
@@ -180,6 +212,15 @@ const editarLlegada = (val)=>{
          className="form-control" value={titulo} placeholder="Titulo (0/1)" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
                      
+      <div className="input-group mb-3">
+         <span className="input-group-text" id="basic-addon1">Fecha de llegada:</span>
+         <input type="date" 
+         maxLength={12}
+         onChange={(event)=>{
+          setTitulo(event.target.value);
+          }}
+         className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
     </div>
     <div className="card-footer text-muted">
           
@@ -203,6 +244,7 @@ const editarLlegada = (val)=>{
           <th scope="col">Precio</th>
           <th scope="col">Fees</th>
           <th scope="col">Titulo</th>
+          <th scope="col">Notas</th>
           <th scope="col">Notas</th>
         </tr>
       </thead>

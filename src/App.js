@@ -21,7 +21,7 @@ function GFGHome() {
   const logoUrl = './truck.png'; 
   return (
        <div className="page">
-          <h2><center>Sistema para Automatizar de Krriers</center></h2>
+          <h2><center>Sistema para Automatizar las operaciones de Krriers</center></h2>
           <img src={logoUrl}  
           width="1500" height="650" 
           alt="Logo" /> 
