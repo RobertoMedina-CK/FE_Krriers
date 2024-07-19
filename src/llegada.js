@@ -233,7 +233,7 @@ const editarLlegada = (val)=>{
            
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '190px'}}>
     <thead>
         <tr>
           <th scope="col">Nombre</th>

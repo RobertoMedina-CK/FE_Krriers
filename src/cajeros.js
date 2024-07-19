@@ -189,7 +189,7 @@ return (
   
 </div>
   
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '325px'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '450px'}}>
   <thead>
       <tr>
       <th scope="col">Usuario</th>

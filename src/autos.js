@@ -217,7 +217,7 @@ const editarAuto = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '80px'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '220px'}}>
     <thead>
         <tr>
           <th scope="col">Marca</th>

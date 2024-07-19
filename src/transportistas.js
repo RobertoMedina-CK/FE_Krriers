@@ -217,7 +217,7 @@ const editarTransportista = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '175px'}}> 
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '280px'}}> 
     <thead>
         <tr>
           <th scope="col">Telefono</th>
