@@ -13,6 +13,7 @@ function Transportistas() {
   const[nombre, setNombre] = useState();
   const[dot, setDot] = useState("");
   const[id, setId] = useState();
+  const[margen, setMargen] = useState("");
     
 
   const[editar, setEditar] = useState(false);
@@ -24,14 +25,16 @@ function Transportistas() {
   }, [])
 
   const add = ()=> {
-    if (!telefono || !nombre || !dot){
+    if (!telefono || !nombre || !dot || !margen){
       return;
     }
     Axios.post("http://localhost:3001/transportistas",{
 
       telefono:telefono,
       nombre:nombre,
-      dot:dot
+      dot:dot,
+      margen:margen
+
     }).then(()=>{
         getTransportistas();
         limpiarCampos();
@@ -60,7 +63,8 @@ function Transportistas() {
       id:id,
       telefono:telefono,
       nombre:nombre,
-      dot:dot
+      dot:dot,
+      margen:margen
       
     }).then(()=>{
         getTransportistas();
@@ -126,6 +130,7 @@ function Transportistas() {
     setNombre("");
     setDot("");
     setTelefono("");
+    setMargen("");
     setEditar(false);
   }
 
@@ -136,6 +141,7 @@ const editarTransportista = (val)=>{
   setTelefono(val.telefono);
   setNombre(val.nombre);
   setDot(val.dot);
+  setMargen(val.margen);
   
     
 
@@ -163,7 +169,7 @@ const editarTransportista = (val)=>{
          onChange={(event)=>{
           setTelefono(event.target.value);
           }}
-         className="form-control" value={telefono} placeholder="Ingrese Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -173,7 +179,7 @@ const editarTransportista = (val)=>{
          onChange={(event)=>{
           setNombre(event.target.value);
           }}
-         className="form-control" value={nombre} placeholder="Ingrese Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -183,9 +189,18 @@ const editarTransportista = (val)=>{
          onChange={(event)=>{
           setDot(event.target.value);
           }}
-         className="form-control" value={dot} placeholder="Ingrese Numero de DOT" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={dot} placeholder="Numero de DOT" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
+      <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Margen:</span>
+         <input type="text" 
+         maxLength={2}
+         onChange={(event)=>{
+          setMargen(event.target.value);
+          }}
+         className="form-control" value={margen} placeholder="Margen de Krriers" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
                            
     </div>
     <div className="card-footer text-muted">
@@ -202,24 +217,14 @@ const editarTransportista = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}> 
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '175px'}}> 
     <thead>
         <tr>
-          <td>{''}</td>
           <th scope="col">Telefono</th>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
           <th scope="col">Nombre</th>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
-          <td>{''}</td>
           <th scope="col">Dot</th>
+          <th scope="col">Margen</th>
+
                     
         </tr>
       </thead>
@@ -228,22 +233,12 @@ const editarTransportista = (val)=>{
     {
       transportistasList.map((val,key)=>{
                 return <tr key={val.id}>
-                        <td>{''}</td>
                         <th scope="row">{val.telefono}</th>
-                        <td>{''}</td>
-                        <td>{''}</td>
                         <td>{val.nombre}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
-                        <td>{''}</td>
                         <td>{val.dot}</td>
+                        <td>{val.margen}</td>
                         <td>
+
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
                           onClick={()=>{

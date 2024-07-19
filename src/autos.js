@@ -168,7 +168,7 @@ const editarAuto = (val)=>{
          onChange={(event)=>{
           setMarca(event.target.value);
           }}
-         className="form-control" value={marca} placeholder="Ingrese la Marca" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={marca} placeholder="Marca" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -178,7 +178,7 @@ const editarAuto = (val)=>{
          onChange={(event)=>{
           setModelo(event.target.value);
           }}
-         className="form-control" value={modelo} placeholder="Ingrese el Modelo" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={modelo} placeholder="Modelo" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -188,7 +188,7 @@ const editarAuto = (val)=>{
          onChange={(event)=>{
           setAnio(event.target.value);
           }}
-         className="form-control" value={anio} placeholder="Ingrese el Año" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={anio} placeholder="Año" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -198,7 +198,7 @@ const editarAuto = (val)=>{
          onChange={(event)=>{
           setFee(event.target.value);
           }}
-         className="form-control" value={fee} placeholder="Ingrese Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={fee} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       
                      
@@ -217,7 +217,7 @@ const editarAuto = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '80px'}}>
     <thead>
         <tr>
           <th scope="col">Marca</th>

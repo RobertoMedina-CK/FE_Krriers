@@ -1,0 +1,21 @@
+[
+  
+  {
+      "Nombre": "Fernando Medina",
+      "Telefono": 19564376620,
+      "Buyer No.": 123456
+  
+    },
+    {
+      "Nombre": "Renata Medina",
+      "Telefono": 19564376621,
+      "Buyer No.": 12345
+  
+    },
+    {
+      "Nombre": "Roberto Medina",
+      "Telefono": 19564376622,
+      "Buyer No.": 12344
+  
+    }
+]

@@ -175,7 +175,7 @@ const editarSubasta = (val)=>{
          onChange={(event)=>{
           setTelefono(event.target.value);
           }}
-         className="form-control" value={telefono} placeholder="Ingrese Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -185,7 +185,7 @@ const editarSubasta = (val)=>{
          onChange={(event)=>{
           setNombre(event.target.value);
           }}
-         className="form-control" value={nombre} placeholder="Ingrese Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -195,7 +195,7 @@ const editarSubasta = (val)=>{
          onChange={(event)=>{
           setDireccion(event.target.value);
           }}
-         className="form-control" value={direccion} placeholder="Ingrese Direccion Calle, Ciudad, Estado, C.P." aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={direccion} placeholder="Direccion Calle, Ciudad, Estado, C.P." aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">

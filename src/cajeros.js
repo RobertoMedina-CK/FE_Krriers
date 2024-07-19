@@ -150,18 +150,18 @@ return (
            
   <div className="card text-center">
    <div className="card-header">
-   MANTENIMIENTO DE BASE DE DATOS DE CAJEROS de KRRIERS
+   MANTENIMIENTO DE BASE DE DATOS DE USUARIOS de KRRIERS
   </div>
   <div className="card-body">
     
     <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">Nombre:</span>
+        <span className="input-group-text" id="basic-addon1">Usuario:</span>
        <input type="text" 
        maxLength={45}
        onChange={(event)=>{
         setNombre(event.target.value);
         }}
-       className="form-control" value={nombre} placeholder="Ingrese Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+       className="form-control" value={nombre} placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -171,7 +171,7 @@ return (
        onChange={(event)=>{
         setPassword(event.target.value);
         }}
-       className="form-control" value={password} placeholder="Ingrese contraseña, mínimo 6 y máximo 8" aria-label="Username" aria-describedby="basic-addon1"/>
+       className="form-control" value={password} placeholder="Contraseña min 6 max 8 caracteres" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
                    
   </div>
@@ -189,41 +189,18 @@ return (
   
 </div>
   
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '325px'}}>
   <thead>
       <tr>
-      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <th scope="col">Nombre</th>
-     </tr>
+      <th scope="col">Usuario</th>
+      </tr>
     </thead>
     <tbody>
 
   {
     cajerosList.map((val,key)=>{
               return <tr key={val.id}>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
-                      <td>{''}</td>
+                      
                       <th scope="row">{val.nombre}</th>
                       <td>
                       <div className="btn-group" role="group" aria-label="Basic example">
@@ -231,7 +208,7 @@ return (
                         onClick={()=>{
                           editarCajero(val);
                           }}   
-                        className="btn btn-info">Editar</button>
+                        className="btn btn-info">Editar</button> 
                         <button type="button" onClick={()=>{
                           deleteCajero(val);
                         }} className="btn btn-danger">Eliminar</button>

@@ -167,7 +167,7 @@ const editarCliente = (val)=>{
          onChange={(event)=>{
           setTelefono(event.target.value);
           }}
-         className="form-control" value={telefono} placeholder="Ingrese Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -177,7 +177,7 @@ const editarCliente = (val)=>{
          onChange={(event)=>{
           setNombre(event.target.value);
           }}
-         className="form-control" value={nombre} placeholder="Ingrese Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -187,7 +187,7 @@ const editarCliente = (val)=>{
          onChange={(event)=>{
           setBuyer(event.target.value);
           }}
-         className="form-control" value={buyer} placeholder="Ingrese Numero de Buyer" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={buyer} placeholder="Numero de Buyer" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -197,7 +197,7 @@ const editarCliente = (val)=>{
          onChange={(event)=>{
           setFoldernum(event.target.value);
           }}
-         className="form-control" value={foldernum} placeholder="Ingrese Numero de Folder" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={foldernum} placeholder="Numero de Folder" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       
                      
@@ -216,7 +216,7 @@ const editarCliente = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '100px'}}>
     <thead>
         <tr>
           <th scope="col">Telefono</th>

@@ -89,9 +89,9 @@ function App() {
                                 Autos
                             </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/cajeros">
-                                Cajeros
+                                Usuarios
                             </NavDropdown.Item>
-                        </NavDropdown>
+                            </NavDropdown>
                       </Nav>
                 </Navbar.Collapse>
             </Navbar>

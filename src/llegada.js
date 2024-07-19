@@ -170,7 +170,7 @@ const editarLlegada = (val)=>{
          onChange={(event)=>{
           setLot(event.target.value);
           }}
-         className="form-control" value={lot} placeholder="Ingrese el Lote" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={lot} placeholder="Numero de Lote" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -180,16 +180,16 @@ const editarLlegada = (val)=>{
          onChange={(event)=>{
           setFee(event.target.value);
           }}
-         className="form-control" value={fees} placeholder="Ingrese Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={fees} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       <div className="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Fees pagado por Transportista:</span>
          <input type="text" 
          maxLength={10}
          onChange={(event)=>{
-          setFee(event.target.value);
+          setFeesCarrier(event.target.value);
           }}
-         className="form-control" value={feescarrier} placeholder="Ingrese Fees pagados por Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={feescarrier} placeholder="Fees pagados por Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       
       <div className="input-group mb-3">
@@ -199,7 +199,7 @@ const editarLlegada = (val)=>{
          onChange={(event)=>{
           setNotas(event.target.value);
           }}
-         className="form-control" value={notas} placeholder="Ingrese Notas de Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={notas} placeholder="Notas de Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -209,7 +209,7 @@ const editarLlegada = (val)=>{
          onChange={(event)=>{
           setTitulo(event.target.value);
           }}
-         className="form-control" value={titulo} placeholder="Titulo (0/1)" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={titulo} placeholder="Titulo (S/N)" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
                      
       <div className="input-group mb-3">
@@ -217,7 +217,7 @@ const editarLlegada = (val)=>{
          <input type="date" 
          maxLength={12}
          onChange={(event)=>{
-          setTitulo(event.target.value);
+          setFechaLlegada(event.target.value);
           }}
          className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
@@ -244,7 +244,6 @@ const editarLlegada = (val)=>{
           <th scope="col">Precio</th>
           <th scope="col">Fees</th>
           <th scope="col">Titulo</th>
-          <th scope="col">Notas</th>
           <th scope="col">Notas</th>
         </tr>
       </thead>
