@@ -27,7 +27,7 @@ function Autos() {
     if (!marca || !modelo || !anio || !fee){
       return;
     }
-    Axios.post("http://localhost:3001/autos",{
+    Axios.post("http://167.172.146.60:3001/autos",{
 
       marca:marca,
       modelo:modelo,
@@ -56,7 +56,7 @@ function Autos() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/autos",{
+    Axios.put("http://167.172.146.60:3001/autos",{
 
       id:id,
       marca:marca,
@@ -98,7 +98,7 @@ function Autos() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/autos/${val.id}`).then(()=>{
+        Axios.delete(`http://167.172.146.60:3001/autos/${val.id}`).then(()=>{
           getAutos();
           limpiarCampos();
           Swal.fire({
@@ -147,7 +147,7 @@ const editarAuto = (val)=>{
 }
 
   const getAutos = ()=> {
-    Axios.get("http://localhost:3001/autos").then((response)=>{
+    Axios.get("http://167.172.146.60:3001/autos").then((response)=>{
         setAutos(response.data);
     });
 

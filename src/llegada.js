@@ -44,7 +44,7 @@ function Llegada() {
 
     
   const update = ()=> {
-    Axios.put("http://localhost:3001/llegada",{
+    Axios.put("http://167.172.146.60:3001/llegada",{
 
       id:id,
       telefono:telefono,
@@ -149,7 +149,7 @@ const editarLlegada = (val)=>{
 }
 
   const getLlegada = ()=> {
-    Axios.get("http://localhost:3001/llegada").then((response)=>{
+    Axios.get("http://167.172.146.60:3001/llegada").then((response)=>{
         setLlegada(response.data);
     });
 

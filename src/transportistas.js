@@ -28,7 +28,7 @@ function Transportistas() {
     if (!telefono || !nombre || !dot || !margen){
       return;
     }
-    Axios.post("http://localhost:3001/transportistas",{
+    Axios.post("http://167.172.146.60:3001/transportistas",{
 
       telefono:telefono,
       nombre:nombre,
@@ -58,7 +58,7 @@ function Transportistas() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/transportistas",{
+    Axios.put("http://167.172.146.60:3001/transportistas",{
 
       id:id,
       telefono:telefono,
@@ -101,7 +101,7 @@ function Transportistas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/transportistas/${val.id}`).then(()=>{
+        Axios.delete(`http://167.172.146.60:3001/transportistas/${val.id}`).then(()=>{
           getTransportistas();
           limpiarCampos();
           Swal.fire({
@@ -148,7 +148,7 @@ const editarTransportista = (val)=>{
 }
 
   const getTransportistas = ()=> {
-    Axios.get("http://localhost:3001/transportistas").then((response)=>{
+    Axios.get("http://167.172.146.60:3001/transportistas").then((response)=>{
         setTransportistas(response.data);
     });
 

@@ -28,7 +28,7 @@ function App() {
     if (!nombre || !edad || !pais || !cargo || !anios){
       return;
     }
-    Axios.post("http://localhost:3001/create",{
+    Axios.post("http://167.172.146.60:3001/create",{
 
       nombre:nombre,
       edad:edad,
@@ -58,7 +58,7 @@ function App() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/update",{
+    Axios.put("http://167.172.146.60:3001/update",{
 
       id:id,
       nombre:nombre,
@@ -101,7 +101,7 @@ function App() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/delete/${val.id}`).then(()=>{
+        Axios.delete(`http://167.172.146.60:3001/delete/${val.id}`).then(()=>{
           getEmpleados();
           limpiarCampos();
           Swal.fire({
@@ -151,7 +151,7 @@ const editarEmpleado = (val)=>{
 }
 
   const getEmpleados = ()=> {
-    Axios.get("http://localhost:3001/empleados").then((response)=>{
+    Axios.get("http://167.172.146.60:3001/empleados").then((response)=>{
         setEmpleados(response.data);
     });
 

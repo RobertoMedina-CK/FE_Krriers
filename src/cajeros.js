@@ -29,7 +29,7 @@ function Cajeros() {
     if (password.length < 6){
         return;
       }
-    Axios.post("http://localhost:3001/cajeros",{
+    Axios.post("http://167.172.146.60:3001/cajeros",{
 
       nombre:nombre,
       password:password
@@ -58,7 +58,7 @@ function Cajeros() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/cajeros",{
+    Axios.put("http://167.172.146.60:3001/cajeros",{
 
       id:id,
       nombre:nombre,
@@ -99,7 +99,7 @@ function Cajeros() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/cajeros/${val.id}`).then(()=>{
+        Axios.delete(`http://167.172.146.60:3001/cajeros/${val.id}`).then(()=>{
           getCajeros();
           limpiarCampos();
           Swal.fire({
@@ -139,7 +139,7 @@ const editarCajero = (val)=>{
 }
 
   const getCajeros = ()=> {
-    Axios.get("http://localhost:3001/cajeros").then((response)=>{
+    Axios.get("http://167.172.146.60:3001/cajeros").then((response)=>{
         setCajeros(response.data);
     });
 

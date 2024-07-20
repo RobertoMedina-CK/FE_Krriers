@@ -29,7 +29,7 @@ function Clientes() {
       return;
     }
 
-    Axios.post(`http://riderarmour-do-user-17269276-0.e.db.ondigitalocean.com/clientes`,{
+    Axios.post("http://167.172.146.60:3001/clientes",{
 
       telefono:telefono,
       nombre:nombre,
@@ -58,7 +58,7 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put(`http://riderarmour-do-user-17269276-0.e.db.ondigitalocean.com/clientes`,{
+    Axios.put("http://167.172.146.60:3001/clientes",{
 
         id:id,
         telefono:telefono,
@@ -100,7 +100,7 @@ function Clientes() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://riderarmour-do-user-17269276-0.e.db.ondigitalocean.com/clientes/${val.id}`).then(()=>{
+        Axios.delete(`http://167.172.146.60:3001/clientes/${val.id}`).then(()=>{
           getClientes();
           limpiarCampos();
           Swal.fire({
@@ -147,7 +147,7 @@ const editarCliente = (val)=>{
 }
 
   const getClientes = ()=> {
-    Axios.get(`http://riderarmour-do-user-17269276-0.e.db.ondigitalocean.com`).then((response)=>{
+    Axios.get("http://167.172.146.60:3001/clientes").then((response)=>{
         setClientes(response.data);
     });
 
