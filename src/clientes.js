@@ -19,6 +19,7 @@ function Clientes() {
   const[editar, setEditar] = useState(false);
 
   const [clientesList,setClientes] = useState([]);
+  const [filteredClients, setFilteredClients] = useState([]);
 
   useEffect(() => {
     getClientes();
@@ -29,7 +30,7 @@ function Clientes() {
       return;
     }
 
-    Axios.post("http://167.172.146.60:3001/clientes",{
+    Axios.post("http://localhost:3001/clientes",{
 
       telefono:telefono,
       nombre:nombre,
@@ -58,7 +59,7 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put("http://167.172.146.60:3001/clientes",{
+    Axios.put("http://localhost:3001/clientes",{
 
         id:id,
         telefono:telefono,
@@ -100,7 +101,7 @@ function Clientes() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://167.172.146.60:3001/clientes/${val.id}`).then(()=>{
+        Axios.delete(`http://localhost:3001/clientes/${val.id}`).then(()=>{
           getClientes();
           limpiarCampos();
           Swal.fire({
@@ -147,11 +148,19 @@ const editarCliente = (val)=>{
 }
 
   const getClientes = ()=> {
-    Axios.get("http://167.172.146.60:3001/clientes").then((response)=>{
+    Axios.get("http://localhost:3001/clientes").then((response)=>{
         setClientes(response.data);
+        setFilteredClients(response.data);
     });
 
   } 
+
+  const onClientPhoneChange = (phoneValue) => {
+    const filteredItems =clientesList.filter((client) => {
+      return client.telefono.includes(phoneValue)
+    })
+    setFilteredClients(filteredItems)
+  }
   
     return (
       <div className="container"> 
@@ -166,6 +175,7 @@ const editarCliente = (val)=>{
          <input type="text" 
          maxLength={14}
          onChange={(event)=>{
+          onClientPhoneChange(event.target.value);
           setTelefono(event.target.value);
           }}
          className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
@@ -230,7 +240,7 @@ const editarCliente = (val)=>{
       <tbody>
 
     {
-      clientesList.map((val,key)=>{
+      filteredClients.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.telefono}</th>
                         <td>{val.nombre}</td>

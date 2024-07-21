@@ -18,6 +18,7 @@ function Autos() {
   const[editar, setEditar] = useState(false);
 
   const [autosList,setAutos] = useState([]);
+  const [filteredAutos, setFilteredAutos] = useState([]);
 
   useEffect(() => {
     getAutos();
@@ -27,7 +28,7 @@ function Autos() {
     if (!marca || !modelo || !anio || !fee){
       return;
     }
-    Axios.post("http://167.172.146.60:3001/autos",{
+    Axios.post("https://krriers.moveurads.com/autos",{
 
       marca:marca,
       modelo:modelo,
@@ -56,7 +57,7 @@ function Autos() {
   }
 
   const update = ()=> {
-    Axios.put("http://167.172.146.60:3001/autos",{
+    Axios.put("https://krriers.moveurads.com/autos",{
 
       id:id,
       marca:marca,
@@ -98,7 +99,7 @@ function Autos() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://167.172.146.60:3001/autos/${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/autos/${val.id}`).then(()=>{
           getAutos();
           limpiarCampos();
           Swal.fire({
@@ -147,12 +148,21 @@ const editarAuto = (val)=>{
 }
 
   const getAutos = ()=> {
-    Axios.get("http://167.172.146.60:3001/autos").then((response)=>{
+    Axios.get("https://krriers.moveurads.com/autos").then((response)=>{
         setAutos(response.data);
+        setFilteredAutos(response.data);
     });
 
   } 
   
+  const onAutosMarcaChange = (marcaValue) => {
+    const filteredItems =autosList.filter((client) => {
+      return client.marca.includes(marcaValue)
+    })
+    setFilteredAutos(filteredItems)
+  }
+  
+
     return (
       <div className="container"> 
              
@@ -166,6 +176,7 @@ const editarAuto = (val)=>{
          <input type="text" 
          maxLength={30}
          onChange={(event)=>{
+          onAutosMarcaChange(event.target.value);
           setMarca(event.target.value);
           }}
          className="form-control" value={marca} placeholder="Marca" aria-label="Username" aria-describedby="basic-addon1"/>
@@ -217,6 +228,9 @@ const editarAuto = (val)=>{
     
   </div>
     
+
+
+
 <table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '220px'}}>
     <thead>
         <tr>
@@ -229,7 +243,7 @@ const editarAuto = (val)=>{
       <tbody>
 
     {
-      autosList.map((val,key)=>{
+      filteredAutos.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.marca}</th>
                         <td>{val.modelo}</td>
