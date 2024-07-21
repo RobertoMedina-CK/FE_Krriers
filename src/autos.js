@@ -28,7 +28,7 @@ function Autos() {
     if (!marca || !modelo || !anio || !fee){
       return;
     }
-    Axios.post("https://krriers.moveurads.com/autos",{
+    Axios.post(`https://krriers.moveurads.com/autos`,{
 
       marca:marca,
       modelo:modelo,
@@ -57,7 +57,7 @@ function Autos() {
   }
 
   const update = ()=> {
-    Axios.put("https://krriers.moveurads.com/autos",{
+    Axios.put(`https://krriers.moveurads.com/autos`,{
 
       id:id,
       marca:marca,
@@ -148,7 +148,7 @@ const editarAuto = (val)=>{
 }
 
   const getAutos = ()=> {
-    Axios.get("https://krriers.moveurads.com/autos").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/autos`).then((response)=>{
         setAutos(response.data);
         setFilteredAutos(response.data);
     });
