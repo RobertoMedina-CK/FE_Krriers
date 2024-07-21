@@ -29,7 +29,7 @@ function Transportistas() {
     if (!telefono || !nombre || !dot || !margen){
       return;
     }
-    Axios.post(`https://krriers.moveurads.com/transportistas`,{
+    Axios.post("http://localhost:3001/transportistas",{
 
       telefono:telefono,
       nombre:nombre,
@@ -59,7 +59,7 @@ function Transportistas() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/transportistas`,{
+    Axios.put("http://localhost:3001/transportistas",{
 
       id:id,
       telefono:telefono,
@@ -102,7 +102,7 @@ function Transportistas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/transportistas/${val.id}`).then(()=>{
+        Axios.delete(`http://localhost:3001/transportistas/${val.id}`).then(()=>{
           getTransportistas();
           limpiarCampos();
           Swal.fire({
@@ -149,7 +149,7 @@ const editarTransportista = (val)=>{
 }
 
   const getTransportistas = ()=> {
-    Axios.get(`https://krriers.moveurads.com/transportistas`).then((response)=>{
+    Axios.get("http://localhost:3001/transportistas").then((response)=>{
         setTransportistas(response.data);
         setFilteredTransportistas(response.data);
     });

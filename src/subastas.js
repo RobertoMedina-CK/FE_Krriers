@@ -30,7 +30,7 @@ function Subastas() {
     if (!telefono || !nombre || !direccion || !subasta || !precio){
       return;
     }
-    Axios.post(`https://krriers.moveurads.com/subastas`,{
+    Axios.post("http://localhost:3001/subastas",{
 
       telefono:telefono,
       nombre:nombre,
@@ -61,7 +61,7 @@ function Subastas() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/subastas`,{
+    Axios.put("http://localhost:3001/subastas",{
 
       id:id,
       telefono:telefono,
@@ -105,7 +105,7 @@ function Subastas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/subastas/${val.id}`).then(()=>{
+        Axios.delete(`http://localhost:3001/subastas/${val.id}`).then(()=>{
           getSubastas();
           limpiarCampos();
           Swal.fire({
@@ -155,7 +155,7 @@ const editarSubasta = (val)=>{
 }
 
   const getSubastas = ()=> {
-    Axios.get(`https://krriers.moveurads.com/subastas`).then((response)=>{
+    Axios.get("http://localhost:3001/subastas").then((response)=>{
         setSubastas(response.data);
         setFilteredSubastas(response.data);
     });
