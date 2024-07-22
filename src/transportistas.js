@@ -19,6 +19,7 @@ function Transportistas() {
   const[editar, setEditar] = useState(false);
 
   const [transportistasList,setTransportistas] = useState([]);
+  const [filteredTransportistas, setFilteredTransportistas] = useState([]);
 
   useEffect(() => {
     getTransportistas();
@@ -28,7 +29,7 @@ function Transportistas() {
     if (!telefono || !nombre || !dot || !margen){
       return;
     }
-    Axios.post("http://167.172.146.60:3001/transportistas",{
+    Axios.post(`https://krriers.moveurads.com/transportistas`,{
 
       telefono:telefono,
       nombre:nombre,
@@ -58,7 +59,7 @@ function Transportistas() {
   }
 
   const update = ()=> {
-    Axios.put("http://167.172.146.60:3001/transportistas",{
+    Axios.put(`https://krriers.moveurads.com/transportistas`,{
 
       id:id,
       telefono:telefono,
@@ -101,7 +102,7 @@ function Transportistas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://167.172.146.60:3001/transportistas/${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/transportistas/${val.id}`).then(()=>{
           getTransportistas();
           limpiarCampos();
           Swal.fire({
@@ -148,20 +149,40 @@ const editarTransportista = (val)=>{
 }
 
   const getTransportistas = ()=> {
-    Axios.get("http://167.172.146.60:3001/transportistas").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/transportistas`).then((response)=>{
         setTransportistas(response.data);
+        setFilteredTransportistas(response.data);
     });
 
   } 
   
+  const onTransportistasChange = (transportistasValue) => {
+    const filteredItems =transportistasList.filter((client) => {
+      return client.nombre.includes(transportistasValue)
+    })
+    setFilteredTransportistas(filteredItems)
+  }
+
     return (
       <div className="container"> 
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE TRANSPORTISTAS de KRRIERS
+     LOS VEHICULOS LISTADOS HAN SIDO ASIGNADOS AL SIGUIENTE TRANSPORTISTA
     </div>
     <div className="card-body">
+      
+    <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Nombre:</span>
+         <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          onTransportistasChange(event.target.value);
+          setNombre(event.target.value);
+          }}
+         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
+
       <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">Telefono:</span>
          <input type="text" 
@@ -170,16 +191,6 @@ const editarTransportista = (val)=>{
           setTelefono(event.target.value);
           }}
          className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-
-      <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre:</span>
-         <input type="text" 
-         maxLength={45}
-         onChange={(event)=>{
-          setNombre(event.target.value);
-          }}
-         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -220,8 +231,8 @@ const editarTransportista = (val)=>{
 <table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '280px'}}> 
     <thead>
         <tr>
-          <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
+          <th scope="col">Telefono</th>
           <th scope="col">Dot</th>
           <th scope="col">Margen</th>
 
@@ -231,10 +242,10 @@ const editarTransportista = (val)=>{
       <tbody>
 
     {
-      transportistasList.map((val,key)=>{
+      filteredTransportistas.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.telefono}</th>
-                        <td>{val.nombre}</td>
+                        <th scope="row">{val.nombre}</th>
+                        <td>{val.telefono}</td>
                         <td>{val.dot}</td>
                         <td>{val.margen}</td>
                         <td>
