@@ -20,6 +20,7 @@ function Subastas() {
   const[editar, setEditar] = useState(false);
 
   const [subastasList,setSubastas] = useState([]);
+  const [filteredSubastas, setFilteredSubastas] = useState([]);
 
   useEffect(() => {
     getSubastas();
@@ -29,7 +30,7 @@ function Subastas() {
     if (!telefono || !nombre || !direccion || !subasta || !precio){
       return;
     }
-    Axios.post("http://167.172.146.60:3001/subastas",{
+    Axios.post(`https://krriers.moveurads.com/subastas`,{
 
       telefono:telefono,
       nombre:nombre,
@@ -60,7 +61,7 @@ function Subastas() {
   }
 
   const update = ()=> {
-    Axios.put("http://167.172.146.60:3001/subastas",{
+    Axios.put(`https://krriers.moveurads.com/subastas`,{
 
       id:id,
       telefono:telefono,
@@ -104,7 +105,7 @@ function Subastas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://167.172.146.60:3001/subastas/${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/subastas/${val.id}`).then(()=>{
           getSubastas();
           limpiarCampos();
           Swal.fire({
@@ -154,12 +155,19 @@ const editarSubasta = (val)=>{
 }
 
   const getSubastas = ()=> {
-    Axios.get("http://167.172.146.60:3001/subastas").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/subastas`).then((response)=>{
         setSubastas(response.data);
+        setFilteredSubastas(response.data);
     });
 
   } 
-  
+  const onSubastasChange = (subastaValue) => {
+    const filteredItems =subastasList.filter((client) => {
+      return client.nombre.includes(subastaValue)
+    })
+    setFilteredSubastas(filteredItems)
+  }
+
     return (
       <div className="container"> 
              
@@ -169,6 +177,17 @@ const editarSubasta = (val)=>{
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Nombre:</span>
+         <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          onSubastasChange(event.target.value);
+          setNombre(event.target.value);
+          }}
+         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
+      
+      <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">Telefono:</span>
          <input type="text" 
          maxLength={14}
@@ -176,16 +195,6 @@ const editarSubasta = (val)=>{
           setTelefono(event.target.value);
           }}
          className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-
-      <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre:</span>
-         <input type="text" 
-         maxLength={45}
-         onChange={(event)=>{
-          setNombre(event.target.value);
-          }}
-         className="form-control" value={nombre} placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -237,8 +246,8 @@ const editarSubasta = (val)=>{
 <table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '130px'}}> 
     <thead>
         <tr>
-          <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
+          <th scope="col">Telefono</th>
           <th scope="col">Direccion</th>
           <th scope="col">Subasta</th>
           <th scope="col">Precio</th>
@@ -248,13 +257,13 @@ const editarSubasta = (val)=>{
       <tbody>
 
     {
-      subastasList.map((val,key)=>{
+      filteredSubastas.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.telefono}</th>
-                        <td>{val.nombre}</td>
+                        <th scope="row">{val.nombre}</th>
+                        <td>{val.telefono}</td>
                         <td>{val.direccion}</td>
                         <td>{val.subasta}</td>
-                        <td>{val.precio}</td>
+                        <td>$ {val.precio}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
