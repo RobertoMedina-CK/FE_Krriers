@@ -30,7 +30,7 @@ function Clientes() {
       return;
     }
 
-    Axios.post("http://localhost:3001/clientes",{
+    Axios.post(`https://krriers.moveurads.com/clientes`,{
 
       telefono:telefono,
       nombre:nombre,
@@ -59,7 +59,7 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put("http://localhost:3001/clientes",{
+    Axios.put(`https://krriers.moveurads.com/clientes`,{
 
         id:id,
         telefono:telefono,
@@ -101,7 +101,7 @@ function Clientes() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/clientes/${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/clientes/${val.id}`).then(()=>{
           getClientes();
           limpiarCampos();
           Swal.fire({
@@ -148,7 +148,7 @@ const editarCliente = (val)=>{
 }
 
   const getClientes = ()=> {
-    Axios.get("http://localhost:3001/clientes").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/clientes`).then((response)=>{
         setClientes(response.data);
         setFilteredClients(response.data);
     });
