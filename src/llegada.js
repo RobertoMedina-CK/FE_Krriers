@@ -37,6 +37,7 @@ function Llegada() {
   const[editar, setEditar] = useState(false);
 
   const [llegadaList,setLlegada] = useState([]);
+  const [filteredLlegadas, setFilteredLlegadas] = useState([]);
 
   useEffect(() => {
     getLlegada();
@@ -44,7 +45,7 @@ function Llegada() {
 
     
   const update = ()=> {
-    Axios.put("http://localhost:3001/llegada",{
+    Axios.put(`https://krriers.moveurads.com/llegada`,{
 
       id:id,
       telefono:telefono,
@@ -149,12 +150,21 @@ const editarLlegada = (val)=>{
 }
 
   const getLlegada = ()=> {
-    Axios.get("http://localhost:3001/llegada").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/llegada`).then((response)=>{
         setLlegada(response.data);
+        setFilteredLlegadas(response.data);
     });
 
   } 
   
+  const onLlegadasChange = (lotValue) => {
+    const filteredItems =llegadaList.filter((client) => {
+      return client.lot.includes(lotValue)
+    })
+    setFilteredLlegadas(filteredItems)
+  }
+  
+
     return (
       <div className="container"> 
              
@@ -168,6 +178,7 @@ const editarLlegada = (val)=>{
          <input type="text" 
          maxLength={12}
          onChange={(event)=>{
+          onLlegadasChange(event.target.value);
           setLot(event.target.value);
           }}
          className="form-control" value={lot} placeholder="Numero de Lote" aria-label="Username" aria-describedby="basic-addon1"/>
@@ -215,7 +226,7 @@ const editarLlegada = (val)=>{
       <div className="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Fecha de llegada:</span>
          <input type="date" 
-         maxLength={12}
+//         maxLength={12}
          onChange={(event)=>{
           setFechaLlegada(event.target.value);
           }}
@@ -233,7 +244,7 @@ const editarLlegada = (val)=>{
            
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '190px'}}>
+<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '15px'}}>
     <thead>
         <tr>
           <th scope="col">Nombre</th>
@@ -242,24 +253,28 @@ const editarLlegada = (val)=>{
           <th scope="col">Subasta</th>
           <th scope="col">Fecha</th>
           <th scope="col">Precio</th>
-          <th scope="col">Fees</th>
+          <th scope="col">Fees Krriers</th>
           <th scope="col">Titulo</th>
+          <th scope="col">Fees Transportista</th>
+          <th scope="col">Fecha Llegada</th>
           <th scope="col">Notas</th>
         </tr>
       </thead>
       <tbody>
 
     {
-      llegadaList.map((val,key)=>{
+      filteredLlegadas.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.nombre}</th>
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
                         <td>{val.subasta}</td>
                         <td>{moment(val.fecha).format("MMM Do YY")}</td>
-                        <td>{val.precio}</td>
+                        <td>$ {val.precio}</td>
                         <td>{val.fees}</td>
                         <td>{val.titulo}</td>
+                        <td>$ {val.feescarrier}</td>
+                        <td>{moment(val.fechallegada).format("MMM Do YY")}</td>
                         <td>{val.notas}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
