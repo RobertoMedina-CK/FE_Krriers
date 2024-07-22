@@ -7,6 +7,8 @@ import Subastas from './subastas'
 import Transportistas from './transportistas.js'
 import Cajeros from './cajeros.js'
 import Llegada from './llegada.js'
+import Asigna from './asignatransportista.js'
+// import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
 
 import {
@@ -68,11 +70,25 @@ function App() {
                             </NavDropdown.Item>
                             </NavDropdown>
                         <NavDropdown title="Transportistas">
-                            <NavDropdown.Item as={Link} to="/asignacion">
+                            <NavDropdown.Item as={Link} to="/asigna">
                                 Asignación a Transportistas
                             </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/pago">
                                 Pago a Transportistas
+                            </NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Reportes">
+                            <NavDropdown.Item as={Link} to="/wasa">
+                                Whatsapp Mensaje
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pagotransportistas">
+                                Pago a Transportistas
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pedidosfecha">
+                                Pedidos por fecha
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pedidossinasignar">
+                                Pedidos sin Asignar
                             </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Mantenimiento a BD">
@@ -105,6 +121,7 @@ function App() {
                         <Route path="/subastas" element={<Subastas />} />
                         <Route path="/cajeros" element={<Cajeros />} />
                         <Route path="/llegada" element={<Llegada />} />
+                        <Route path="/asigna" element={<Asigna />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
                 </Routes>
