@@ -17,6 +17,8 @@ function Cajeros() {
   const[editar, setEditar] = useState(false);
 
   const [cajerosList,setCajeros] = useState([]);
+  const [filteredCajeros, setFilteredCajeros] = useState([]);
+
 
   useEffect(() => {
     getCajeros();
@@ -29,7 +31,7 @@ function Cajeros() {
     if (password.length < 6){
         return;
       }
-    Axios.post("http://167.172.146.60:3001/cajeros",{
+    Axios.post("http://localhost:3001/cajeros",{
 
       nombre:nombre,
       password:password
@@ -58,7 +60,7 @@ function Cajeros() {
   }
 
   const update = ()=> {
-    Axios.put("http://167.172.146.60:3001/cajeros",{
+    Axios.put("http://localhost:3001/cajeros",{
 
       id:id,
       nombre:nombre,
@@ -99,7 +101,7 @@ function Cajeros() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://167.172.146.60:3001/cajeros/${val.id}`).then(()=>{
+        Axios.delete(`http://localhost:3001/cajeros/${val.id}`).then(()=>{
           getCajeros();
           limpiarCampos();
           Swal.fire({
@@ -139,12 +141,20 @@ const editarCajero = (val)=>{
 }
 
   const getCajeros = ()=> {
-    Axios.get("http://167.172.146.60:3001/cajeros").then((response)=>{
+    Axios.get("http://localhost:3001/cajeros").then((response)=>{
         setCajeros(response.data);
+        setFilteredCajeros(response.data);
     });
 
   } 
   
+  const onClientCajerosChange = (NombreValue) => {
+    const filteredItems =cajerosList.filter((client) => {
+      return client.nombre.includes(NombreValue)
+    })
+    setFilteredCajeros(filteredItems)
+  }
+
 return (
     <div className="container"> 
            
@@ -159,6 +169,7 @@ return (
        <input type="text" 
        maxLength={45}
        onChange={(event)=>{
+        onClientCajerosChange(event.target.value);
         setNombre(event.target.value);
         }}
        className="form-control" value={nombre} placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1"/>
@@ -198,7 +209,7 @@ return (
     <tbody>
 
   {
-    cajerosList.map((val,key)=>{
+    filteredCajeros.map((val,key)=>{
               return <tr key={val.id}>
                       
                       <th scope="row">{val.nombre}</th>
