@@ -162,8 +162,9 @@ const editarSubasta = (val)=>{
 
   } 
   const onSubastasChange = (subastaValue) => {
+    subastaValue = subastaValue.toLowerCase();
     const filteredItems =subastasList.filter((client) => {
-      return client.nombre.includes(subastaValue)
+      return client.nombre.toLowerCase().includes(subastaValue)
     })
     setFilteredSubastas(filteredItems)
   }
@@ -243,14 +244,15 @@ const editarSubasta = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '130px'}}> 
-    <thead>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '130px'}}> 
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Telefono</th>
           <th scope="col">Direccion</th>
           <th scope="col">Subasta</th>
           <th scope="col">Precio</th>
+          <th scope="col">Acción</th>
                     
         </tr>
       </thead>

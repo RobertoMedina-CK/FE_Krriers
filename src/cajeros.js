@@ -147,10 +147,11 @@ const editarCajero = (val)=>{
     });
 
   } 
-  
+
   const onClientCajerosChange = (NombreValue) => {
+    NombreValue = NombreValue.toLowerCase();
     const filteredItems =cajerosList.filter((client) => {
-      return client.nombre.includes(NombreValue)
+      return client.nombre.toLowerCase().includes(NombreValue)
     })
     setFilteredCajeros(filteredItems)
   }
@@ -199,11 +200,12 @@ return (
 
   
 </div>
-  
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '450px'}}>
-  <thead>
+
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '600px', display: 'inline-block', paddingLeft: '450px'}}> 
+  <thead class="sticky-top">
       <tr>
       <th scope="col">Usuario</th>
+      <th scope="col">Acción</th>
       </tr>
     </thead>
     <tbody>

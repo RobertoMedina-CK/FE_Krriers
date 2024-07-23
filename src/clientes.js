@@ -156,8 +156,9 @@ const editarCliente = (val)=>{
   } 
 
   const onClientPhoneChange = (phoneValue) => {
+    phoneValue =phoneValue.toLowerCase();
     const filteredItems =clientesList.filter((client) => {
-      return client.telefono.includes(phoneValue)
+      return client.telefono.toLowerCase().includes(phoneValue)
     })
     setFilteredClients(filteredItems)
   }
@@ -227,13 +228,14 @@ const editarCliente = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '260px'}}>
-    <thead>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '260px'}}>
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Telefono</th>
           <th scope="col">Nombre</th>
           <th scope="col">Numero de Buyer</th>
           <th scope="col">Numero de Folder</th>
+          <th scope="col">Acción</th>
           
         </tr>
       </thead>

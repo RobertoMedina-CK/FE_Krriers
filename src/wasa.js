@@ -1,7 +1,4 @@
 
-
-
-
 function Wasa() {
 
 const accountSid = 'ACe83481613a81f17fc412be954e97ac1d';

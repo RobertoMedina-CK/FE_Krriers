@@ -157,8 +157,9 @@ const editarTransportista = (val)=>{
   } 
   
   const onTransportistasChange = (transportistasValue) => {
+    transportistasValue = transportistasValue.toLowerCase();
     const filteredItems =transportistasList.filter((client) => {
-      return client.nombre.includes(transportistasValue)
+      return client.nombre.toLowerCase().includes(transportistasValue)
     })
     setFilteredTransportistas(filteredItems)
   }
@@ -228,13 +229,14 @@ const editarTransportista = (val)=>{
     
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '280px'}}> 
-    <thead>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '280px'}}> 
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Telefono</th>
           <th scope="col">Dot</th>
           <th scope="col">Margen</th>
+          <th scope="col">Acción</th>
 
                     
         </tr>

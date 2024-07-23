@@ -7,12 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Swal from 'sweetalert2';
 import { ListGroupItem } from 'react-bootstrap';
+import Transportistas from './transportistas';
 
 
 function Asigna() {
-
-  const[nombret, setNombreT] = useState();
-      
+    
   
   const[marca, setMarca] = useState("");
   const[modelo, setModelo] = useState("");
@@ -36,69 +35,32 @@ function Asigna() {
   const[feescarrier, setFeesCarrier] = useState("");
   const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
   const[nombrecarrier, setNombreCarrier] = useState("");
-    
-
   const[select, setSelect] = useState(false);
-  
-
   const [asignaList,setAsigna] = useState([]);
-  const [transportistasList,setTransportistas] = useState([]);
   const [filteredAsigna, setFilteredAsigna] = useState([]);
+  const [filteredAsigna2, setFilteredAsigna2] = useState([]);
+
+
+  //Transportistas
+
+  const[telefonotransportista, setTelefonoTransportista] = useState("");
+  const[nombretransportista, setNombreTransportista] = useState();
+  const[dot, setDot] = useState("");
+  const[idTransportista, setIdTransportista] = useState();
+  const[margen, setMargen] = useState("");
+  const [transportistasList,setTransportistas] = useState([]);
   const [filteredTransportistas, setFilteredTransportistas] = useState([]);
 
-  
+  useEffect(() => {
+    getTransportistas();
+  }, [])
+
+
   useEffect(() => {
     getAsigna();
   }, [])
 
-      
-  const update = ()=> {
-    Axios.put("http://localhost:3001/asigna",{
 
-      id:id,
-      telefono:telefono,
-      nombre:nombre,
-      buyer:buyer,
-      lot:lot,
-      pin:pin,
-      marca:marca,
-      modelo:modelo,
-      anio:anio,
-      subasta:subasta,
-      direccion:direccion,
-      fecha:fecha,
-      precio:precio,
-      fees:fees,
-      titulo:titulo,
-      notas:notas,
-      fechafinal:fechafinal,
-      deposito:deposito,
-      fechallegada:fechallegada,
-      feescarrier:feescarrier,
-      fechaasignacarrier:fechaasignacarrier,
-      nombrecarrier:nombrecarrier
-
-    }).then(()=>{
-        getAsigna();
-        limpiarCampos();
-        Swal.fire({
-          title: "<strong>Actualización Exitosa!!!</strong>",
-          html: "<i>Los Lotes <strong>"+lot+"</strong> fueron asignados con Exito!!!</i>",
-          icon: 'success',
-          timer:3000
-        });
-    }).catch(function(error){
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No se lograron Aasingar los Lotes!",
-        footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
-        timer: 3000
-      });
-
-    })
-
-  }
 
 const limpiarCampos = ()=> {
     
@@ -127,7 +89,15 @@ const limpiarCampos = ()=> {
   setSelect(false);
   }
 
-    
+  const limpiarCamposTransportista = ()=> {
+    setNombreTransportista("");
+    setDot("");
+    setTelefonoTransportista("");
+    setMargen("");
+  }
+
+
+  
   const selectAsigna = (val)=>{
   setSelect(true);
 
@@ -158,6 +128,49 @@ const limpiarCampos = ()=> {
   
 }
 
+const selectAsigna2 = (val)=>{
+  setSelect(true);
+
+  setId(val.id);
+  setTelefono(val.telefono);
+  setNombre(val.Nombre);
+  setBuyer(val.buyer);
+  setLot(val.lot);
+  setPin(val.pin);
+  setMarca(val.Marca);
+  setModelo(val.modelo);
+  setAnio(val.anio);
+  setSubasta(val.subasta);
+  setDireccion(val.direccion);
+  setFecha(val.fecha);
+  setPrecio(val.precio);
+  setFee(val.fees);
+  setTitulo(val.titulo);
+  setNotas(val.notas);
+  setFechaFinal(val.fechafinal);
+  setDeposito(val.deposito);
+  setFechaLlegada(val.fechallegada);
+  setFeesCarrier(val.feescarrier);
+  setFechaAsignaCarrier(val.fechaasignacarrier);
+  setNombreCarrier(val.nombrecarrier);
+  
+ 
+  
+}
+
+const selectTransportista = (val)=>{
+  
+  setIdTransportista(val.id);
+  setTelefonoTransportista(val.telefono);
+  setNombreTransportista(val.nombre);
+  setDot(val.dot);
+  setMargen(val.margen);
+  
+    
+
+}
+
+
   const getAsigna = ()=> {
     Axios.get("http://localhost:3001/asigna").then((response)=>{
         setAsigna(response.data);
@@ -167,16 +180,33 @@ const limpiarCampos = ()=> {
   } 
 
     const onAsignaSubasta = (subastaValue) => {
+      subastaValue = subastaValue.toLowerCase();
     const filteredItems =asignaList.filter((client) => {
-      return client.subasta.includes(subastaValue)
+      return client.subasta.toLowerCase().includes(subastaValue)
     })
     setFilteredAsigna(filteredItems)
   }
+
+  const getTransportistas = ()=> {
+    Axios.get("http://localhost:3001/transportistas").then((response)=>{
+        setTransportistas(response.data);
+        setFilteredTransportistas(response.data);
+    });
+
+  } 
   
+  const onTransportistasChange = (transportistasValue) => {
+    transportistasValue = transportistasValue.toLowerCase();
+    const filteredItemsTransportista =transportistasList.filter((client) => {
+      return client.nombre.toLowerCase().includes(transportistasValue)
+    })
+    setFilteredTransportistas(filteredItemsTransportista)
+  }
+
     return (
       <div className="container"> 
              
-    <div className="card text-center">
+  <div className="card text-center">
      <div className="card-header">
       ASIGNACION DE VEHICULOS a TRANSPORTISTAS
     </div>
@@ -191,35 +221,78 @@ const limpiarCampos = ()=> {
           }}
          className="form-control" value={subasta} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
-      <div className="input-group mb-3">
+
+      <div class="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Fecha de Asignación:</span>
-         <input type="date" 
+         <div class="input-group-text">
+         <input type="date" class="input-control" placeholder="Fecha Asignacion"
+
          onChange={(event)=>{
           setFechaAsignaCarrier(event.target.value);
-          }}
-         className="form-control" value={fechaasignacarrier} placeholder="Fecha Asignación" aria-label="Username" aria-describedby="basic-addon1"/>
+          }}/>
+        </div>
       </div>
-      <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre del Transportista:</span>
+    
+    <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
          <input type="text" 
          maxLength={45}
          onChange={(event)=>{
-          setTransportistas(event.target.value);
+          onTransportistasChange(event.target.value);
+          setNombreTransportista(event.target.value);
           }}
-         className="form-control" value={nombret} placeholder="Nombre del Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      
+         className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+    </div>
+
+     
     <div className="card-footer text-muted">
           
-              <div>
-               <button className='btn btn-warning m-2' onClick={update}>Asignar</button> 
-               <button className='btn btn-info m-2' onClick={limpiarCampos}>Cancelar</button>
-             </div>
+
     </div>
   </div>
 
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '80px'}}>
-    <thead>
+  <table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '150px', display: 'inline-block', paddingLeft: '280px'}}> 
+    <thead class = "sticky-top">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Dot</th>
+          <th scope="col">Margen</th>
+          <th scope="col">Acción</th>
+
+                    
+        </tr>
+      </thead>
+      <tbody>
+
+    {
+      filteredTransportistas.map((val,key)=>{
+                return <tr key={val.id}>
+                        <th scope="row">{val.nombre}</th>
+                        <td>{val.telefono}</td>
+                        <td>{val.dot}</td>
+                        <td>{val.margen}</td>
+                        <td>
+
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                          <button type="button" 
+                          onClick={()=>{
+                            selectTransportista(val);
+                            }}   
+                          className="btn btn-info">Select</button>
+                        </div>
+                          </td>
+                </tr>
+                     
+              })
+
+            }
+
+                   
+      </tbody>
+</table>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '200px'}}>
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
           <th scope="col">Lote</th>
@@ -228,6 +301,7 @@ const limpiarCampos = ()=> {
           <th scope="col">PIN</th>
           <th scope="col">Tipo de Auto</th>
           <th scope="col">Fecha Pedido</th>
+          <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -260,6 +334,7 @@ const limpiarCampos = ()=> {
                    
       </tbody>
 </table>
+ 
 </div>
 
     </div>

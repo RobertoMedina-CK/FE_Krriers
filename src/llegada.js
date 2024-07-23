@@ -158,8 +158,9 @@ const editarLlegada = (val)=>{
   } 
   
   const onLlegadasChange = (lotValue) => {
+    lotValue = lotValue.toLowerCase();
     const filteredItems =llegadaList.filter((client) => {
-      return client.lot.includes(lotValue)
+      return client.lot.toLowerCase().includes(lotValue)
     })
     setFilteredLlegadas(filteredItems)
   }
@@ -213,26 +214,42 @@ const editarLlegada = (val)=>{
          className="form-control" value={notas} placeholder="Notas de Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
-      <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Tiene Titulo:</span>
-         <input type="text" 
-         maxLength={1}
-         onChange={(event)=>{
-          setTitulo(event.target.value);
-          }}
-         className="form-control" value={titulo} placeholder="Titulo (S/N)" aria-label="Username" aria-describedby="basic-addon1"/>
+      <div class="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">Tiene Titulo:</span>
+        <div class="input-group-text">
+       
+        <div class="custom-control custom-radio my-auto mx-3">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="Si"
+                  onChange={(event)=>{
+                    setTitulo("S");
+                    }}
+                  
+                 />
+           <label class="custom-control-label" for="customRadioInline1">Si</label>
+           </div>
+        <div class="custom-control custom-radio my-auto">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="No"
+                  onChange={(event)=>{
+                    setTitulo("N");
+                  }}/>
+          <label class="custom-control-label" for="customRadioInline2">No</label>
+         </div>
+        </div>
       </div>
-                     
-      <div className="input-group mb-3">
+
+      <div class="input-group my-auto mx-auto">
          <span className="input-group-text" id="basic-addon1">Fecha de llegada:</span>
-         <input type="date" 
-//         maxLength={12}
+         <div class="input-group-text">
+         <input type="date" class="input-control" placeholder="Fecha Llegada"
+
          onChange={(event)=>{
           setFechaLlegada(event.target.value);
-          }}
-         className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
+          }}/>
+        {/* //  className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/> */}
       </div>
     </div>
+   </div>
+      
     <div className="card-footer text-muted">
           
               <div>
@@ -244,8 +261,8 @@ const editarLlegada = (val)=>{
            
   </div>
     
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '15px'}}>
-    <thead>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '15px'}}>
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
           <th scope="col">Buyer</th>
@@ -258,6 +275,7 @@ const editarLlegada = (val)=>{
           <th scope="col">Fees Transportista</th>
           <th scope="col">Fecha Llegada</th>
           <th scope="col">Notas</th>
+          <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>

@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Swal from 'sweetalert2';
 
+function capitalizarPrimeraLetra (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 function Autos() {
 
@@ -24,10 +27,16 @@ function Autos() {
     getAutos();
   }, [])
 
+ 
   const add = ()=> {
     if (!marca || !modelo || !anio || !fee){
       return;
-    }
+     } 
+
+      let marcaL = marca.toLowerCase();
+      let modeloL = modelo.toLowerCase();
+      
+     
     Axios.post("http://localhost:3001/autos",{
 
       marca:marca,
@@ -39,7 +48,7 @@ function Autos() {
         limpiarCampos();
         Swal.fire({
           title: "<strong>Registro Existo!!!</strong>",
-          html: "<i>El Auto <strong>"+marca+"</strong> fue Registrado con Exito!!!</i>",
+          html: "<i>El Auto <strong>"+marcaL+"</strong> fue Registrado con Exito!!!</i>",
           icon: 'success',
           timer:3000
         });
@@ -156,8 +165,9 @@ const editarAuto = (val)=>{
   } 
   
   const onAutosMarcaChange = (marcaValue) => {
-    const filteredItems =autosList.filter((client) => {
-      return client.marca.includes(marcaValue)
+    marcaValue = marcaValue.toLowerCase();
+    const filteredItems = autosList.filter((client) => {
+      return client.marca.toLowerCase().includes(marcaValue)
     })
     setFilteredAutos(filteredItems)
   }
@@ -229,15 +239,14 @@ const editarAuto = (val)=>{
   </div>
     
 
-
-
-<table className="table table-striped" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '220px'}}>
-    <thead>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '220px'}}>
+    <thead  class="sticky-top">
         <tr>
           <th scope="col">Marca</th>
           <th scope="col">Modelo</th>
           <th scope="col">Año</th>
           <th scope="col">Fees</th>
+          <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
