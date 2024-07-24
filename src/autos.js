@@ -28,7 +28,7 @@ function Autos() {
     if (!marca || !modelo || !anio || !fee){
       return;
     }
-    Axios.post(`https://krriers.moveurads.com/autos`,{
+    Axios.post("http://localhost:3001/autos",{
 
       marca:marca,
       modelo:modelo,
@@ -57,7 +57,7 @@ function Autos() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/autos`,{
+    Axios.put("http://localhost:3001/autos",{
 
       id:id,
       marca:marca,
@@ -99,7 +99,7 @@ function Autos() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/autos/${val.id}`).then(()=>{
+        Axios.delete(`http://localhost:3001/autos/${val.id}`).then(()=>{
           getAutos();
           limpiarCampos();
           Swal.fire({
@@ -148,7 +148,7 @@ const editarAuto = (val)=>{
 }
 
   const getAutos = ()=> {
-    Axios.get(`https://krriers.moveurads.com/autos`).then((response)=>{
+    Axios.get("http://localhost:3001/autos").then((response)=>{
         setAutos(response.data);
         setFilteredAutos(response.data);
     });

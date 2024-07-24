@@ -53,7 +53,7 @@ function Asigna() {
 
       
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/asigna`,{
+    Axios.put("http://localhost:3001/asigna",{
 
       id:id,
       telefono:telefono,
@@ -159,7 +159,7 @@ const limpiarCampos = ()=> {
 }
 
   const getAsigna = ()=> {
-    Axios.get(`https://krriers.moveurads.com/asigna`).then((response)=>{
+    Axios.get("http://localhost:3001/asigna").then((response)=>{
         setAsigna(response.data);
         setFilteredAsigna(response.data);
     });
