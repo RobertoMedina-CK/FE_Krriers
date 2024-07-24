@@ -8,6 +8,8 @@ import Transportistas from './transportistas.js'
 import Cajeros from './cajeros.js'
 import Llegada from './llegada.js'
 import Asigna from './asignatransportista.js'
+import ImprimePedidos from './reppedidos.js'
+
 // import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
 
@@ -122,6 +124,7 @@ function App() {
                         <Route path="/cajeros" element={<Cajeros />} />
                         <Route path="/llegada" element={<Llegada />} />
                         <Route path="/asigna" element={<Asigna />} />
+                        <Route path="/pedidosfecha" element={<ImprimePedidos />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
                 </Routes>

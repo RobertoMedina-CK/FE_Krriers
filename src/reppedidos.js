@@ -40,7 +40,7 @@ function Asigna() {
   const [filteredAsigna, setFilteredAsigna] = useState([]);
   
   
-  const [subastaList,setSubastaList] = useState([]);
+  const [subastaList,elementoSubasta] = useState([]);
 
   //Transportistas
 
@@ -168,12 +168,9 @@ const agregarElementoTransportista = ()=> {
 
   const getAsigna = ()=> {
     Axios.get("http://localhost:3001/asigna").then((response)=>{
-        const res = response.data;
-        const mutatedRes = res.map((item) => {
-          return {...item, disabled: false}
-        })
-        setAsigna(mutatedRes)
-        setFilteredAsigna(mutatedRes);
+        setAsigna(response.data);
+        setFilteredAsigna(response.data);
+        elementoSubasta(response.data);
     });
 
   } 
@@ -207,7 +204,7 @@ const agregarElementoTransportista = ()=> {
              
   <div className="card text-center">
      <div className="card-header">
-      ASIGNACION DE VEHICULOS a TRANSPORTISTAS
+      REPORTE DE PEDIDOS POR FECHA
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
@@ -215,83 +212,28 @@ const agregarElementoTransportista = ()=> {
          <input type="text" 
          maxLength={45}
          onChange={(event)=>{
-          onAsignaSubasta(event.target.value);
           setSubasta(event.target.value);
           }}
          className="form-control" value={subasta} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
-      <div className="input-group mb-3">
+      <div class="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Fecha de Asignación:</span>
-         <div className="input-group-text">
-         <input type="date" className="input-control" placeholder="Fecha Asignacion"
+         <div class="input-group-text">
+         <input type="date" class="input-control" placeholder="Fecha Asignacion"
 
          onChange={(event)=>{
           setFechaAsignaCarrier(event.target.value);
           }}/>
         </div>
       </div>
-    
-    <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
-         <input type="text" 
-         maxLength={45}
-         onChange={(event)=>{
-          onTransportistasChange(event.target.value);
-          setNombreTransportista(event.target.value);
-          }}
-         className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
-    </div>
 
-     
-    <div className="card-footer text-muted">
-          
+  <div className="card-footer text-muted"> </div>
 
-    </div>
   </div>
 
-  <table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '150px', display: 'inline-block', paddingLeft: '280px'}}> 
-    <thead className = "sticky-top">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Dot</th>
-          <th scope="col">Margen</th>
-          <th scope="col">Acción</th>
-
-                    
-        </tr>
-      </thead>
-      <tbody>
-
-    {
-      filteredTransportistas.map((val,key)=>{
-                return <tr key={val.id}>
-                        <th scope="row">{val.nombre}</th>
-                        <td>{val.telefono}</td>
-                        <td>{val.dot}</td>
-                        <td>{val.margen}</td>
-                        <td>
-
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" 
-                          onClick={()=>{
-                            selectTransportista(val);
-                            }}   
-                          className="btn btn-info">Select</button>
-                        </div>
-                          </td>
-                </tr>
-                     
-              })
-
-            }
-
-                   
-      </tbody>
-</table>
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '200px'}}>
-    <thead className="sticky-top">
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '600px', display: 'inline-block', paddingLeft: '75px'}}>
+    <thead class="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
           <th scope="col">Lote</th>
@@ -300,7 +242,6 @@ const agregarElementoTransportista = ()=> {
           <th scope="col">PIN</th>
           <th scope="col">Tipo de Auto</th>
           <th scope="col">Fecha Pedido</th>
-          <th scope="col">Acción</th>
         </tr>
       </thead>
       <tbody>
@@ -316,75 +257,7 @@ const agregarElementoTransportista = ()=> {
                         <td>{val.marca}</td>
                         <td>{moment(val.fecha).format("MMM Do YY")}</td>
                     <td>
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" 
-                          disabled={val.disabled}
-                          onClick={()=>{
-                            selectAsigna(val); 
-                            let newSubastaList = subastaList;
-                            newSubastaList = [...newSubastaList, val]
-                            setSubastaList(newSubastaList);
-                            const asignaElement = filteredAsigna.map((el) =>{
-                              return el.id === val.id ? {...el, disabled: true} : el
-                            })
-                            setAsigna(asignaElement)
-                            setFilteredAsigna(asignaElement)
-                            }}   
-                          className="btn btn-info">Select</button>
-                          </div>
-                    </td>
-                </tr>
-                     
-              })
-
-            }
-
-                   
-      </tbody>
-</table>
-
-
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '200px'}}>
-    <thead className="sticky-top">
-        <tr>
-          <th scope="col">Subasta</th>
-          <th scope="col">Lote</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Buyer</th>
-          <th scope="col">PIN</th>
-          <th scope="col">Tipo de Auto</th>
-          <th scope="col">Fecha Pedido</th>
-          <th scope="col">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-
-    {
-      subastaList.map((val,index)=>{
-                return <tr key={val.id}>
-                        <th scope="row">{val.subasta}</th>
-                        <td>{val.lot}</td>
-                        <td>{val.nombre}</td>
-                        <td>{val.buyer}</td>
-                        <td>{val.pin}</td>
-                        <td>{val.marca}</td>
-                        <td>{moment(val.fecha).format("MMM Do YY")}</td>
-                    <td>
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" 
-                          onClick={()=>{
-                            //setFilteredAsigna(val);
-                            let newSubastaList = subastaList;
-                            const deletedSubastaList = newSubastaList.splice(index, 0)
-                            setSubastaList(deletedSubastaList);
-                            const asignaElement = filteredAsigna.map((el) =>{
-                              return el.id === val.id ? {...el, disabled: false} : el
-                            })
-                            setAsigna(asignaElement)
-                            setFilteredAsigna(asignaElement)
-                            }}   
-                          className="btn btn-info">Quitar</button>
-                          </div>
+                        
                     </td>
                 </tr>
                      
