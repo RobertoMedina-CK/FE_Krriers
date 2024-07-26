@@ -45,7 +45,7 @@ function Llegada() {
 
     
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/llegada`,{
+    Axios.put("http://localhost:3001/llegada",{
 
       id:id,
       telefono:telefono,
@@ -90,6 +90,24 @@ function Llegada() {
 
     })
 
+    const params = {
+      id: id,
+      buyer: buyer,
+      name: nombre,
+      lote: lot,
+      telefono: telefono
+    }
+
+    console.log(params)
+
+    Axios.post("https://hook.us1.make.com/nl8sklk32huiwa4t688obebfceaofjj3", 
+      params
+    ).then(() => {
+      console.log('Success')
+    }).catch((err) => {
+      console.error('Error hook', err)
+    })
+
   }
 
 const limpiarCampos = ()=> {
@@ -124,7 +142,7 @@ const editarLlegada = (val)=>{
 
   setId(val.id);
   setTelefono(val.telefono);
-  setNombre(val.Nombre);
+  setNombre(val.nombre);
   setBuyer(val.buyer);
   setLot(val.lot);
   setPin(val.pin);
@@ -150,7 +168,7 @@ const editarLlegada = (val)=>{
 }
 
   const getLlegada = ()=> {
-    Axios.get(`https://krriers.moveurads.com/llegada`).then((response)=>{
+    Axios.get("http://localhost:3001/llegada").then((response)=>{
         setLlegada(response.data);
         setFilteredLlegadas(response.data);
     });
@@ -299,6 +317,7 @@ const editarLlegada = (val)=>{
                           <button type="button" 
                           onClick={()=>{
                             editarLlegada(val);
+
                             }}   
                           className="btn btn-info">Editar</button>
                           </div>

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react"
 import Axios from "axios";
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input'
 
 import Swal from 'sweetalert2';
 
@@ -29,6 +31,25 @@ function Clientes() {
     if (!telefono || !nombre || !buyer || !foldernum){
       return;
     }
+// Validar cliente existente por telefono
+
+    getClientes();
+    const telefonoExiste = clientesList.find(val => {
+      return val.telefono === telefono
+    })
+    if (telefonoExiste) {
+      limpiarCampos();
+        Swal.fire({
+          title: "<strong>El Cliente ya Existe!</strong>",
+          html: "<i>El Telefono <strong>"+telefono+"</strong> ya está Registrado!</i>",
+          icon: 'error',
+          timer:5000
+        });
+      return;
+    }
+      
+      
+
 
     Axios.post(`https://krriers.moveurads.com/clientes`,{
 
@@ -155,13 +176,21 @@ const editarCliente = (val)=>{
 
   } 
 
-  const onClientPhoneChange = (phoneValue) => {
-    phoneValue =phoneValue.toLowerCase();
-    const filteredItems =clientesList.filter((client) => {
-      return client.telefono.toLowerCase().includes(phoneValue)
+  // const onClientPhoneChange = (phoneValue) => {
+  //   phoneValue =phoneValue.toLowerCase();
+  //   const filteredItems =clientesList.filter((client) => {
+  //     return client.telefono.toLowerCase().includes(phoneValue)
+  //   })
+  //   setFilteredClients(filteredItems)
+  // }
+
+  useEffect(() => {
+    console.log(telefono)
+    const filteredItems = clientesList.filter((client) => {
+      return client.telefono.includes(telefono)
     })
     setFilteredClients(filteredItems)
-  }
+  }, [telefono])
   
     return (
       <div className="container"> 
@@ -172,14 +201,18 @@ const editarCliente = (val)=>{
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Telefono:</span>
-         <input type="text" 
+         <span className="input-group-text" id="basic-addon1">Telefono:</span>
+         <PhoneInput
+         placeholder="Telefono" value={telefono} onChange={setTelefono} defaultCountry='US' international
+          ></PhoneInput>
+
+         {/* <input type="text" 
          maxLength={14}
          onChange={(event)=>{
           onClientPhoneChange(event.target.value);
           setTelefono(event.target.value);
           }}
-         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/> */}
       </div>
 
       <div className="input-group mb-3">
