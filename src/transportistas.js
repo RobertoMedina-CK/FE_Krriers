@@ -59,6 +59,7 @@ function Transportistas() {
   }
 
   const update = ()=> {
+    console.log(id);
     Axios.put(`https://krriers.moveurads.com/transportistas`,{
 
       id:id,
@@ -66,6 +67,7 @@ function Transportistas() {
       nombre:nombre,
       dot:dot,
       margen:margen
+      
       
     }).then(()=>{
         getTransportistas();
