@@ -101,7 +101,7 @@ function Cajeros() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/cajeros${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/cajeros/${val.id}`).then(()=>{
           getCajeros();
           limpiarCampos();
           Swal.fire({
