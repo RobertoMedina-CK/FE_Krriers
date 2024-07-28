@@ -105,7 +105,7 @@ function Subastas() {
       confirmButtonText: "Si, eliminarlo!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/subastas${val.id}`).then(()=>{
+        Axios.delete(`https://krriers.moveurads.com/subastas/${val.id}`).then(()=>{
           getSubastas();
           limpiarCampos();
           Swal.fire({
