@@ -167,7 +167,7 @@ const agregarElementoTransportista = ()=> {
 
 
   const getAsigna = ()=> {
-    Axios.get("http://localhost:3001/asigna").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/asigna`).then((response)=>{
         setAsigna(response.data);
         setFilteredAsigna(response.data);
         elementoSubasta(response.data);
@@ -184,7 +184,7 @@ const agregarElementoTransportista = ()=> {
   }
 
   const getTransportistas = ()=> {
-    Axios.get("http://localhost:3001/transportistas").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/transportistas`).then((response)=>{
         setTransportistas(response.data);
         setFilteredTransportistas(response.data);
     });

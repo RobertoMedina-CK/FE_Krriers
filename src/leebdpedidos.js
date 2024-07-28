@@ -16,7 +16,7 @@ function Leepedido() {
       }, [])
 
       const getPedidos = ()=> {
-        Axios.get("http://localhost:3001/pedidos").then((response)=>{
+        Axios.get(`https://krriers.moveurads.com/pedidos`).then((response)=>{
             setPedidos(response.data);
         });
     

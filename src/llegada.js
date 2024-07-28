@@ -45,7 +45,7 @@ function Llegada() {
 
     
   const update = ()=> {
-    Axios.put("http://localhost:3001/llegada",{
+    Axios.put(`https://krriers.moveurads.com/llegada`,{
 
       id:id,
       telefono:telefono,
@@ -168,7 +168,7 @@ const editarLlegada = (val)=>{
 }
 
   const getLlegada = ()=> {
-    Axios.get("http://localhost:3001/llegada").then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/llegada`).then((response)=>{
         setLlegada(response.data);
         setFilteredLlegadas(response.data);
     });
