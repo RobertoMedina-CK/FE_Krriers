@@ -29,6 +29,21 @@ function Transportistas() {
     if (!telefono || !nombre || !dot || !margen){
       return;
     }
+
+    getTransportistas();
+    const telefonoExiste = clientesList.find(val => {
+      return val.telefono === telefono
+    })
+    if (telefonoExiste) {
+      limpiarCampos();
+        Swal.fire({
+          title: "<strong>El Cliente ya Existe!</strong>",
+          html: "<i>El Telefono <strong>"+telefono+"</strong> ya está Registrado!</i>",
+          icon: 'error',
+          timer:5000
+        });
+      return;
+    }
     Axios.post(`https://krriers.moveurads.com/transportistas`,{
 
       telefono:telefono,
