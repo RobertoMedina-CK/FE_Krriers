@@ -31,7 +31,7 @@ function Transportistas() {
     }
 
     getTransportistas();
-    const telefonoExiste = clientesList.find(val => {
+    const telefonoExiste = transportistasList.find(val => {
       return val.telefono === telefono
     })
     if (telefonoExiste) {
