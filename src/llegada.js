@@ -158,7 +158,7 @@ const editarLlegada = (val)=>{
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
   setDeposito(val.deposito);
-  setFechaLlegada(val.fechallegada);
+  setFechaLlegada(null);
   setFeesCarrier(val.feescarrier);
   setFechaAsignaCarrier(val.fechaasignacarrier);
   setNombreCarrier(val.nombrecarrier);
