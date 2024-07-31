@@ -4,6 +4,9 @@ import Axios from "axios";
 import React from 'react';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-calendar/dist/Calendar.css";
 
 import Swal from 'sweetalert2';
 
@@ -32,12 +35,17 @@ function Llegada() {
   const[feescarrier, setFeesCarrier] = useState("");
   const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
   const[nombrecarrier, setNombreCarrier] = useState("");
-  
-
   const[editar, setEditar] = useState(false);
-
   const [llegadaList,setLlegada] = useState([]);
   const [filteredLlegadas, setFilteredLlegadas] = useState([]);
+  const [selecteddate, setSelectedDate] = useState(null)
+ 
+ 
+  const handleDateChange = (date) =>{
+   
+    setSelectedDate(date);
+
+  };
 
   useEffect(() => {
     getLlegada();
@@ -98,8 +106,7 @@ function Llegada() {
       telefono: telefono
     }
 
-    console.log(params)
-
+    
     Axios.post("https://hook.us1.make.com/nl8sklk32huiwa4t688obebfceaofjj3", 
       params
     ).then(() => {
@@ -134,6 +141,8 @@ const limpiarCampos = ()=> {
   setFeesCarrier("");
   setFechaAsignaCarrier("");
   setNombreCarrier("");
+  setSelectedDate("");
+  handleDateChange("");
   setEditar(false);
   }
 
@@ -158,7 +167,11 @@ const editarLlegada = (val)=>{
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
   setDeposito(val.deposito);
+<<<<<<< HEAD
   setFechaLlegada(null);
+=======
+  setFechaLlegada(val.selecteddate);
+>>>>>>> f4f4013 (v1.1)
   setFeesCarrier(val.feescarrier);
   setFechaAsignaCarrier(val.fechaasignacarrier);
   setNombreCarrier(val.nombrecarrier);
@@ -232,38 +245,57 @@ const editarLlegada = (val)=>{
          className="form-control" value={notas} placeholder="Notas de Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <span className="input-group-text" id="basic-addon1">Tiene Titulo:</span>
-        <div class="input-group-text">
+        <div className="input-group-text">
        
-        <div class="custom-control custom-radio my-auto mx-3">
+        <div className="custom-control custom-radio my-auto mx-3">
         <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="Si"
                   onChange={(event)=>{
                     setTitulo("S");
                     }}
                   
                  />
-           <label class="custom-control-label" for="customRadioInline1">Si</label>
+           <label className="custom-control-label" for="customRadioInline1">Si</label>
            </div>
-        <div class="custom-control custom-radio my-auto">
+        <div className="custom-control custom-radio my-auto">
           <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="No"
                   onChange={(event)=>{
                     setTitulo("N");
                   }}/>
-          <label class="custom-control-label" for="customRadioInline2">No</label>
+          <label className="custom-control-label" for="customRadioInline2">No</label>
          </div>
         </div>
       </div>
 
-      <div class="input-group my-auto mx-auto">
-         <span className="input-group-text" id="basic-addon1">Fecha de llegada:</span>
-         <div class="input-group-text">
-         <input type="date" class="input-control" placeholder="Fecha Llegada"
+      <div className="input-group my-auto mx-auto">
+         <span className="input-group-text" value={fechallegada} id="basic-addon1">Fecha de llegada:</span>
+         <div className="input-group-text">
+         {/* <input type="date" class="input-control" placeholder="Fecha Llegada"
 
          onChange={(event)=>{
+          console.log(event.target.value);
           setFechaLlegada(event.target.value);
-          }}/>
-        {/* //  className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/> */}
+          }}
+          /> */}
+        {/* <label className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/> */}
+
+        <div>
+
+                    <DatePicker 
+                            placeholderText='MM/dd/YYYY' 
+                            selected={selecteddate}
+                            onChange={handleDateChange}
+                            dateFormat="MM/dd/YYYY"
+ //  onChange={(handleDateChange)=>{
+ //   setFechaLlegada(setSelectedDate);
+ //   }}
+  
+  
+                     />
+
+
+</div>
       </div>
     </div>
    </div>
