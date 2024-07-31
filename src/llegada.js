@@ -38,12 +38,11 @@ function Llegada() {
   const[editar, setEditar] = useState(false);
   const [llegadaList,setLlegada] = useState([]);
   const [filteredLlegadas, setFilteredLlegadas] = useState([]);
-  const [selecteddate, setSelectedDate] = useState(null)
  
  
   const handleDateChange = (date) =>{
-   
-    setSelectedDate(date);
+    console.log(date)
+    setFechaLlegada(date);
 
   };
 
@@ -141,7 +140,6 @@ const limpiarCampos = ()=> {
   setFeesCarrier("");
   setFechaAsignaCarrier("");
   setNombreCarrier("");
-  setSelectedDate("");
   handleDateChange("");
   setEditar(false);
   }
@@ -167,7 +165,7 @@ const editarLlegada = (val)=>{
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
   setDeposito(val.deposito);
-  setFechaLlegada(val.selecteddate);
+  setFechaLlegada(val.fechallegada);
   setFeesCarrier(val.feescarrier);
   setFechaAsignaCarrier(val.fechaasignacarrier);
   setNombreCarrier(val.nombrecarrier);
@@ -280,7 +278,7 @@ const editarLlegada = (val)=>{
 
                     <DatePicker 
                             placeholderText='MM/dd/YYYY' 
-                            selected={selecteddate}
+                            selected={fechallegada}
                             onChange={handleDateChange}
                             dateFormat="MM/dd/YYYY"
  //  onChange={(handleDateChange)=>{
