@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
+import { Portal } from "react-overlays";
 
 import Swal from 'sweetalert2';
 
@@ -44,6 +45,11 @@ function Llegada() {
     console.log(date)
     setFechaLlegada(date);
 
+  };
+  const CalendarContainer = ({ children }) => {
+    const el = document.getElementById("calendar-portal");
+  
+    return <Portal container={el}>{children}</Portal>;
   };
 
   useEffect(() => {
@@ -240,57 +246,52 @@ const editarLlegada = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">Tiene Titulo:</span>
+        <span className="input-group-text" id="basic-addon4">Tiene Titulo:</span>
         <div className="input-group-text">
        
         <div className="custom-control custom-radio my-auto mx-3">
-        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="Si"
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" value="S"
                   onChange={(event)=>{
-                    setTitulo("S");
+                    setTitulo(event.target.value);
                     }}
                   
                  />
-           <label className="custom-control-label" for="customRadioInline1">Si</label>
-           </div>
+           <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
+        </div>
         <div className="custom-control custom-radio my-auto">
-          <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="No"
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
                   onChange={(event)=>{
-                    setTitulo("N");
+                    setTitulo(event.target.value);
                   }}/>
-          <label className="custom-control-label" for="customRadioInline2">No</label>
+          <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
          </div>
         </div>
       </div>
 
-      <div className="input-group my-auto mx-auto">
-         <span className="input-group-text" value={fechallegada} id="basic-addon1">Fecha de llegada:</span>
-         <div className="input-group-text">
-         {/* <input type="date" class="input-control" placeholder="Fecha Llegada"
+      <div  className="input-group my-auto mx-auto">
 
-         onChange={(event)=>{
-          console.log(event.target.value);
-          setFechaLlegada(event.target.value);
-          }}
-          /> */}
-        {/* <label className="form-control" value={fechallegada} placeholder="Fecha Llegada" aria-label="Username" aria-describedby="basic-addon1"/> */}
+         <span className="input-group-text" id="basic-addon5">Fecha de llegada:</span>
+        <div className="input-group-text">
 
-        <div>
+                    
+          <div>
+             <DatePicker
+              closeOnScroll={true}
+              showIcon
+              toggleCalendarOnIconClick 
+              placeholderText='Enter Date here' 
+              selected={fechallegada}
+              onChange={handleDateChange}
+              dateFormat="MM/dd/YYYY"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              popperPlacement="top-start"
+              popperContainer={CalendarContainer}
 
-                    <DatePicker 
-                            placeholderText='MM/dd/YYYY' 
-                            selected={fechallegada}
-                            onChange={handleDateChange}
-                            dateFormat="MM/dd/YYYY"
- //  onChange={(handleDateChange)=>{
- //   setFechaLlegada(setSelectedDate);
- //   }}
-  
-  
-                     />
-
-
-</div>
-      </div>
+              />
+          </div>
+        </div>
     </div>
    </div>
       
