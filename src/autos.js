@@ -16,6 +16,7 @@ function Autos() {
   const[modelo, setModelo] = useState("");
   const[anio, setAnio] = useState("");
   const[fee, setFee] = useState("");
+  const[tipo, setTipo] = useState("");
   const[id, setId] = useState();
 
   const[editar, setEditar] = useState(false);
@@ -29,7 +30,7 @@ function Autos() {
 
  
   const add = ()=> {
-    if (!marca || !modelo || !anio || !fee){
+    if (!marca || !modelo || !anio || !fee || !tipo){
       return;
      } 
 
@@ -43,6 +44,7 @@ function Autos() {
       modelo:modelo,
       anio:anio,
       fee:fee,
+      tipo:tipo,
       }).then(()=>{
         getAutos();
         limpiarCampos();
@@ -72,7 +74,8 @@ function Autos() {
       marca:marca,
       modelo:modelo,
       anio:anio,
-      fee:fee
+      fee:fee,
+      tipo:tipo
     }).then(()=>{
         getAutos();
         limpiarCampos();
@@ -139,6 +142,7 @@ function Autos() {
     setAnio("");
     setFee("");
     setId("");
+    setTipo("");
     setEditar(false);
   }
 
@@ -150,6 +154,7 @@ const editarAuto = (val)=>{
   setModelo(val.modelo);
   setAnio(val.anio);
   setFee(val.fee);
+  setTipo(val.tipo);
  
   
   
@@ -221,6 +226,16 @@ const editarAuto = (val)=>{
           }}
          className="form-control" value={fee} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
+
+      <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Tipo de Auto:</span>
+         <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          setTipo(event.target.value);
+          }}
+         className="form-control" value={tipo} placeholder="Tipo de Auto" aria-label="Username" aria-describedby="basic-addon1"/>
+      </div>
       
                      
     </div>
@@ -239,13 +254,14 @@ const editarAuto = (val)=>{
   </div>
     
 
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '220px'}}>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '100px'}}>
     <thead  class="sticky-top">
         <tr>
           <th scope="col">Marca</th>
           <th scope="col">Modelo</th>
           <th scope="col">Año</th>
           <th scope="col">Fees</th>
+          <th scope="col">Tipo</th>
           <th scope="col">Acción</th>
         </tr>
       </thead>
@@ -258,6 +274,7 @@ const editarAuto = (val)=>{
                         <td>{val.modelo}</td>
                         <td>{val.anio}</td>
                         <td>$ {val.fee}</td>
+                        <td>{val.tipo}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
