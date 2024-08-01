@@ -332,12 +332,12 @@ const editarLlegada = (val)=>{
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
                         <td>{val.subasta}</td>
-                        <td>{moment(val.fecha).format("MMM Do YY")}</td>
+                        <td>{moment(val.fecha).format("LL")}</td>
                         <td>$ {val.precio}</td>
                         <td>{val.fees}</td>
                         <td>{val.titulo}</td>
                         <td>$ {val.feescarrier}</td>
-                        <td>{moment(val.fechallegada).format("MMM Do YY")}</td>
+                        <td>{moment(val.fechallegada).format("LL")}</td>
                         <td>{val.notas}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
