@@ -12,7 +12,8 @@ import Transportistas from './transportistas';
 
 function Asigna() {
     
-  
+  // AUTOS PEDIDO
+
   const[marca, setMarca] = useState("");
   const[modelo, setModelo] = useState("");
   const[anio, setAnio] = useState("");
@@ -181,7 +182,7 @@ const agregarElementoTransportista = ()=> {
     const onAsignaSubasta = (subastaValue) => {
       subastaValue = subastaValue.toLowerCase();
     const filteredItems =asignaList.filter((client) => {
-      return client.subasta.toLowerCase().includes(subastaValue)
+      return client.direccion?.toLowerCase().includes(subastaValue)
     })
     setFilteredAsigna(filteredItems)
   }
@@ -200,6 +201,32 @@ const agregarElementoTransportista = ()=> {
       return client.nombre.toLowerCase().includes(transportistasValue)
     })
     setFilteredTransportistas(filteredItemsTransportista)
+  }
+
+  const asignarCarga = () => {
+    const bodyCarga = {
+      fechaasignacarrier: fechaasignacarrier,
+      nombrecarrier: nombrecarrier,
+      subastaList: subastaList
+    }
+    Axios.put(`https://krriers.moveurads.com/asigna`, bodyCarga).then((res) => {
+      getAsigna();
+      getTransportistas();
+      Swal.fire({
+        title: "<strong>Carga asignada exitosamente!</strong>",
+        html: "<i>La carga fue asignada con Exito!</i>",
+        icon: 'success',
+        timer:3000
+      });
+    }).catch((err) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se logró asignar la carga!",
+        footer: JSON.parse(JSON.stringify(err)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(err)).message,
+        timer: 3000
+      });
+    })
   }
 
     return (
@@ -290,7 +317,7 @@ const agregarElementoTransportista = ()=> {
                    
       </tbody>
 </table>
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '200px'}}>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
@@ -298,7 +325,9 @@ const agregarElementoTransportista = ()=> {
           <th scope="col">Nombre</th>
           <th scope="col">Buyer</th>
           <th scope="col">PIN</th>
-          <th scope="col">Tipo de Auto</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Año</th>
           <th scope="col">Fecha Pedido</th>
           <th scope="col">Acción</th>
         </tr>
@@ -308,13 +337,15 @@ const agregarElementoTransportista = ()=> {
     {
       filteredAsigna.map((val,key)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.subasta}</th>
+                        <th scope="row">{val.direccion}</th>
                         <td>{val.lot}</td>
                         <td>{val.nombre}</td>
                         <td>{val.buyer}</td>
                         <td>{val.pin}</td>
                         <td>{val.marca}</td>
-                        <td>{moment(val.fecha).format("MMM Do YY")}</td>
+                        <td>{val.modelo}</td>
+                        <td>{val.anio}</td>
+                        <td>{moment(val.fecha).format("LL")}</td>
                     <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
@@ -344,7 +375,7 @@ const agregarElementoTransportista = ()=> {
 </table>
 
 
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '200px'}}>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
@@ -352,7 +383,9 @@ const agregarElementoTransportista = ()=> {
           <th scope="col">Nombre</th>
           <th scope="col">Buyer</th>
           <th scope="col">PIN</th>
-          <th scope="col">Tipo de Auto</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Año</th>
           <th scope="col">Fecha Pedido</th>
           <th scope="col">Acción</th>
         </tr>
@@ -368,15 +401,17 @@ const agregarElementoTransportista = ()=> {
                         <td>{val.buyer}</td>
                         <td>{val.pin}</td>
                         <td>{val.marca}</td>
-                        <td>{moment(val.fecha).format("MMM Do YY")}</td>
+                        <td>{val.modelo}</td>
+                        <td>{val.anio}</td>
+                        <td>{moment(val.fecha).format("LL")}</td>
                     <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
                           onClick={()=>{
                             //setFilteredAsigna(val);
                             let newSubastaList = subastaList;
-                            const deletedSubastaList = newSubastaList.splice(index, 0)
-                            setSubastaList(deletedSubastaList);
+                            newSubastaList.splice(index, 1)
+                            setSubastaList(newSubastaList);
                             const asignaElement = filteredAsigna.map((el) =>{
                               return el.id === val.id ? {...el, disabled: false} : el
                             })
@@ -394,6 +429,9 @@ const agregarElementoTransportista = ()=> {
 
                    
       </tbody>
+<div className='btn-group' style={{width: '50%', marginBottom: '24px'}}>
+<button type='button' className='btn btn-outline-dark' onClick={() => asignarCarga()} disabled={subastaList.length < 1 || !idTransportista || !fechaasignacarrier}>Asignar Carga</button>
+</div>
 </table>
  
 </div>
