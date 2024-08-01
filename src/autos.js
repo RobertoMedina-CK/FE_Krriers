@@ -218,13 +218,13 @@ const editarAuto = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Extra Fees:</span>
+          <span className="input-group-text" id="basic-addon1">Sobre Peso?:</span>
          <input type="text" 
-         maxLength={10}
+         maxLength={1}
          onChange={(event)=>{
           setFee(event.target.value);
           }}
-         className="form-control" value={fee} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={fee} placeholder="Sobre Peso (S/N)" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
@@ -260,7 +260,7 @@ const editarAuto = (val)=>{
           <th scope="col">Marca</th>
           <th scope="col">Modelo</th>
           <th scope="col">Año</th>
-          <th scope="col">Fees</th>
+          <th scope="col">Sobre Peso</th>
           <th scope="col">Tipo</th>
           <th scope="col">Acción</th>
         </tr>
@@ -273,7 +273,7 @@ const editarAuto = (val)=>{
                         <th scope="row">{val.marca}</th>
                         <td>{val.modelo}</td>
                         <td>{val.anio}</td>
-                        <td>$ {val.fee}</td>
+                        <td>{val.fee}</td>
                         <td>{val.tipo}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
