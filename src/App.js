@@ -3,6 +3,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Autos from './autos'
 import Clientes from './clientes'
+import Caja from './caja.js'
 import Subastas from './subastas'
 import Transportistas from './transportistas.js'
 import Cajeros from './cajeros.js'
@@ -124,6 +125,7 @@ function App() {
                         <Route path="/cajeros" element={<Cajeros />} />
                         <Route path="/llegada" element={<Llegada />} />
                         <Route path="/asigna" element={<Asigna />} />
+                        <Route path="/caja" element={<Caja />} />
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
