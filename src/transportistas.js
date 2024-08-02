@@ -236,17 +236,17 @@ const editarTransportista = (val)=>{
           {
               editar? 
               <div>
-                <button className='btn btn-warning m-2' onClick={update}>Actualizar</button> 
-              <button className='btn btn-info m-2' onClick={limpiarCampos}>Cancelar</button>
+                <button className='btn btn-outline-warning m-2' onClick={update}>Actualizar</button> 
+              <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
                 </div>
-              :<button className='btn btn-success' onClick={add}>Registrar</button>
+              :<button className='btn btn-outline-success' onClick={add}>Registrar</button>
           }
           
 
     
   </div>
     
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '280px'}}> 
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '310px', display: 'inline-block', paddingLeft: '280px'}}> 
     <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
@@ -274,10 +274,10 @@ const editarTransportista = (val)=>{
                           onClick={()=>{
                             editarTransportista(val);
                             }}   
-                          className="btn btn-info">Editar</button>
+                          className="btn btn-outline-primary">Editar</button>
                           <button type="button" onClick={()=>{
                             deleteTransportista(val);
-                          }} className="btn btn-danger">Eliminar</button>
+                          }} className="btn btn-outline-danger">Eliminar</button>
                         </div>
                           </td>
                 </tr>
