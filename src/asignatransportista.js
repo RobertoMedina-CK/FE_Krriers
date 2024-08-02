@@ -302,10 +302,10 @@ const agregarElementoTransportista = ()=> {
 
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" 
-                          onClick={()=>{
+                            onClick={()=>{
                             selectTransportista(val);
                             }}   
-                          className="btn btn-info">Select</button>
+                          className="btn btn-outline-success">Select</button>
                         </div>
                           </td>
                 </tr>
@@ -361,7 +361,7 @@ const agregarElementoTransportista = ()=> {
                             setAsigna(asignaElement)
                             setFilteredAsigna(asignaElement)
                             }}   
-                          className="btn btn-info">Select</button>
+                          className="btn btn-outline-success">Select</button>
                           </div>
                     </td>
                 </tr>
@@ -418,7 +418,7 @@ const agregarElementoTransportista = ()=> {
                             setAsigna(asignaElement)
                             setFilteredAsigna(asignaElement)
                             }}   
-                          className="btn btn-info">Quitar</button>
+                          className="btn btn-outline-danger">Quitar</button>
                           </div>
                     </td>
                 </tr>
