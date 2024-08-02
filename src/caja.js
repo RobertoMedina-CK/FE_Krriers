@@ -141,7 +141,7 @@ function Caja() {
     var total = (Number(`${precio}`)+Number(`${fees}`)+Number(`${storage}`)-Number(`${deposito}`));
     const datos4= [["$ "+total]];
 
-
+    const copart = `https://www.copart.com/lot/55108684`;
     
     autoTable(doc, {
         startY:30,
@@ -318,8 +318,16 @@ function Caja() {
     })
     
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow')
-}
+    doc.output('dataurlnewwindow');
+    doc.autoPrint({variant: 'non-conform'});
+
+    if (subasta == 'Copart')  {
+      window.open(`https://www.copart.com/lot/`+lot, '_blank', 'width = 650, height = 800');
+    }  else if (subasta == 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+lot+'~US', '_blank', 'width = 700, height = 850'); }
+    
+
+
+  }
         
         
    
@@ -424,7 +432,7 @@ const editarCaja = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Extra Fees:</span>
+         <span className="input-group-text" id="basic-addon1">Extra Fees: $</span>
          <input type="number" 
          maxLength={10}
          onChange={(event)=>{
@@ -434,7 +442,7 @@ const editarCaja = (val)=>{
          className="form-control" value={fees} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Precio flete:</span>
+         <span className="input-group-text" id="basic-addon1">Precio flete: $</span>
          <input type="number" 
           maxLength={10}
           onChange={(event)=>{
@@ -445,7 +453,7 @@ const editarCaja = (val)=>{
          className="form-control" value={precio} placeholder="Precio de flete" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Storage fees:</span>
+         <span className="input-group-text" id="basic-addon1">Storage fees: $</span>
          <input type="number" 
          maxLength={10}
          onChange={(event)=>{
@@ -455,7 +463,7 @@ const editarCaja = (val)=>{
          className="form-control" value={storage} placeholder="Storage" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Deposito:</span>
+         <span className="input-group-text" id="basic-addon1">Deposito: $-</span>
          <input type="number" 
          maxLength={10}
          onChange={(event)=>{
@@ -487,7 +495,7 @@ const editarCaja = (val)=>{
 
       </div>
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Precio Final:</span>
+         <span className="input-group-text" id="basic-addon1">Precio Final: $</span>
          <input type="number" disabled 
         //  onChange={(event)=>{
         //     setPrecioFinal(Number(`${preciofinal}`)+Number(`${deposito}`)-Number(`${event.target.value}`));
@@ -593,5 +601,4 @@ const editarCaja = (val)=>{
 }
 
 export default Caja;
-
 
