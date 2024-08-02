@@ -82,7 +82,7 @@ function Llegada() {
       feescarrier:feescarrier,
       fechaasignacarrier:fechaasignacarrier,
       nombrecarrier:nombrecarrier
-
+     
     }).then(()=>{
         getLlegada();
         limpiarCampos();
@@ -100,6 +100,8 @@ function Llegada() {
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
+     
+
 
     })
 
@@ -176,7 +178,7 @@ const editarLlegada = (val)=>{
   setFechaAsignaCarrier(val.fechaasignacarrier);
   setNombreCarrier(val.nombrecarrier);
   
- 
+  
   
 }
 
@@ -298,15 +300,15 @@ const editarLlegada = (val)=>{
     <div className="card-footer text-muted">
           
               <div>
-                <button className='btn btn-warning m-2' onClick={update}>Actualizar</button> 
-              <button className='btn btn-info m-2' onClick={limpiarCampos}>Cancelar</button>
+                <button className='btn btn-outline-warning m-2' onClick={update}>Actualizar</button> 
+              <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
                 </div>
               
           
            
   </div>
     
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '400px', display: 'inline-block', paddingLeft: '15px'}}>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '310px', display: 'inline-block', paddingLeft: '15px'}}>
     <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
@@ -331,7 +333,7 @@ const editarLlegada = (val)=>{
                         <th scope="row">{val.nombre}</th>
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
-                        <td>{val.subasta}</td>
+                        <td>{val.direccion}</td>
                         <td>{moment(val.fecha).format("LL")}</td>
                         <td>$ {val.precio}</td>
                         <td>{val.fees}</td>
@@ -344,9 +346,11 @@ const editarLlegada = (val)=>{
                           <button type="button" 
                           onClick={()=>{
                             editarLlegada(val);
-
+                            if (val.subasta == 'Copart')  {
+                              window.open(`https://www.copart.com/lot/`+val.lot, '_blank', 'width = 650, height = 800');
+                            }  else if (val.subasta == 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+val.lot+'~US', '_blank', 'width = 700, height = 800'); }
                             }}   
-                          className="btn btn-info">Editar</button>
+                          className="btn btn-outline-primary">Editar</button>
                           </div>
                           </td>
                 </tr>
