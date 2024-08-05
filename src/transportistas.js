@@ -186,7 +186,7 @@ const editarTransportista = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     LOS VEHICULOS LISTADOS HAN SIDO ASIGNADOS AL SIGUIENTE TRANSPORTISTA
+     MANTENIMIENTO DE BASE DE DATOS de TRANSPORTISTAS de KRRIERS
     </div>
     <div className="card-body">
       
