@@ -517,7 +517,7 @@ const editarCaja = (val)=>{
               closeOnScroll={true}
               showIcon
               toggleCalendarOnIconClick 
-              placeholderText='Enter Date here' 
+              placeholderText='Coloque la fecha aquí' 
               selected={fechafinal}
               onChange={handleDateChange}
               dateFormat="MM/dd/YYYY"
