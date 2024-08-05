@@ -9,6 +9,7 @@ import Transportistas from './transportistas.js'
 import Cajeros from './cajeros.js'
 import Llegada from './llegada.js'
 import Asigna from './asignatransportista.js'
+import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
 
 // import Wasa from './wasa.js'
@@ -107,6 +108,9 @@ function App() {
                             <NavDropdown.Item as={Link} to="/autos">
                                 Autos
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pedidos">
+                                Pedidos
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/cajeros">
                                 Usuarios
                             </NavDropdown.Item>
@@ -114,7 +118,7 @@ function App() {
                       </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <div className="container mt-4">
+            <div className="container-fluid mt-4">
                 <Routes>
                     <Route path="/" element={<Outlet />}>
                         <Route index element={<GFGHome />} />
@@ -126,6 +130,7 @@ function App() {
                         <Route path="/llegada" element={<Llegada />} />
                         <Route path="/asigna" element={<Asigna />} />
                         <Route path="/caja" element={<Caja />} />
+                        <Route path="/pedidos" element={<Pedidos />} />
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
