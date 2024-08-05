@@ -189,8 +189,12 @@ const agregarElementoTransportista = ()=> {
 
   const getTransportistas = ()=> {
     Axios.get(`https://krriers.moveurads.com/transportistas`).then((response)=>{
-        setTransportistas(response.data);
-        setFilteredTransportistas(response.data);
+        const res = response.data;
+        const mutatedRes = res.map((item) => {
+          return {...item, disabled: false}
+        })
+        setTransportistas(mutatedRes);
+        setFilteredTransportistas(mutatedRes);
     });
 
   } 
@@ -301,9 +305,14 @@ const agregarElementoTransportista = ()=> {
                         <td>
 
                         <div className="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" 
+                          <button type="button" disabled={val.disabled}
                             onClick={()=>{
-                            selectTransportista(val);
+                              selectTransportista(val);
+                            const transportistaElement = filteredTransportistas.map((el) =>{
+                              return el.id === val.id ? {...el, disabled: true} : el
+                            })
+                            setFilteredTransportistas(transportistaElement)
+                            setTransportistas(transportistaElement)
                             }}   
                           className="btn btn-outline-success">Select</button>
                         </div>
