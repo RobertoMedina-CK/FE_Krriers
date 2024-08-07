@@ -15,7 +15,7 @@ import autoTable from 'jspdf-autotable';
 import Swal from 'sweetalert2';
 
 
-function Caja() {
+function ReportePedidosCaja() {
 
   const[marca, setMarca] = useState("");
   const[modelo, setModelo] = useState("");
@@ -123,216 +123,16 @@ function Caja() {
 
   const generapdf = ()=> {
    
-    const doc = new jsPDF();
+    const doc = new jsPDF({orientation: 'l'});
     var logo = new Image();
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 135,5,60,18);
-    doc.text('Factura', 40, 15);
+    doc.text('Reporte de Pedidos por Fecha', 40, 15);
 
-    const columna1 = ['Nombre', 'Telefono', 'Lote', 'Subasta'];
-    const columna2 = ['Modelo', 'Marca', 'Año', 'Titulo', 'Notas'];
-    const columna3 = ['Precio Base'];
-    const columna5 = ['Extra Fees' ];
-    const columna6 = ['Storage'];
-    const columna7 = ['Deposito'];
-    const columna4 = ['Total a pagar:'];
-
-    const datos1= [[`${nombre}`,`${telefono}`,`${lot}`,`${direccion}` ]];
-
-    const datos2 = [[`${modelo}`,`${marca}`,`${anio}`,`${titulo}`,`${notas}`]];
-
-    const datos3 = [["$ "+`${precio}`]];
-    const datos5 = [["$ "+`${fees}`,]];
-    const datos6 = [["$ "+`${storage}`]];
-    const datos7 = [["$ -"+`${deposito}`]];
-    var total = (Number(`${precio}`)+Number(`${fees}`)+Number(`${storage}`)-Number(`${deposito}`));
-    const datos4= [["$ "+total]];
-
-    const copart = `https://www.copart.com/lot/55108684`;
-    
-    autoTable(doc, {
-        startY:30,
-        theme: 'grid',
-        head: [columna1],
-        body: datos1
-        
-    })
-
-    autoTable(doc, {
-        startY:50,
-        theme: 'grid',
-        head: [columna2],
-        body: datos2
-    })
-
-    autoTable(doc, {
-        startY:70,
-        theme: 'grid',
-        head: [columna3],
-        body: datos3,
-        margin:{left:160},
-        headerStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "times", // helvetica, times, courier
-            fontStyle: 'normal', // normal, bold, italic, normal
-            halign: 'right', // left, center, right
-            valign: 'top', // top, middle, bottom
-
-
-        },
-        bodyStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "courier", // helvetica, times, courier
-            lineColor: 200,
-
-            fontStyle: 'normal', // normal, bold, italic, normal
-            fillColor: 200, // false for transparent or a color as described below
-            textColor: 0,
-            halign: 'right', // left, center, right
-            valign: 'middle', // top, middle, bottom
-            columnWidth: 'auto' // 'auto', 'wrap' or a number
-        }
-    })
-    autoTable(doc, {
-        startY:90,                
-        theme: 'grid',
-        head: [columna5],
-        body: datos5,
-        margin:{left:160},
-        headerStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "times", // helvetica, times, courier
-            fontStyle: 'normal', // normal, bold, italic, normal
-            halign: 'right', // left, center, right
-            valign: 'top', // top, middle, bottom
-
-
-        },
-        bodyStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "courier", // helvetica, times, courier
-            lineColor: 200,
-
-            fontStyle: 'normal', // normal, bold, italic, normal
-            fillColor: 200, // false for transparent or a color as described below
-            textColor: 0,
-            halign: 'right', // left, center, right
-            valign: 'middle', // top, middle, bottom
-            columnWidth: 'auto' // 'auto', 'wrap' or a number
-        }
-    })
-    autoTable(doc, {
-        startY:110,                
-        theme: 'grid',
-        head: [columna6],
-        body: datos6,
-        margin:{left:160},
-        headerStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "times", // helvetica, times, courier
-            fontStyle: 'normal', // normal, bold, italic, normal
-            halign: 'right', // left, center, right
-            valign: 'top', // top, middle, bottom
-
-
-        },
-        bodyStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "courier", // helvetica, times, courier
-            lineColor: 200,
-
-            fontStyle: 'normal', // normal, bold, italic, normal
-            fillColor: 200, // false for transparent or a color as described below
-            textColor: 0,
-            halign: 'right', // left, center, right
-            valign: 'middle', // top, middle, bottom
-            columnWidth: 'auto' // 'auto', 'wrap' or a number
-        }
-
-    })
-    autoTable(doc, {
-        startY:130,                
-        theme: 'grid',
-        head: [columna7],
-        body: datos7,
-        margin:{left:160},
-        headerStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "times", // helvetica, times, courier
-            fontStyle: 'normal', // normal, bold, italic, normal
-            halign: 'right', // left, center, right
-            valign: 'top', // top, middle, bottom
-
-
-        },
-        bodyStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "courier", // helvetica, times, courier
-            lineColor: 200,
-
-            fontStyle: 'normal', // normal, bold, italic, normal
-            fillColor: 200, // false for transparent or a color as described below
-            textColor: 0,
-            halign: 'right', // left, center, right
-            valign: 'middle', // top, middle, bottom
-            columnWidth: 'auto' // 'auto', 'wrap' or a number
-        }
-
-    })
-
-
-    autoTable(doc, {
-        startY:150,                
-        
-        head: [columna4],
-        body: datos4,
-        margin:{left:160},
-        headerStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 14,
-            font: "helvetica", // helvetica, times, courier
-            lineColor:0,
-            fontStyle: 'normal', // normal, bold, italic, normal
-            fillColor: 0, // false for transparent or a color as described below
-            textColor: 255,
-            halign: 'center', // left, center, right
-            valign: 'top', // top, middle, bottom
-
-
-        },
-        bodyStyles:{
-            cellPadding: 2, // a number, array or object (see margin below)
-            fontSize: 25,
-            font: "helvetica", // helvetica, times, courier
-            lineColor:[0, 163, 108],
-
-            fontStyle: 'bold', // normal, bold, italic, normal
-            fillColor: 120, // false for transparent or a color as described below
-            textColor: 0,
-            halign: 'right', // left, center, right
-            valign: 'middle', // top, middle, bottom
-            columnWidth: 'auto' // 'auto', 'wrap' or a number
-        }
-
-    })
+    autoTable(doc, {html: '#pedidos-table', margin:{top: 30}})
     
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
-    doc.autoPrint({variant: 'non-conform'});
-
-    if (subasta == 'Copart')  {
-      window.open(`https://www.copart.com/lot/`+lot, '_blank', 'width = 650, height = 800');
-    }  else if (subasta == 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+lot+'~US', '_blank', 'width = 700, height = 850'); }
-    
-
 
   }
         
@@ -469,7 +269,7 @@ const editarCaja = (val)=>{
 
     
     
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '450px', display: 'inline-block', paddingLeft: '15px', }}>
+<table id='pedidos-table' className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '450px', display: 'inline-block', paddingLeft: '15px', }}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
@@ -538,5 +338,5 @@ const editarCaja = (val)=>{
 );
 }
 
-export default Caja;
+export default ReportePedidosCaja;
 
