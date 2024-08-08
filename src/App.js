@@ -11,6 +11,7 @@ import Llegada from './llegada.js'
 import Asigna from './asignatransportista.js'
 import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
+import ImprimePedidosSinAsignar from './reppedsinasignar.js'
 
 // import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
@@ -82,9 +83,6 @@ function App() {
                             </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Reportes">
-                            <NavDropdown.Item as={Link} to="/wasa">
-                                Whatsapp Mensaje
-                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/pagotransportistas">
                                 Pago a Transportistas
                             </NavDropdown.Item>
@@ -132,6 +130,7 @@ function App() {
                         <Route path="/caja" element={<Caja />} />
                         <Route path="/pedidos" element={<Pedidos />} />
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
+                        <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
                 </Routes>
