@@ -195,9 +195,7 @@ const editarAuto = (val)=>{
           setMarca(event.target.value);
           }}
          className="form-control" value={marca} placeholder="Marca" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
 
-      <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">Modelo:</span>
          <input type="text" 
          maxLength={45}
@@ -205,9 +203,7 @@ const editarAuto = (val)=>{
           setModelo(event.target.value);
           }}
          className="form-control" value={modelo} placeholder="Modelo" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
 
-      <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">Año:</span>
          <input type="text" 
          maxLength={45}
@@ -218,16 +214,28 @@ const editarAuto = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Sobre Peso?:</span>
-         <input type="text" 
-         maxLength={1}
-         onChange={(event)=>{
-          setFee(event.target.value);
-          }}
-         className="form-control" value={fee} placeholder="Sobre Peso (S/N)" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-
-      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon4">Sobrepeso?:</span>
+        <div className="input-group-text">
+       
+        <div className="custom-control custom-radio my-auto mx-3">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" value="S"
+                  onChange={(event)=>{
+                    setFee(event.target.value);
+                    }}
+                  
+                 />
+           <label className="custom-control-label" value={fee} htmlFor="customRadioInline1">Si</label>
+        </div>
+        <div className="custom-control custom-radio my-auto">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
+                  onChange={(event)=>{
+                    setFee(event.target.value);
+                  }}
+                  />
+          <label className="custom-control-label" value={fee} htmlFor="customRadioInline2">No</label>
+         </div>
+        </div>
+      
           <span className="input-group-text" id="basic-addon1">Tipo de Auto:</span>
          <input type="text" 
          maxLength={45}
