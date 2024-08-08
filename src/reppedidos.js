@@ -304,7 +304,7 @@ const editarCaja = (val)=>{
                         <td>$ {val.deposito}</td>
                         <td>{val.modelo}</td>
                         <td>{val.nombrecarrier}</td>
-                        <td>{val.preciofinal}</td>
+                        <td>$ {val.preciofinal}</td>
                       </tr>
                      
                 } else if (val.fecha >= fechainicial && val.fecha <= fechafinalreporte){ 
