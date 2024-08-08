@@ -1,11 +1,10 @@
 import './App.css';
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input'
-
+import PhoneInput from 'react-phone-number-input';
 import Swal from 'sweetalert2';
 
 
@@ -176,13 +175,6 @@ const editarCliente = (val)=>{
 
   } 
 
-  // const onClientPhoneChange = (phoneValue) => {
-  //   phoneValue =phoneValue.toLowerCase();
-  //   const filteredItems =clientesList.filter((client) => {
-  //     return client.telefono.toLowerCase().includes(phoneValue)
-  //   })
-  //   setFilteredClients(filteredItems)
-  // }
 
   useEffect(() => {
     console.log(telefono)
@@ -206,13 +198,7 @@ const editarCliente = (val)=>{
          placeholder="Telefono" value={telefono} onChange={setTelefono} defaultCountry='US' international
           ></PhoneInput>
 
-         {/* <input type="text" 
-         maxLength={14}
-         onChange={(event)=>{
-          onClientPhoneChange(event.target.value);
-          setTelefono(event.target.value);
-          }}
-         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/> */}
+
       </div>
 
       <div className="input-group mb-3">
