@@ -219,16 +219,15 @@ const editarLlegada = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Extra Fees:</span>
+         <span className="input-group-text" id="basic-addon1">Extra Fees: $</span>
          <input type="text" 
          maxLength={10}
          onChange={(event)=>{
           setFee(event.target.value);
           }}
          className="form-control" value={fees} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Fees pagado por Transportista:</span>
+     
+         <span className="input-group-text" id="basic-addon1">Fees pagado por Transportista: $</span>
          <input type="text" 
          maxLength={10}
          onChange={(event)=>{
