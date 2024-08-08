@@ -4,10 +4,9 @@ import Axios from "axios";
 import React from 'react';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Swal from 'sweetalert2';
-import { ListGroupItem } from 'react-bootstrap';
-import Transportistas from './transportistas';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 
 function Asigna() {
@@ -105,11 +104,11 @@ const limpiarCampos = ()=> {
 
   setId(val.id);
   setTelefono(val.telefono);
-  setNombre(val.Nombre);
+  setNombre(val.nombre);
   setBuyer(val.buyer);
   setLot(val.lot);
   setPin(val.pin);
-  setMarca(val.Marca);
+  setMarca(val.marca);
   setModelo(val.modelo);
   setAnio(val.anio);
   setSubasta(val.subasta);
@@ -207,29 +206,101 @@ const agregarElementoTransportista = ()=> {
     setFilteredTransportistas(filteredItemsTransportista)
   }
 
+  const generapdf = ()=> {
+   
+    const doc = new jsPDF({orientation: 'l'});
+    var logo = new Image();
+    logo.src = 'logo.png';
+    doc.addImage(logo, 'PNG', 190,5,60,18);
+    doc.text(`Pedidos asignados al Transportista`, 100, 50);
+    doc.text(`${nombretransportista}`, 110, 60);
+
+    autoTable(doc, {html: '#pedidos-seleccionados', margin:{top: 70}})
+    
+    doc.autoPrint({variant: 'non-conform'});
+    doc.output('dataurlnewwindow');
+
+  }
+
   const asignarCarga = () => {
-    const bodyCarga = {
-      fechaasignacarrier: fechaasignacarrier,
-      nombrecarrier: nombrecarrier,
-      subastaList: subastaList
-    }
-    Axios.put(`https://krriers.moveurads.com/asigna`, bodyCarga).then((res) => {
-      getAsigna();
-      getTransportistas();
-      Swal.fire({
-        title: "<strong>Carga asignada exitosamente!</strong>",
-        html: "<i>La carga fue asignada con Exito!</i>",
-        icon: 'success',
-        timer:3000
-      });
-    }).catch((err) => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No se logró asignar la carga!",
-        footer: JSON.parse(JSON.stringify(err)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(err)).message,
-        timer: 3000
-      });
+    Swal.fire({
+      title: `<strong>Estas seguro de asignar esta carga a ${nombretransportista}?</strong>`,
+      html: [`<style>
+
+      table {border-collapse: collapse;
+            width:100%;
+      }
+      th, td {padding: 8px;
+            text-align: left;
+      }
+      tr:hover {background-color: #D6EEEE;} >
+      </style>
+      <table id="pedido-asignado">
+        <thead className="sticky-top">
+          <tr>
+            <th scope="col">Subasta</th>
+            <th scope="col">Lote</th>
+            <th scope="col">Buyer</th>
+            <th scope="col">PIN</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Año</th>
+            <th scope="col">Fecha Pedido</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${
+            subastaList.map((val,index)=>{
+              return `<tr key=${val.id}>
+                <th scope="row">${val.direccion}</th>
+                <td>${val.lot}</td>
+                <td>${val.buyer}</td>
+                <td>${val.pin}</td>
+                <td>${val.marca}</td>
+                <td>${val.modelo}</td>
+                <td>${val.anio}</td>
+                <td>${moment(val.fecha).format("LL")}</td>
+              </tr>`
+            })
+          }         
+        </tbody>
+      </table>
+      `],
+      width: '60%',
+      padding: '10em',
+      grow: 'row',
+      position: 'center',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Asignar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+          const bodyCarga = {
+            fechaasignacarrier: fechaasignacarrier,
+            nombrecarrier: nombretransportista,
+            subastaList: subastaList
+          }
+          Axios.put(`https://krriers.moveurads.com/asigna`, bodyCarga).then((res) => {
+            getAsigna();
+            getTransportistas();
+            generapdf();
+            Swal.fire({
+              title: "<strong>Carga asignada exitosamente!</strong>",
+              html: "<i>La carga fue asignada con Exito!</i>",
+              icon: 'success',
+              timer:3000
+            });
+          }).catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No se logró asignar la carga!",
+              footer: JSON.parse(JSON.stringify(err)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(err)).message,
+              timer: 3000
+            });
+          })
+      }
     })
   }
 
@@ -247,12 +318,21 @@ const agregarElementoTransportista = ()=> {
          maxLength={45}
          onChange={(event)=>{
           onAsignaSubasta(event.target.value);
-          setSubasta(event.target.value);
+          setDireccion(event.target.value);
           }}
-         className="form-control" value={subasta} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
+         className="form-control" value={direccion} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
+         <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          onTransportistasChange(event.target.value);
+          setNombreTransportista(event.target.value);
+          }}
+         className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+    
          <span className="input-group-text" id="basic-addon1">Fecha de Asignación:</span>
          <div className="input-group-text">
          <input type="date" className="input-control" placeholder="Fecha Asignacion"
@@ -263,25 +343,13 @@ const agregarElementoTransportista = ()=> {
         </div>
       </div>
     
-    <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
-         <input type="text" 
-         maxLength={45}
-         onChange={(event)=>{
-          onTransportistasChange(event.target.value);
-          setNombreTransportista(event.target.value);
-          }}
-         className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
-    </div>
+    
 
      
-    <div className="card-footer text-muted">
-          
-
-    </div>
+    <div className="card-footer text-muted">Transportistas Registrados</div>
   </div>
 
-  <table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '150px', display: 'inline-block', paddingLeft: '280px'}}> 
+  <table id="tabla-transportistas" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '150px', display: 'inline-block', paddingLeft: '325px'}}> 
     <thead className = "sticky-top">
         <tr>
           <th scope="col">Nombre</th>
@@ -308,7 +376,10 @@ const agregarElementoTransportista = ()=> {
                           <button type="button" disabled={val.disabled}
                             onClick={()=>{
                               selectTransportista(val);
-                            const transportistaElement = filteredTransportistas.map((el) =>{
+                              const deselectTransportistas = filteredTransportistas.map((el) =>{
+                                return el.disabled ? {...el, disabled: false} : el
+                              })
+                            const transportistaElement = deselectTransportistas.map((el) =>{
                               return el.id === val.id ? {...el, disabled: true} : el
                             })
                             setFilteredTransportistas(transportistaElement)
@@ -325,8 +396,10 @@ const agregarElementoTransportista = ()=> {
 
                    
       </tbody>
+
 </table>
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
+<div className="card-footer text-muted">Pedidos disponibles</div>
+<table id="tabla-pedidos-no-seleccionados" className="table  table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
@@ -367,8 +440,11 @@ const agregarElementoTransportista = ()=> {
                             const asignaElement = filteredAsigna.map((el) =>{
                               return el.id === val.id ? {...el, disabled: true} : el
                             })
-                            setAsigna(asignaElement)
                             setFilteredAsigna(asignaElement)
+                            const asignaElement2 = asignaList.map((el) =>{
+                              return el.id === val.id ? {...el, disabled: true} : el
+                            })
+                            setAsigna(asignaElement2)
                             }}   
                           className="btn btn-outline-success">Select</button>
                           </div>
@@ -382,9 +458,9 @@ const agregarElementoTransportista = ()=> {
                    
       </tbody>
 </table>
+<div className="card-footer text-muted">Pedidos Seleccionados</div>
 
-
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
+<table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Subasta</th>
@@ -404,7 +480,7 @@ const agregarElementoTransportista = ()=> {
     {
       subastaList.map((val,index)=>{
                 return <tr key={val.id}>
-                        <th scope="row">{val.subasta}</th>
+                        <th scope="row">{val.direccion}</th>
                         <td>{val.lot}</td>
                         <td>{val.nombre}</td>
                         <td>{val.buyer}</td>
@@ -424,8 +500,11 @@ const agregarElementoTransportista = ()=> {
                             const asignaElement = filteredAsigna.map((el) =>{
                               return el.id === val.id ? {...el, disabled: false} : el
                             })
-                            setAsigna(asignaElement)
                             setFilteredAsigna(asignaElement)
+                            const asignaElement2 = asignaList.map((el) =>{
+                              return el.id === val.id ? {...el, disabled: false} : el
+                            })
+                            setAsigna(asignaElement2)
                             }}   
                           className="btn btn-outline-danger">Quitar</button>
                           </div>
@@ -442,7 +521,7 @@ const agregarElementoTransportista = ()=> {
 <button type='button' className='btn btn-outline-dark' onClick={() => asignarCarga()} disabled={subastaList.length < 1 || !idTransportista || !fechaasignacarrier}>Asignar Carga</button>
 </div>
 </table>
- 
+<div className="card-footer text-muted"></div>
 </div>
 
     </div>
