@@ -430,7 +430,7 @@ const editarCaja = (val)=>{
           }}
          className="form-control" value={lot} placeholder="Numero de Lote" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
-
+  
       <div className="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Extra Fees: $</span>
          <input type="number" 
@@ -440,8 +440,7 @@ const editarCaja = (val)=>{
           setPrecioFinal(Number(`${preciofinal}`)-Number(`${fees}`)+Number(`${event.target.value}`));
           }}
          className="form-control" value={fees} placeholder="Extra Fees" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      <div className="input-group mb-3">
+         
          <span className="input-group-text" id="basic-addon1">Precio flete: $</span>
          <input type="number" 
           maxLength={10}
@@ -451,8 +450,7 @@ const editarCaja = (val)=>{
           }}
 
          className="form-control" value={precio} placeholder="Precio de flete" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      <div className="input-group mb-3">
+      
          <span className="input-group-text" id="basic-addon1">Storage fees: $</span>
          <input type="number" 
          maxLength={10}
@@ -461,8 +459,7 @@ const editarCaja = (val)=>{
           setPrecioFinal(Number(`${preciofinal}`)-Number(`${storage}`)+Number(`${event.target.value}`));
           }}
          className="form-control" value={storage} placeholder="Storage" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      <div className="input-group mb-3">
+      
          <span className="input-group-text" id="basic-addon1">Deposito: $-</span>
          <input type="number" 
          maxLength={10}
@@ -484,35 +481,31 @@ const editarCaja = (val)=>{
         <span className="input-group-text" id="basic-addon4">Tiene Titulo:</span>
         <div className="input-group-text">
        
-        <div className="custom-control my-auto mx-3">
-        <input type="text" id="basic-addon4" name="customRadioInline1" className="custom-control-input" value={titulo} aria-label="Username" aria-describedby="basic-addon1"
-           />
-
-  
+        <div className="custom-control custom-radio my-auto mx-3">
+        <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" value="S"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                    }}
+                  
+                 />
+           <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
         </div>
-
+        <div className="custom-control custom-radio my-auto">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
+         </div>
         </div>
-
       </div>
+      
       <div className="input-group mb-3">
-         <span className="input-group-text" id="basic-addon1">Precio Final: $</span>
-         <input type="number" disabled 
-        //  onChange={(event)=>{
-        //     setPrecioFinal(Number(`${preciofinal}`)+Number(`${deposito}`)-Number(`${event.target.value}`));
-        //     }}
-        
-          lassName="form-control" value={preciofinal} placeholder="Precio Final" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-
-     
-
-      <div  className="input-group my-auto mx-auto">
-
+         
          <span className="input-group-text" id="basic-addon5">Fecha de cierre pedido:</span>
-        <div className="input-group-text">
-
-                    
-          <div>
+         <div className="input-group-text">
+            
+          
              <DatePicker
               closeOnScroll={true}
               showIcon
@@ -528,8 +521,11 @@ const editarCaja = (val)=>{
               popperContainer={CalendarContainer}
 
               />
-          </div>
+          
         </div>
+        <span className="input-group-text" id="basic-addon1">Precio Final: $</span>
+         <input type="number" disabled 
+          className="form-control" value={preciofinal} placeholder="Precio Final" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
     </div>
    
@@ -546,7 +542,7 @@ const editarCaja = (val)=>{
            
     </div>
     
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '150px', display: 'inline-block', paddingLeft: '60px', }}>
+<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '60px', }}>
     <thead className="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
