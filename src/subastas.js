@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import Axios from "axios";
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import PhoneInput from 'react-phone-number-input';
 import Swal from 'sweetalert2';
 
 
@@ -189,15 +189,12 @@ const editarSubasta = (val)=>{
       </div>
       
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Telefono:</span>
-         <input type="text" 
-         maxLength={14}
-         onChange={(event)=>{
-          setTelefono(event.target.value);
-          }}
-         className="form-control" value={telefono} placeholder="Teléfono" aria-label="Username" aria-describedby="basic-addon1"/>
+         <span className="input-group-text" id="basic-addon1">Telefono:</span>
+         <PhoneInput
+         placeholder="Telefono" value={telefono} onChange={setTelefono} defaultCountry='US' international
+          ></PhoneInput>
       </div>
-
+      
       <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon1">Direccion:</span>
          <input type="text" 
