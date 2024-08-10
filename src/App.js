@@ -12,6 +12,7 @@ import Asigna from './asignatransportista.js'
 import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
+import PagoTransportista from './pagotransportista.js'
 
 // import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
@@ -24,13 +25,15 @@ import {
   Outlet,
 } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+
+
 function GFGHome() {
   const logoUrl = './truck.png'; 
   return (
        <div className="page">
-          <h2><center>Sistema para Automatizar las operaciones de Krriers</center></h2>
+          <h2><center><strong>Krriers App</strong></center></h2>
           <img src={logoUrl}  
-          width="1500" height="650" 
+          width="100%" height="auto"
           alt="Logo" /> 
       </div>
   );
@@ -78,7 +81,7 @@ function App() {
                             <NavDropdown.Item as={Link} to="/asigna">
                                 Asignación a Transportistas
                             </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/pago">
+                            <NavDropdown.Item as={Link} to="/pagotransportista">
                                 Pago a Transportistas
                             </NavDropdown.Item>
                         </NavDropdown>
@@ -130,6 +133,7 @@ function App() {
                         <Route path="/caja" element={<Caja />} />
                         <Route path="/pedidos" element={<Pedidos />} />
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
+                        <Route path="/pagotransportista" element={<PagoTransportista />} />
                         <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
