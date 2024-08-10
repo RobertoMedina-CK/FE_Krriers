@@ -44,14 +44,13 @@ function Transportistas() {
         });
       return;
     }
-    Axios.post(`https://krriers.moveurads.com/transportistas`,{
-
+    const bodyCarga = {
       telefono:telefono,
       nombre:nombre,
       dot:dot,
       margen:margen
-
-    }).then(()=>{
+    }
+    Axios.post(`https://krriers.moveurads.com/transportistas`,bodyCarga).then(()=>{
         getTransportistas();
         limpiarCampos();
         Swal.fire({
@@ -75,16 +74,14 @@ function Transportistas() {
 
   const update = ()=> {
     console.log(id);
-    Axios.put(`https://krriers.moveurads.com/transportistas`,{
-
+    const bodyCargaPut = {
       id:id,
       telefono:telefono,
       nombre:nombre,
       dot:dot,
       margen:margen
-      
-      
-    }).then(()=>{
+    }
+    Axios.put(`https://krriers.moveurads.com/transportistas`,bodyCargaPut).then(()=>{
         getTransportistas();
         limpiarCampos();
         Swal.fire({
@@ -186,7 +183,7 @@ const editarTransportista = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS de TRANSPORTISTAS de KRRIERS
+     MANTENIMIENTO BASE DE DATOS TRANSPORTISTAS KRRIERS
     </div>
     <div className="card-body">
       
