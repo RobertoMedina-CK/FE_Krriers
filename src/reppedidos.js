@@ -72,8 +72,8 @@ function ReportePedidosCaja() {
 
     
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/caja`,{
-
+   
+    const bodyCarga = {
       id:id,
       telefono:telefono,
       nombre:nombre,
@@ -98,8 +98,8 @@ function ReportePedidosCaja() {
       nombrecarrier:nombrecarrier,
       storage:storage,
       preciofinal:preciofinal
-
-    }).then(()=>{
+    } 
+    Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
         getCaja();
         limpiarCampos();
         Swal.fire({
@@ -230,7 +230,7 @@ const editarCaja = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-      REPORTE DE PEDIDOS POR FECHA de KRRIERS
+      REPORTE DE PEDIDOS POR FECHA KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
