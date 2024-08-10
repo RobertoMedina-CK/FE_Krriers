@@ -48,15 +48,15 @@ function Clientes() {
     }
       
       
-
-
-    Axios.post(`https://krriers.moveurads.com/clientes`,{
-
+    const bodyCarga = {
+ 
       telefono:telefono,
       nombre:nombre,
       buyer:buyer,
       foldernum:foldernum
-    }).then(()=>{
+    }
+
+    Axios.post(`https://krriers.moveurads.com/clientes`,bodyCarga).then(()=>{
         getClientes();
         limpiarCampos();
         Swal.fire({
@@ -79,14 +79,14 @@ function Clientes() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/clientes`,{
-
-        id:id,
-        telefono:telefono,
-        nombre:nombre,
-        buyer:buyer,
-        foldernum:foldernum
-    }).then(()=>{
+    const bodyCargaPut = {
+      id:id,
+      telefono:telefono,
+      nombre:nombre,
+      buyer:buyer,
+      foldernum:foldernum
+    }
+    Axios.put(`https://krriers.moveurads.com/clientes`,bodyCargaPut).then(()=>{
         getClientes();
         limpiarCampos();
         Swal.fire({
@@ -189,7 +189,7 @@ const editarCliente = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE CLIENTES de KRRIERS
+     MANTENIMIENTO BASE DE DATOS CLIENTES KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
