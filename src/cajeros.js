@@ -31,13 +31,17 @@ function Cajeros() {
     if (password.length < 6){
         return;
       }
-    Axios.post(`https://krriers.moveurads.com/cajeros`,{
-
-      nombre:nombre,
-      password:password
       
-
-    }).then(()=>{
+      
+      
+      
+      const bodyCarga = {
+        nombre:nombre,
+        password:password
+        
+        }
+      Axios.post(`https://krriers.moveurads.com/cajeros`,bodyCarga).then(()=>{
+      
         getCajeros();
         limpiarCampos();
         Swal.fire({
@@ -60,13 +64,12 @@ function Cajeros() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/cajeros`,{
-
+    const bodyCargaPut = {
       id:id,
       nombre:nombre,
       password:password
-      
-    }).then(()=>{
+    }
+    Axios.put(`https://krriers.moveurads.com/cajeros`,bodyCargaPut).then(()=>{
         getCajeros();
         limpiarCampos();
         Swal.fire({
@@ -126,12 +129,12 @@ function Cajeros() {
    
   }
 
-  const limpiarCampos = ()=> {
+const limpiarCampos = ()=> {
     setNombre("");
     setPassword("");
     setId("");
     setEditar(false);
-  }
+}
 
 const editarCajero = (val)=>{
   setEditar(true);
@@ -140,109 +143,102 @@ const editarCajero = (val)=>{
   setPassword(val.password);  
 }
 
-  const getCajeros = ()=> {
+const getCajeros = ()=> {
     Axios.get(`https://krriers.moveurads.com/cajeros`).then((response)=>{
         setCajeros(response.data);
         setFilteredCajeros(response.data);
     });
 
-  } 
+} 
 
-  const onClientCajerosChange = (NombreValue) => {
+const onClientCajerosChange = (NombreValue) => {
     NombreValue = NombreValue.toLowerCase();
     const filteredItems =cajerosList.filter((client) => {
       return client.nombre.toLowerCase().includes(NombreValue)
     })
     setFilteredCajeros(filteredItems)
-  }
+}
 
 return (
-    <div className="container"> 
+  <div className="container"> 
            
-  <div className="card text-center">
-   <div className="card-header">
-   MANTENIMIENTO DE BASE DE DATOS DE USUARIOS de KRRIERS
-  </div>
-  <div className="card-body">
-    
-    <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">Usuario:</span>
-       <input type="text" 
-       maxLength={45}
-       onChange={(event)=>{
-        onClientCajerosChange(event.target.value);
-        setNombre(event.target.value);
-        }}
-       className="form-control" value={nombre} placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1"/>
-    </div>
+    <div className="card text-center">
+      
+        <div className="card-header">
+        MANTENIMIENTO USUARIOS KRRIERS
+        </div>
 
-    <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">Password:</span>
-       <input type="password" 
-       maxLength={8}
-       onChange={(event)=>{
-        setPassword(event.target.value);
-        }}
-       className="form-control" value={password} placeholder="Contraseña min 6 max 8 caracteres" aria-label="Username" aria-describedby="basic-addon1"/>
-    </div>
-                   
-  </div>
-  <div className="card-footer text-muted">
-        {
-            editar? 
-            <div>
-              <button className='btn btn-outline-warning m-2' onClick={update}>Actualizar</button> 
-            <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
-              </div>
-            :<button className='btn btn-outline-success' onClick={add}>Registrar</button>
-        }
-        
+        <div className="card-body">
+          
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">Usuario:</span>
+                <input type="text" 
+                maxLength={45}
+                onChange={(event)=>{
+                  onClientCajerosChange(event.target.value);
+                  setNombre(event.target.value);
+                  }}
+                className="form-control" value={nombre} placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1"/>
+          </div>
 
-  
-</div>
+          <div className="input-group mb-3">
+            <span className="input-group-text" id="basic-addon1">Password:</span>
+                <input type="password" 
+                maxLength={8}
+                onChange={(event)=>{
+                  setPassword(event.target.value);
+                  }}
+                className="form-control" value={password} placeholder="Contraseña min 6 max 8 caracteres" aria-label="Username" aria-describedby="basic-addon1"/>
+          </div>
+            
+        </div>
 
-<table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '310px', display: 'inline-block', paddingLeft: '450px'}}> 
-  <thead class="sticky-top">
-      <tr>
-      <th scope="col">Usuario</th>
-      <th scope="col">Acción</th>
-      </tr>
-    </thead>
-    <tbody>
+        <div className="card-footer text-muted">
+              {
+                  editar? 
+                  <div>
+                      <button className='btn btn-outline-warning m-2' onClick={update}>Actualizar</button> 
+                      <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
+                  </div>
+                      :<button className='btn btn-outline-success' onClick={add}>Registrar</button>
+              }
 
-  {
-    filteredCajeros.map((val,key)=>{
-              return <tr key={val.id}>
-                      
-                      <th scope="row">{val.nombre}</th>
-                      <td>
-                      <div className="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" 
-                        onClick={()=>{
-                          editarCajero(val);
-                          }}   
-                        className="btn btn-outline-primary">Editar</button> 
-                        <button type="button" onClick={()=>{
-                          deleteCajero(val);
-                        }} className="btn btn-outline-danger">Eliminar</button>
-                      </div>
-                        </td>
-              </tr>
-                   
-            })
+        </div>
 
-          }
+                    <table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '310px', display: 'inline-block', paddingLeft: '450px'}}> 
+                      <thead class="sticky-top">
+                          <tr>
+                          <th scope="col">Usuario</th>
+                          <th scope="col">Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
 
-                 
-    </tbody>
-</table>
+                      {
+                        filteredCajeros.map((val,key)=>{
+                          return <tr key={val.id}>
+                                  
+                                  <th scope="row">{val.nombre}</th>
+                                  <td>
+                                      <div className="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" 
+                                        onClick={()=>{
+                                          editarCajero(val);
+                                          }}   
+                                        className="btn btn-outline-primary">Editar</button> 
+                                        <button type="button" onClick={()=>{
+                                          deleteCajero(val);
+                                        }} className="btn btn-outline-danger">Eliminar</button>
+                                      </div>
+                                  </td>
+                                </tr>
+                              
+                                })
+                              };                 
+                        </tbody>
+                    </table>
 
-
-</div>
-
-
-
-
+      </div>
   </div>
 
 
