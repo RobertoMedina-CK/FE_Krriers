@@ -179,35 +179,35 @@ function Pedidos() {
         });
       return;
     }
+    
+    const bodyCarga = {
+      id:id,
+      telefono:telefono,
+      nombre:nombre,
+      buyer:buyer,
+      lot:lot,
+      pin:pin,
+      marca:marca,
+      modelo:modelo,
+      anio:anio,
+      subasta:subasta,
+      direccion:direccion,
+      fecha:fecha,
+      precio:precio,
+      fees:fees,
+      titulo:titulo,
+      notas:notas,
+      fechafinal:fechafinal,
+      deposito:deposito,
+      fechallegada:fechallegada,
+      feescarrier:feescarrier,
+      fechaasignacarrier:fechaasignacarrier,
+      nombrecarrier:nombrecarrier
+    }
 
       
       
-    Axios.post(`https://krriers.moveurads.com/pedidosabc`,{
-
-        id:id,
-        telefono:telefono,
-        nombre:nombre,
-        buyer:buyer,
-        lot:lot,
-        pin:pin,
-        marca:marca,
-        modelo:modelo,
-        anio:anio,
-        subasta:subasta,
-        direccion:direccion,
-        fecha:fecha,
-        precio:precio,
-        fees:fees,
-        titulo:titulo,
-        notas:notas,
-        fechafinal:fechafinal,
-        deposito:deposito,
-        fechallegada:fechallegada,
-        feescarrier:feescarrier,
-        fechaasignacarrier:fechaasignacarrier,
-        nombrecarrier:nombrecarrier
-
-    }).then(()=>{
+    Axios.post(`https://krriers.moveurads.com/pedidosabc`,bodyCarga).then(()=>{
         getPedidos();
         limpiarCampos();
         Swal.fire({
@@ -230,33 +230,32 @@ function Pedidos() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/pedidosabc`,{
+    const bodyCargaPut = {
+      id:id,
+      telefono:telefono,
+      nombre:nombre,
+      buyer:buyer,
+      lot:lot,
+      pin:pin,
+      marca:marca,
+      modelo:modelo,
+      anio:anio,
+      subasta:subasta,
+      direccion:direccion,
+      fecha:fecha,
+      precio:precio,
+      fees:fees,
+      titulo:titulo,
+      notas:notas,
+      fechafinal:fechafinal,
+      deposito:deposito,
+      fechallegada:fechallegada,
+      feescarrier:feescarrier,
+      fechaasignacarrier:fechaasignacarrier,
+      nombrecarrier:nombrecarrier
+    }
 
-        id:id,
-        telefono:telefono,
-        nombre:nombre,
-        buyer:buyer,
-        lot:lot,
-        pin:pin,
-        marca:marca,
-        modelo:modelo,
-        anio:anio,
-        subasta:subasta,
-        direccion:direccion,
-        fecha:fecha,
-        precio:precio,
-        fees:fees,
-        titulo:titulo,
-        notas:notas,
-        fechafinal:fechafinal,
-        deposito:deposito,
-        fechallegada:fechallegada,
-        feescarrier:feescarrier,
-        fechaasignacarrier:fechaasignacarrier,
-        nombrecarrier:nombrecarrier
-
-
-    }).then(()=>{
+    Axios.put(`https://krriers.moveurads.com/pedidosabc`,bodyCargaPut).then(()=>{
         getPedidos();
         limpiarCampos();
         Swal.fire({
@@ -280,41 +279,38 @@ function Pedidos() {
 
   const deletePedidos = (val)=> {
 
-    Swal.fire({
-      title: "Confirmar Eliminar?",
-      html: "<i>Realmente desea eliminar el lote No. <strong>"+val.lot+"</strong></i>",
-      text: "No Podremos deshacer esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, eliminarlo!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Axios.delete(`https://krriers.moveurads.com/pedidosabc/${val.id}`).then(()=>{
-          getPedidos();
-          limpiarCampos();
+      Swal.fire({
+        title: "Confirmar Eliminar?",
+        html: "<i>Realmente desea eliminar el lote No. <strong>"+val.lot+"</strong></i>",
+        text: "No Podremos deshacer esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminarlo!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Axios.delete(`https://krriers.moveurads.com/pedidosabc/${val.id}`).then(()=>{
+            getPedidos();
+            limpiarCampos();
+            Swal.fire({
+              icon: "success",
+              title: val.lot+ ' fue eliminado',
+              showConfirmButton: false,
+              timer: 2000
+            });
+        }).catch(function(error){
           Swal.fire({
-            icon: "success",
-            title: val.lot+ ' fue eliminado',
-            showConfirmButton: false,
-            timer: 2000
-          });
-      }).catch(function(error){
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "No se logró Eliminar el pedido!",
-          footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
-          timer: 3000
+            icon: "error",
+            title: "Oops...",
+            text: "No se logró Eliminar el pedido!",
+            footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
+            timer: 3000
+              });
+            })
+          }
         });
-
-      })
-        
       }
-    });
-   
-  }
 
   const limpiarCampos = ()=> {
  
@@ -415,7 +411,7 @@ const editarPedidos = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE PEDIDOS de KRRIERS
+     MANTENIMIENTO BASE DE DATOS PEDIDOS KRRIERS
     </div>
     <div className="card-body">
       
