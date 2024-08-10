@@ -58,8 +58,7 @@ function Llegada() {
 
     
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/llegada`,{
-
+    const bodyCarga = {
       id:id,
       telefono:telefono,
       nombre:nombre,
@@ -82,8 +81,8 @@ function Llegada() {
       feescarrier:feescarrier,
       fechaasignacarrier:fechaasignacarrier,
       nombrecarrier:nombrecarrier
-     
-    }).then(()=>{
+    }
+    Axios.put(`https://krriers.moveurads.com/llegada`,bodyCarga).then(()=>{
         getLlegada();
         limpiarCampos();
         Swal.fire({
@@ -204,7 +203,7 @@ const editarLlegada = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-      CAPTURA DE LLEGADA DE VEHICULOS de KRRIERS
+      CAPTURA DE LLEGADA DE VEHICULOS KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
