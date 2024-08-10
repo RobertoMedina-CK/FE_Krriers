@@ -80,8 +80,7 @@ function ReportePedidosSinAsignar() {
 
     
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/caja`,{
-
+    const bodyCarga = {
       id:id,
       telefono:telefono,
       nombre:nombre,
@@ -106,8 +105,9 @@ function ReportePedidosSinAsignar() {
       nombrecarrier:nombrecarrier,
       storage:storage,
       preciofinal:preciofinal
+    }
 
-    }).then(()=>{
+    Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
         getCaja();
         limpiarCampos();
         Swal.fire({
@@ -233,82 +233,71 @@ const editarCaja = (val)=>{
 }
 
 
-    return (
-      <div className="container"> 
+return (
+    <div className="container"> 
              
-    <div className="card text-center">
-     <div className="card-header">
-      REPORTE DE PEDIDOS SIN ASIGNAR de KRRIERS
-    </div>
-    <div className="card-body">
-    <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Subasta:</span>
-         <input type="text" 
-         maxLength={45}
-         onChange={(event)=>{
-          onAsignaSubasta(event.target.value);
-          setDireccion(event.target.value);
-          }}
-         className="form-control" value={direccion} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
-      </div>
-      
-    <div className="card-footer text-muted">
-          
-              <div>
-                <button className='btn btn-outline-success m-2' onClick={generapdf}>Imprimir Reporte</button> 
-              </div>
-              
-                </div>
-           
-    </div>
+        <div className="card text-center">
 
-    </div>
-
-    
-    
-<table id='pedidos-table' className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '450px', display: 'inline-block', paddingLeft: '120px', }}>
-    <thead className="sticky-top">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Buyer</th>
-          <th scope="col">Lote</th>
-          <th scope="col">Subasta</th>
-          <th scope="col">Fecha Pedido</th>
-          <th scope="col">Modelo</th>
-          
-        </tr>
-      </thead>
-    <tbody>
-
-
-    {
-      filteredCaja.map((val,key)=>{
-                         return <tr key={val.id}>
-                        <th scope="row">{val.nombre}</th>
-                        <td>{val.telefono}</td>
-                        <td>{val.buyer}</td>
-                        <td>{val.lot}</td>
-                        <td>{val.direccion}</td>
-                        <td>{moment(val.fecha).format("LL")}</td>
-                        <td>{val.modelo}</td>
-                        </tr>
+            <div className="card-header">
+              REPORTE DE PEDIDOS SIN ASIGNAR KRRIERS
+            </div>
+                <div className="card-body">
+                  <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">Subasta:</span>
+                            <input type="text" 
+                            maxLength={45}
+                            onChange={(event)=>{
+                              onAsignaSubasta(event.target.value);
+                              setDireccion(event.target.value);
+                              }}
+                            className="form-control" value={direccion} placeholder="Subasta" aria-label="Username" aria-describedby="basic-addon1"/>
+                  </div>
                     
-              }
-            )
+                  <div className="card-footer text-muted">
+                        
+                            <div>
+                              <button className='btn btn-outline-success m-2' onClick={generapdf}>Imprimir Reporte</button> 
+                            </div>
+                            
+                  </div>
+                      
+                </div>
 
-            }
+        </div>
 
-                   
-      </tbody>
-</table>
-</div>
-
-
-
-);
+    
+    
+          <table id='pedidos-table' className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '450px', display: 'inline-block', paddingLeft: '120px', }}>
+              <thead className="sticky-top">
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Buyer</th>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Subasta</th>
+                    <th scope="col">Fecha Pedido</th>
+                    <th scope="col">Modelo</th>
+                    
+                  </tr>
+                </thead>
+              <tbody>
+              {filteredCaja.map((val,key)=>{
+                    return <tr key={val.id}>
+                    <th scope="row">{val.nombre}</th>
+                    <td>{val.telefono}</td>
+                    <td>{val.buyer}</td>
+                    <td>{val.lot}</td>
+                    <td>{val.direccion}</td>
+                    <td>{moment(val.fecha).format("LL")}</td>
+                    <td>{val.modelo}</td>
+                    </tr>
+                    })
+                  };
+              </tbody>
+          </table>
+    </div>
+      );
 }
 
 export default ReportePedidosSinAsignar;
-
 
