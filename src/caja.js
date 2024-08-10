@@ -65,8 +65,7 @@ function Caja() {
 
     
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/caja`,{
-
+    const bodyCarga = {
       id:id,
       telefono:telefono,
       nombre:nombre,
@@ -91,8 +90,8 @@ function Caja() {
       nombrecarrier:nombrecarrier,
       storage:storage,
       preciofinal:preciofinal
-
-    }).then(()=>{
+    }
+    Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
         getCaja();
         limpiarCampos();
         Swal.fire({
@@ -417,12 +416,12 @@ const editarCaja = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-      MODULO DE CAJA de KRRIERS
+    CAJA KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Lote:</span>
-         <input type="number" 
+        <span className="input-group-text" id="basic-addon1">Lote:</span>
+        <input type="number" 
          maxLength={14}
          onChange={(event)=>{
           onCajaChange(event.target.value);
@@ -478,26 +477,27 @@ const editarCaja = (val)=>{
       </div>
 
       <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon4">Tiene Titulo:</span>
-        <div className="input-group-text">
-       
-        <div className="custom-control custom-radio my-auto mx-3">
-        <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" value="S"
-                  onChange={(event)=>{
-                    setTitulo(event.target.value);
-                    }}
-                  
-                 />
-           <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
-        </div>
-        <div className="custom-control custom-radio my-auto">
-          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
-                  onChange={(event)=>{
-                    setTitulo(event.target.value);
-                  }}/>
-          <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
-         </div>
-        </div>
+          <span className="input-group-text" id="basic-addon4">Tiene Titulo:</span>
+          <div className="input-group-text">
+        
+            <div className="custom-control custom-radio my-auto mx-3">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" className="custom-control-input" value="S"
+                        onChange={(event)=>{
+                          setTitulo(event.target.value);
+                          }}
+                        
+                      />
+                <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
+            </div>
+
+            <div className="custom-control custom-radio my-auto">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
+                      onChange={(event)=>{
+                        setTitulo(event.target.value);
+                      }}/>
+              <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
+            </div>
+          </div>
       </div>
       
       <div className="input-group mb-3">
