@@ -30,15 +30,15 @@ function Subastas() {
     if (!telefono || !nombre || !direccion || !subasta || !precio){
       return;
     }
-    Axios.post(`https://krriers.moveurads.com/subastas`,{
-
+    const bodyCarga = {
+ 
       telefono:telefono,
       nombre:nombre,
       direccion:direccion,
       subasta:subasta,
       precio:precio
-
-    }).then(()=>{
+    }
+    Axios.post(`https://krriers.moveurads.com/subastas`,bodyCarga).then(()=>{
         getSubastas();
         limpiarCampos();
         Swal.fire({
@@ -61,16 +61,15 @@ function Subastas() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/subastas`,{
-
+    const bodyCargaPut = {
       id:id,
       telefono:telefono,
       nombre:nombre,
       direccion:direccion,
       subasta:subasta,
       precio:precio
-      
-    }).then(()=>{
+    }
+    Axios.put(`https://krriers.moveurads.com/subastas`,bodyCargaPut).then(()=>{
         getSubastas();
         limpiarCampos();
         Swal.fire({
@@ -174,7 +173,7 @@ const editarSubasta = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-     MANTENIMIENTO DE BASE DE DATOS DE SUBASTAS de KRRIERS
+     MANTENIMIENTO BASE DE DATOS SUBASTAS KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
