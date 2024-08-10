@@ -23,6 +23,9 @@ function Autos() {
 
   const [autosList,setAutos] = useState([]);
   const [filteredAutos, setFilteredAutos] = useState([]);
+  
+  let marcaL = marca.toLowerCase();
+  let modeloL = modelo.toLowerCase();
 
   useEffect(() => {
     getAutos();
@@ -33,19 +36,16 @@ function Autos() {
     if (!marca || !modelo || !anio || !fee || !tipo){
       return;
      } 
-
-      let marcaL = marca.toLowerCase();
-      let modeloL = modelo.toLowerCase();
-      
      
-    Axios.post(`https://krriers.moveurads.com/autos`,{
-
-      marca:marca,
-      modelo:modelo,
-      anio:anio,
-      fee:fee,
-      tipo:tipo,
-      }).then(()=>{
+      const bodyCarga = {
+        marca:marca,
+        modelo:modelo,
+        anio:anio,
+        fee:fee,
+        tipo:tipo
+      }
+     
+    Axios.post(`https://krriers.moveurads.com/autos`,bodyCarga).then(()=>{
         getAutos();
         limpiarCampos();
         Swal.fire({
@@ -68,15 +68,17 @@ function Autos() {
   }
 
   const update = ()=> {
-    Axios.put(`https://krriers.moveurads.com/autos`,{
+    
+        const bodyCargaPut = {
+          marca:marca,
+          modelo:modelo,
+          anio:anio,
+          fee:fee,
+          tipo:tipo,
+          id:id
+        };
 
-      id:id,
-      marca:marca,
-      modelo:modelo,
-      anio:anio,
-      fee:fee,
-      tipo:tipo
-    }).then(()=>{
+    Axios.put(`https://krriers.moveurads.com/autos`,bodyCargaPut).then(()=>{
         getAutos();
         limpiarCampos();
         Swal.fire({
@@ -183,7 +185,7 @@ const editarAuto = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-      MANTENIMIENTO DE BASE DE DATOS DE AUTOS de KRRIERS
+      MANTENIMIENTO BASE DE DATOS AUTOS KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
