@@ -36,7 +36,7 @@ function PagoTransportista() {
   const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
   const[nombrecarrier, setNombreCarrier] = useState("");
   const[select, setSelect] = useState(false);
-  const [asignaList,setAsigna] = useState([]);
+  const [asignaList, setAsigna] = useState([]);
   const [filteredAsigna, setFilteredAsigna] = useState([]);
   const[pagocarrier, setPagoCarrier] = useState("");
   const[pagadocarrier, setPagadoCarrier] = useState(false);
@@ -47,7 +47,7 @@ function PagoTransportista() {
   //Transportistas
 
   const[telefonotransportista, setTelefonoTransportista] = useState("");
-  const[nombretransportista, setNombreTransportista] = useState();
+  const[nombretransportista, setNombreTransportista] = useState("");
   const[dot, setDot] = useState("");
   const[idTransportista, setIdTransportista] = useState();
   const[margen, setMargen] = useState("");
@@ -63,77 +63,12 @@ function PagoTransportista() {
     getAsigna();
   }, [])
 
-
-
-const limpiarCampos = ()=> {
-
-  setId("");
-  setTelefono("");
-  setNombre("");
-  setBuyer("");
-  setLot("");
-  setPin("");
-  setMarca("");
-  setModelo("");
-  setAnio("");
-  setSubasta("");
-  setDireccion("");
-  setFecha("");
-  setPrecio("");
-  setFee("");
-  setTitulo("");
-  setNotas("");
-  setFechaFinal("");
-  setDeposito("");
-  setFechaLlegada("");
-  setFeesCarrier("");
-  setFechaAsignaCarrier("");
-  setNombreCarrier("");
-  setSelect(false);
-  }
-
   const limpiarCamposTransportista = ()=> {
     setNombreTransportista("");
     setDot("");
     setTelefonoTransportista("");
     setMargen("");
   }
-
-
-
-  const selectAsigna = (val)=>{
-  setSelect(true);
-
-  setId(val.id);
-  setTelefono(val.telefono);
-  setNombre(val.nombre);
-  setBuyer(val.buyer);
-  setLot(val.lot);
-  setPin(val.pin);
-  setMarca(val.marca);
-  setModelo(val.modelo);
-  setAnio(val.anio);
-  setSubasta(val.subasta);
-  setDireccion(val.direccion);
-  setFecha(val.fecha);
-  setPrecio(val.precio);
-  setFee(val.fees);
-  setTitulo(val.titulo);
-  setNotas(val.notas);
-  setFechaFinal(val.fechafinal);
-  setDeposito(val.deposito);
-  setFechaLlegada(val.fechallegada);
-  setFeesCarrier(val.feescarrier);
-  setFechaAsignaCarrier(val.fechaasignacarrier);
-  setNombreCarrier(val.nombrecarrier);
-  setPagoCarrier(val.pagocarrier);
-  setPagadoCarrier(val.pagadocarrier);
-
-
-
-}
-
-
 const selectTransportista = (val)=>{
 
   setIdTransportista(val.id);
@@ -142,34 +77,9 @@ const selectTransportista = (val)=>{
   setDot(val.dot);
   setMargen(val.margen);
   setPagoCarrier(1-(1/Number(val.margen)));
-
-
-
-}
-
-
-  const agregarElementoSubasta = ()=> {
-    var datossubasta;
-    window.onload = function(){
-     window.datossubasta = [];
-    }
-    let datosubasta = document.getElementById('texto').value;
-
-     datossubasta.push(datosubasta);
+  setPagadoCarrier("S");
 
 }
-
-const agregarElementoTransportista = ()=> {
-  var datostransportista;
-  window.onload = function(){
-   window.datostransportista = [];
-  }
-  let datotransportista = document.getElementById('texto').value;
-
-   datostransportista.push(datotransportista);
-
-}
-
 
   const getAsigna = ()=> {
     Axios.get(`https://krriers.moveurads.com/asignacompletado`).then((response)=>{
@@ -220,7 +130,8 @@ const agregarElementoTransportista = ()=> {
     doc.text(`Liquidacion de servicios del transportista`, 100, 50);
     doc.text(`${nombretransportista}`, 110, 60);
 
-    autoTable(doc, {html: '#pedidos-apagar', margin:{top: 70}})
+    autoTable(doc, {html: '#pedidos-apagar', 
+      margin:{top: 70}})
 
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
@@ -228,7 +139,6 @@ const agregarElementoTransportista = ()=> {
   }
 
   const asignarCarga = () => {
-
     Swal.fire({
       title: `<strong>Estas seguro de liquidar los servicios a ${nombretransportista}?</strong>`,
       html: [`<style>
@@ -243,23 +153,24 @@ const agregarElementoTransportista = ()=> {
       </style>
       <table id="pedidos-a-pagar">
         <thead className="sticky-top">
-          <tr>
-            <th scope="col">Lote</th>
-            <th scope="col">Transportista</th>
-            <th scope="col">Fecha Asignacion</th>
-          </tr>
+            <tr>
+              <th scope="col">Lote</th>
+              <th scope="col">Transportista</th>
+              <th scope="col">Fecha Asignacion</th>
+              <th scope="col">Pago</th>
+            </tr>
         </thead>
         <tbody>
           ${
-            subastaList.map((val,index)=>{
+            filteredAsigna.map((val,index)=>{
               return `<tr key=${val.id}>
-                <th scope="row">${val.lot}</th>
-                <td>${val.nombrecarrier}</td>
-                <td>${moment(val.fechaasignacarrier).format("LL")}</td>
-              </tr>`
-
+                  <th scope="row">${val.lot}</th>
+                  <td>${val.nombrecarrier}</td>
+                  <td>${moment(val.fechaasignacarrier).format("LL")}</td>
+                  <td>${val.pagocarrier}</td>
+                </tr>`
             })
-          }
+          }         
         </tbody>
       </table>
       `],
@@ -269,20 +180,23 @@ const agregarElementoTransportista = ()=> {
       position: 'center',
       showConfirmButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Asignar',
+      confirmButtonText: 'Pagar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
           const bodyCarga = {
-            pagadocarrier:pagadocarrier
+            
+            pagadocarrier:'S',
+            filteredAsigna:filteredAsigna
           }
-          Axios.put(`https://krriers.moveurads.com/asigna`, bodyCarga).then((res) => {
+          Axios.put(`https://krriers.moveurads.com/cierrepedido`, bodyCarga).then((res) => {
             getAsigna();
+            console.log(bodyCarga);
             getTransportistas();
             generaPdf();
             Swal.fire({
-              title: "<strong>Tranportista liquidado exitosamente!</strong>",
-              html: "<i>Liquidado al transportista con exito!</i>",
+              title: "<strong>Carga asignada exitosamente!</strong>",
+              html: "<i>La carga fue asignada con Exito!</i>",
               icon: 'success',
               timer:3000
             });
@@ -302,45 +216,43 @@ const agregarElementoTransportista = ()=> {
     return (
       <div className="container">
 
-  <div className="card text-center">
-     <div className="card-header">
-      LIQUIDACION TRANSPORTISTAS
-    </div>
-    <div className="card-body">
+      <div className="card text-center">
+        <div className="card-header">
+          LIQUIDACION TRANSPORTISTAS
+        </div>
+        <div className="card-body">
 
-      <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
-         <input type="text"
-         maxLength={45}
-         onChange={(event)=>{
-          onTransportistasChange(event.target.value);
-          onAsignaSubasta(event.target.value)
-
-
-          }}
-         className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
-
-      </div>
+                  <div className="input-group mb-3">
+                      <span className="input-group-text" id="basic-addon1">Nombre Transportista:</span>
+                    <input type="text"
+                    maxLength={45}
+                    onChange={(event)=>{
+                      onTransportistasChange(event.target.value);
+                      //onAsignaSubasta(event.target.value)
 
 
+                      }}
+                    className="form-control" value={nombretransportista} placeholder="Nombre Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+
+                  </div>
 
 
-    <div className="card-footer text-muted">Transportistas Registrados</div>
-  </div>
-
-  <table id="tabla-transportistas" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '600px', display: 'inline-block', paddingLeft: '225px'}}>
-    <thead className = "sticky-top">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Dot</th>
-          <th scope="col">Margen</th>
-          <th scope="col">Acción</th>
 
 
-        </tr>
-      </thead>
-      <tbody>
+ <div className="card-footer text-muted">Transportistas Registrados</div>
+        </div>
+
+              <table id="tabla-transportistas" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '600px', display: 'inline-block', paddingLeft: '225px'}}>
+                <thead className = "sticky-top">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Telefono</th>
+                      <th scope="col">Dot</th>
+                      <th scope="col">Margen</th>
+                      <th scope="col">Acción</th>
+                  </tr>
+                  </thead>
+                  <tbody>
 
     {
       filteredTransportistas.map((val,key)=>{
@@ -354,19 +266,37 @@ const agregarElementoTransportista = ()=> {
                         <div className="btn-group" role="group" aria-label="Basic example">
                           <button type="button" disabled={val.disabled}
                             onClick={()=>{
-                              selectTransportista(val);
-                              const deselectTransportistas = filteredTransportistas.map((el) =>{
+                              const deselectTransportistas = transportistasList.map((el) =>{
                                 return el.disabled ? {...el, disabled: false} : el
                               })
                             const transportistaElement = deselectTransportistas.map((el) =>{
                               return el.id === val.id ? {...el, disabled: true} : el
                             })
-                            setFilteredTransportistas(transportistaElement)
+                            const filteredItemsTransportista =transportistaElement.filter((client) => {
+                              return client.nombre.includes(val.nombre)
+                            })
+                            selectTransportista(val);
+                            setFilteredTransportistas(filteredItemsTransportista)
                             setTransportistas(transportistaElement)
-                          
+                            onAsignaSubasta(val.nombre)
                             }}
                           className="btn btn-outline-success">Select</button>
-                          
+                          <button type="button" className='btn btn-outline-danger' disabled={!val.disabled}
+                            onClick={() => {
+                              const deselectTransportistas = transportistasList.map((el) =>{
+                                return el.disabled ? {...el, disabled: false} : el
+                              })
+                            const transportistaElement = deselectTransportistas.map((el) =>{
+                              return el.id === val.id ? {...el, disabled: false} : el
+                            })
+                            setFilteredTransportistas(transportistaElement)
+                            setTransportistas(transportistaElement)
+                            setFilteredAsigna(asignaList)
+                            limpiarCamposTransportista()
+                            }}
+                          >
+                            Remove
+                          </button>
                         </div>
                           </td>
                 </tr>
@@ -374,19 +304,14 @@ const agregarElementoTransportista = ()=> {
               })
 
             }
-
-
       </tbody>
-
-
     </table>
-        <div className='btn-group' style={{width: '80%', margin: 'auto', paddingRight: '18em'}}>
+
+        <div className='btn-group' style={{width: '120%', margin: 'auto', paddingRight: '18em', paddingLeft: '5em'}}>
             <button type='button' className='btn btn-outline-dark' onClick={() => asignarCarga()} disabled={!idTransportista }>Pagar</button>
         </div>
-
-<div className="card-footer text-muted">Pedidos disponibles</div>
             <table id="pedidos-apagar" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '325px'}}>
-                <thead className="sticky-top" >
+                <thead className="sticky-top">
                     <tr>
 
                       <th scope="col">Lote</th>
@@ -395,7 +320,6 @@ const agregarElementoTransportista = ()=> {
                     </tr>
                 </thead>
                   <tbody>
-
                       {
                         filteredAsigna.map((val,key)=>{
                           // console.log(val.nombrecarrier);
@@ -410,22 +334,13 @@ const agregarElementoTransportista = ()=> {
                               </tr>
                             })
                           }
-
-
                   </tbody>
             </table>
         <div className="card-footer text-muted"></div>
      </div>
-
 </div>
-
-
-
-
-
 );
 }
 
 export default PagoTransportista;
-
 
