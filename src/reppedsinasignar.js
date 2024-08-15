@@ -137,7 +137,7 @@ function ReportePedidosSinAsignar() {
     doc.addImage(logo, 'PNG', 185,5,60,18);
     doc.text('REPORTE DE PEDIDOS SIN ASIGNAR de KRRIERS', 80, 35);
 
-    autoTable(doc, {html: '#pedidos-table', margin:{top: 45}})
+    autoTable(doc, {html: '#pedidos-table', margin:{top: 45, right: 50, left: 40}})
     
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
