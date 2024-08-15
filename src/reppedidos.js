@@ -129,7 +129,7 @@ function ReportePedidosCaja() {
     doc.addImage(logo, 'PNG', 135,5,60,18);
     doc.text('Reporte de Pedidos por Fecha', 40, 15);
 
-    autoTable(doc, {html: '#pedidos-table', margin:{top: 30}})
+    autoTable(doc, {html: '#pedidos-table', margin:{top: 30, right:30}})
     
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
