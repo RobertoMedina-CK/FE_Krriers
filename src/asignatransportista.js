@@ -38,8 +38,9 @@ function Asigna() {
   const[select, setSelect] = useState(false);
   const [asignaList,setAsigna] = useState([]);
   const [filteredAsigna, setFilteredAsigna] = useState([]);
-  const[pagocarrier, setPagoCarrier] = useState("");
+  const[pagocarrier, setPagoCarrier] = useState();
   const[pagadocarrier, setPagadoCarrier] = useState("");
+  const[pagocarrier2, setPagoCarrier2] = useState();
   
   
   const [subastaList,setSubastaList] = useState([]);
@@ -124,7 +125,9 @@ const limpiarCampos = ()=> {
   setDeposito(val.deposito);
   setFechaLlegada(val.fechallegada);
   setFeesCarrier(val.feescarrier);
-  setFechaAsignaCarrier(val.fechaasignacarrier);
+  if (val.fechaasignacarrier) {
+    setFechaAsignaCarrier(val.fechaasignacarrier);
+  }
   setNombreCarrier(val.nombrecarrier);
   setPagoCarrier(val.pagocarrier);
   setPagadoCarrier(val.pagadocarrier);
@@ -141,7 +144,7 @@ const selectTransportista = (val)=>{
   setNombreTransportista(val.nombre);
   setDot(val.dot);
   setMargen(val.margen);
-  setPagoCarrier(1-(1/Number(val.margen)));
+  setPagoCarrier2(1-(Number(val.margen/100)));
   
     
 
@@ -219,8 +222,17 @@ const agregarElementoTransportista = ()=> {
     doc.addImage(logo, 'PNG', 190,5,60,18);
     doc.text(`Pedidos asignados al Transportista`, 100, 50);
     doc.text(`${nombretransportista}`, 110, 60);
-
-    autoTable(doc, {html: '#pedidos-seleccionados', margin:{top: 70}})
+    
+    autoTable(doc, {html: '#pedidos-seleccionados',
+       margin:{top: 70, right: 30, },
+       columns: [{header:'Subasta', dataKey:'subasta'},{header:'Lote', dataKey:'lot'},{header:'Buyer', dataKey:'buyer'},{header:'Pin', dataKey:'pin'},{header:'Marca', dataKey:'marca'}
+        ,{header:'Modelo', dataKey:'modelo'},{header:'Año', dataKey:'anio'},{header:'Fecha Pedido', dataKey:'fechapedido'}]
+      })
+    var tTB = document.getElementById("pedidos-seleccionados");
+    var atTB = doc.autoTableHtmlToJson(tTB, true);
+    var cols =atTB.columns;
+    cols.splice(9,1)
+   
     
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
@@ -278,14 +290,13 @@ const agregarElementoTransportista = ()=> {
       showConfirmButton: true,
       showCancelButton: true,
       confirmButtonText: 'Asignar',
-      cancelButtonText: 'Cancelar',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
           const bodyCarga = {
             fechaasignacarrier: fechaasignacarrier,
             nombrecarrier: nombretransportista,
-            subastaList: subastaList,
-            pagocarrier: (precio*pagocarrier)
+            subastaList: subastaList
           }
           Axios.put(`https://krriers.moveurads.com/asigna`, bodyCarga).then((res) => {
             getAsigna();
@@ -439,7 +450,9 @@ const agregarElementoTransportista = ()=> {
                                   onClick={()=>{
                                     selectAsigna(val); 
                                     let newSubastaList = subastaList;
-                                    newSubastaList = [...newSubastaList, val]
+                                    newSubastaList = [...newSubastaList, {...val, pagocarrier: ((Number(val.precio)*pagocarrier2) + Number(val.feescarrier))}]
+                                    console.log(newSubastaList)
+                                    console.log(val.precio, pagocarrier2, val.feescarrier)
                                     setSubastaList(newSubastaList);
                                     const asignaElement = filteredAsigna.map((el) =>{
                                       return el.id === val.id ? {...el, disabled: true} : el
