@@ -477,7 +477,7 @@ const agregarElementoTransportista = ()=> {
           </table>
           <div className="card-footer text-muted">Pedidos Seleccionados</div>
 
-          <table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
+          <table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '120px'}}>
               <thead className="sticky-top">
                   <tr>
                     <th scope="col">Subasta</th>
@@ -535,7 +535,8 @@ const agregarElementoTransportista = ()=> {
                             
                 </tbody>
           </table>
-          <div className='btn-group' style={{width: '50%', marginBottom: '24px'}}>
+    
+          <div className='btn-group' style={{width: '120%', margin: 'auto', paddingRight: '18em', paddingLeft: '5em'}}>
             <button type='button' className='btn btn-outline-dark' onClick={() => asignarCarga()} disabled={subastaList.length < 1 || !idTransportista || !fechaasignacarrier}>Asignar Carga</button>
           </div>
         <div className="card-footer text-muted"></div>
