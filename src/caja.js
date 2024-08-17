@@ -100,6 +100,7 @@ function Caja() {
           icon: 'success',
           timer:3000
         });
+        window.location.reload()
     }).catch(function(error){
       Swal.fire({
         icon: "error",
@@ -118,8 +119,8 @@ function Caja() {
     const doc = new jsPDF();
     var logo = new Image();
     logo.src = 'logo.png';
-    doc.addImage(logo, 'PNG', 135,5,60,18);
-    doc.text('Factura', 40, 15);
+    doc.addImage(logo, 'PNG', 135,5,60,16);
+    doc.text('Invoice', 160, 35,);
 
     const columna1 = ['Nombre', 'Telefono', 'Lote', 'Subasta'];
     const columna2 = ['Modelo', 'Marca', 'Año', 'Titulo', 'Notas'];
@@ -128,6 +129,15 @@ function Caja() {
     const columna6 = ['Storage'];
     const columna7 = ['Deposito'];
     const columna4 = ['Total a pagar:'];
+    const columna11 = ['Krriers 956, LLC.'];
+    const columna8 = ['3407 E. US Highway 281, Hidalgo, TX. 78577'];
+    const columna9 = ['Phone (956) 627-1318 Whatsapp (956) 961-1991'];
+    const columna10 = ['No nos hacemos responsables por catalizadores, títulos, llaves y/o partes sueltas que la subasta no entregue, daños ocasionados por el uso de Montacargas en la maniobra de carga y descarga, tampoco por daños presentes en el vehículo al momento de la carga o partes que se vuelen en el traslado Se requiere el pago total en los próximos 5 días hábiles posteriores a la llegada a nuestras instalaciones, posterior a los 5 días se cobrará multa de $ 150.00 USD mas $ 5.00 USD diarios por concepto de Storage, Al undécimo día hábil posterior el vehículo serña retirado de nuestras instalaciones con un Cargo adicional de $ 150.00 mas $ 20.00 dólares díarios'];
+    const columna16 = ['Customer Signature'];
+    const columna20 = ['Signature'];
+    const columna17 = ['Keys Yes [   ]  No  [   ]'];
+    const columna18 = ['Title Yes [   ]  No  [   ]  Correo [   ]  Pendiente  [   ]'];
+    const columna19 = ['Entregado Yes [   ]  No  [   ]'];
 
     const datos1= [[`${nombre}`,`${telefono}`,`${lot}`,`${direccion}` ]];
 
@@ -143,7 +153,7 @@ function Caja() {
     const copart = `https://www.copart.com/lot/55108684`;
     
     autoTable(doc, {
-        startY:30,
+        startY:40,
         theme: 'grid',
         head: [columna1],
         body: datos1
@@ -151,14 +161,14 @@ function Caja() {
     })
 
     autoTable(doc, {
-        startY:50,
+        startY:60,
         theme: 'grid',
         head: [columna2],
         body: datos2
     })
 
     autoTable(doc, {
-        startY:70,
+        startY:90,
         theme: 'grid',
         head: [columna3],
         body: datos3,
@@ -188,7 +198,7 @@ function Caja() {
         }
     })
     autoTable(doc, {
-        startY:90,                
+        startY:110,                
         theme: 'grid',
         head: [columna5],
         body: datos5,
@@ -218,7 +228,7 @@ function Caja() {
         }
     })
     autoTable(doc, {
-        startY:110,                
+        startY:130,                
         theme: 'grid',
         head: [columna6],
         body: datos6,
@@ -249,7 +259,7 @@ function Caja() {
 
     })
     autoTable(doc, {
-        startY:130,                
+        startY:150,                
         theme: 'grid',
         head: [columna7],
         body: datos7,
@@ -282,7 +292,7 @@ function Caja() {
 
 
     autoTable(doc, {
-        startY:150,                
+        startY:170,                
         
         head: [columna4],
         body: datos4,
@@ -315,14 +325,182 @@ function Caja() {
         }
 
     })
+
+    autoTable(doc, {
+      startY:200,                
+      
+      head: [columna10],
+      margin:{left:25},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 7,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    
+
+    autoTable(doc, {
+      startY:230,                
+      
+      head: [columna16],
+      margin:{left:140},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'left', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:120,                
+      
+      head: [columna17],
+      theme: 'grid',
+      margin:{left:25, right:130},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: 120, // false for transparent or a color as described below
+          textColor: 255,
+          halign: 'left', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:130,                
+      
+      head: [columna18],
+      theme: 'grid',
+      margin:{left:25, right:130},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: 200, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'left', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:144,                
+      
+      head: [columna19],
+      theme: 'grid',
+      margin:{left:25, right:130},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: 120, // false for transparent or a color as described below
+          textColor: 255,
+          halign: 'left', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:230,                
+      
+      head: [columna20],
+      margin:{left:60},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'left', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:245,                
+      
+      head: [columna11],
+      margin:{left:25},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 13,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'bold', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+
+    autoTable(doc, {
+      startY:250,                
+      
+      head: [columna8],
+      margin:{left:25},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    autoTable(doc, {
+      startY:255,                
+      
+      head: [columna9],
+      margin:{left:25},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
     
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
     doc.autoPrint({variant: 'non-conform'});
 
-    if (subasta == 'Copart')  {
+    if (subasta === 'Copart')  {
       window.open(`https://www.copart.com/lot/`+lot, '_blank', 'width = 650, height = 800');
-    }  else if (subasta == 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+lot+'~US', '_blank', 'width = 700, height = 850'); }
+    }  else if (subasta === 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+lot+'~US', '_blank', 'width = 700, height = 850'); }
     
 
 
