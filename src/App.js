@@ -13,6 +13,7 @@ import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
 import PagoTransportista from './pagotransportista.js'
+// import Webhook from './webhook.js'
 
 // import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
@@ -76,6 +77,9 @@ function App() {
                             <NavDropdown.Item as={Link} to="https://whatsform.com/webhooktest" target="_blank" rel="noreferrer noopener">
                                 Captura Pedidos
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/webhook">
+                                WebHook Test
+                            </NavDropdown.Item>
                             </NavDropdown>
                         <NavDropdown title="Transportistas">
                             <NavDropdown.Item as={Link} to="/asigna">
@@ -135,6 +139,7 @@ function App() {
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
                         <Route path="/pagotransportista" element={<PagoTransportista />} />
                         <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
+                        {/* <Route path="/webhook" element={<Webhook />} /> */}
                         <Route path="*" element={<NotFound />} />
                     </Route>
                 </Routes>
