@@ -233,7 +233,7 @@ const agregarElementoTransportista = ()=> {
     var cols =atTB.columns;
     cols.splice(9,1)
    
-    
+    doc.save(`${nombretransportista}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
 
