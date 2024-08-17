@@ -258,12 +258,33 @@ const editarLlegada = (val)=>{
                  />
            <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
         </div>
-        <div className="custom-control custom-radio my-auto">
+        <div className="custom-control custom-radio my-auto mx-3">
           <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
                   onChange={(event)=>{
                     setTitulo(event.target.value);
                   }}/>
           <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
+         </div>
+         <div className="custom-control custom-radio my-autom x-3">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="M"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline2">Mail</label>
+         </div>
+         <div className="custom-control custom-radio my-auto mx-3">
+          <input type="radio" id="customRadioInline3" name="customRadioInline1" className="custom-control-input" value="P"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline3">Pending</label>
+         </div>
+         <div className="custom-control custom-radio my-auto mx-3">
+          <input type="radio" id="customRadioInline4" name="customRadioInline1" className="custom-control-input" value="B"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline4">BOS</label>
          </div>
         </div>
       </div>
