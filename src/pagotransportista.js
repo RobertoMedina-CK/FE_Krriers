@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import 'dates-of-today';
+
 
 
 function PagoTransportista() {
@@ -113,7 +115,24 @@ const selectTransportista = (val)=>{
 
   }
 
-  const onTransportistasChange = (transportistasValue) => {
+  const prefix = (val) => {
+    if (val.length < 2) return '0' + val
+    return val
+  }
+
+  const datesOfToday = () => {
+    const ret = {}
+  
+    ret.year = String(new Date().getFullYear())
+    ret.month = prefix(String(new Date().getMonth()))
+    ret.day = prefix(String(new Date().getDate()))
+    ret.date = [ret.year, ret.month, ret.day].join('-')
+    
+    return ret
+    
+  }
+
+    const onTransportistasChange = (transportistasValue) => {
     transportistasValue = transportistasValue.toLowerCase();
     const filteredItemsTransportista =transportistasList.filter((client) => {
       return client.nombre.toLowerCase().includes(transportistasValue)
@@ -121,17 +140,118 @@ const selectTransportista = (val)=>{
     setFilteredTransportistas(filteredItemsTransportista)
   }
 
+
   const generaPdf = ()=> {
 
     const doc = new jsPDF({orientation: 'l'});
+    const total = filteredAsigna.reduce((acc, val) => {
+      return acc += Number(val.pagocarrier);
+    }, 0)
+   
+    const datos4= [["$ "+total]];
+    const columna1 = ['Total a Pagar:'];
+    const columna5 = ['Recibimos la cantidad descrita en el total de este recibo como pago TOTAL de los servicios que nuestra compañia prestó de transporte de autos, no quedando adeudo alguno por ningún otro concepto. Liberamos a Krriers 956, LLC de cualquier responsabilidad pasada, presente o futura por el servicio que nuestra compañia presta'];
+    const columna6 = ['Transportista Signature                                              Krriers Signature'];
+    const columna8 = ['Pagado con Efectivo [   ]  Cheque  [   ] Zelle [   ]  CashApp  [   ]'];
+    
+    const hoy = moment(new Date()).format("LL");
+   
+
     var logo = new Image();
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 190,5,60,18);
-    doc.text(`Liquidacion de servicios del transportista`, 100, 50);
-    doc.text(`${nombretransportista}`, 110, 60);
-
+    doc.text(`Liquidacion de servicios del transportista`, 100, 30);
+    doc.text(`${nombretransportista}`, 110, 40);
+    doc.text(`${hoy}`, 210, 50);
+    
     autoTable(doc, {html: '#pedidos-apagar', 
-      margin:{top: 70}})
+      theme:'grid',
+      margin:{top: 60}})
+
+      autoTable(doc, {
+        // startY:120,
+        theme: 'grid',
+        head: [columna1],
+        body: datos4,
+        margin:{left:50, right:65},
+        headerStyles:{
+            cellPadding: 2, // a number, array or object (see margin below)
+            fontSize: 14,
+            font: "times", // helvetica, times, courier
+            fontStyle: 'normal', // normal, bold, italic, normal
+            halign: 'right', // left, center, right
+            valign: 'top', // top, middle, bottom
+
+
+        },
+        bodyStyles:{
+            cellPadding: 2, // a number, array or object (see margin below)
+            fontSize: 14,
+            font: "courier", // helvetica, times, courier
+            lineColor: 200,
+
+            fontStyle: 'normal', // normal, bold, italic, normal
+            fillColor: 200, // false for transparent or a color as described below
+            textColor: 0,
+            halign: 'right', // left, center, right
+            valign: 'middle', // top, middle, bottom
+            columnWidth: 'auto' // 'auto', 'wrap' or a number
+        }
+    })
+
+    autoTable(doc, {
+      // startY:120,
+      theme: 'grid',
+      head: [columna5],
+      margin:{left:25, right:50},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 7,
+          font: "times", // helvetica, times, courier
+          fontStyle: 'normal', // normal, bold, italic, normal
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+     })
+
+     autoTable(doc, {
+      // startY:220,                
+      
+      head: [columna6],
+      margin:{left:5},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
+    
+
+    autoTable(doc, {
+      // startY:230,                
+      
+      head: [columna8],
+      margin:{left:5},
+      headerStyles:{
+          cellPadding: 2, // a number, array or object (see margin below)
+          fontSize: 10,
+          font: "helvetica", // helvetica, times, courier
+          lineColor:0,
+          fontStyle: 'normal', // normal, bold, italic, normal
+          fillColor: false, // false for transparent or a color as described below
+          textColor: 0,
+          halign: 'center', // left, center, right
+          valign: 'top', // top, middle, bottom
+      },
+    })
+
 
     doc.autoPrint({variant: 'non-conform'});
     doc.output('dataurlnewwindow');
@@ -200,6 +320,7 @@ const selectTransportista = (val)=>{
               icon: 'success',
               timer:3000
             });
+            window.location.reload()
           }).catch((err) => {
             Swal.fire({
               icon: "error",
@@ -317,7 +438,9 @@ const selectTransportista = (val)=>{
                       <th scope="col">Lote</th>
                       <th scope="col">Transportista</th>
                       <th scope="col">Fecha Asignacion</th>
-                    </tr>
+                      <th scope="col">Pago a Carrier</th>
+                      
+                      </tr>
                 </thead>
                   <tbody>
                       {
@@ -328,7 +451,8 @@ const selectTransportista = (val)=>{
                                       <th scope="row">{val.lot}</th>
                                       <td>{val.nombrecarrier}</td>
                                       <td>{moment(val.fechaasignacarrier).format("LL")}</td>
-                                  <td>
+                                      <td>$ {val.pagocarrier}</td>
+                                    <td>
 
                                   </td>
                               </tr>
