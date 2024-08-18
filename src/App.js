@@ -29,11 +29,12 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 
 function GFGHome() {
-  const logoUrl = './truck.png'; 
+  const logoUrl = './camionnew.png'; 
   return (
-       <div className="page">
-          <h2><center><strong>Krriers App</strong></center></h2>
+       <div className="grid-element">
+          {/* <h2><center><strong>Krriers App</strong></center></h2> */}
           <img src={logoUrl}  
+          layout="responsive"
           width="100%" height="auto"
           alt="Logo" /> 
       </div>
