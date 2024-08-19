@@ -91,9 +91,6 @@ function App() {
                             </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Reportes">
-                            <NavDropdown.Item as={Link} to="/pagotransportistas">
-                                Pago a Transportistas
-                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/pedidosfecha">
                                 Pedidos por fecha
                             </NavDropdown.Item>
