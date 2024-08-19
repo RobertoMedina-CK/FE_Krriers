@@ -44,6 +44,7 @@ function Caja() {
   const [filteredCaja, setFilteredCaja] = useState([]);
   const [storage, setStorage] = useState("");
   const [preciofinal, setPrecioFinal] = useState("");
+  const [color, setColor] = useState("");
  
  
  
@@ -89,7 +90,8 @@ function Caja() {
       fechaasignacarrier:fechaasignacarrier,
       nombrecarrier:nombrecarrier,
       storage:storage,
-      preciofinal:preciofinal
+      preciofinal:preciofinal,
+      color:color
     }
     Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
         getCaja();
@@ -123,7 +125,7 @@ function Caja() {
     doc.text('Invoice', 160, 35,);
 
     const columna1 = ['Nombre', 'Telefono', 'Lote', 'Subasta'];
-    const columna2 = ['Modelo', 'Marca', 'Año', 'Titulo', 'Notas'];
+    const columna2 = ['Modelo', 'Marca', 'Año', 'Color', 'Titulo', 'Notas'];
     const columna3 = ['Precio Base'];
     const columna5 = ['Extra Fees' ];
     const columna6 = ['Storage'];
@@ -141,12 +143,13 @@ function Caja() {
 
     const datos1= [[`${nombre}`,`${telefono}`,`${lot}`,`${direccion}` ]];
 
-    const datos2 = [[`${modelo}`,`${marca}`,`${anio}`,`${titulo}`,`${notas}`]];
+    const datos2 = [[`${modelo}`,`${marca}`,`${anio}`,`${color}`,`${titulo}`,`${notas}`]];
 
     const datos3 = [["$ "+`${precio}`]];
     const datos5 = [["$ "+`${fees}`,]];
     const datos6 = [["$ "+`${storage}`]];
     const datos7 = [["$ -"+`${deposito}`]];
+    
     var total = (Number(`${precio}`)+Number(`${fees}`)+Number(`${storage}`)-Number(`${deposito}`));
     const datos4= [["$ "+total]];
 
@@ -535,6 +538,7 @@ const limpiarCampos = ()=> {
   handleDateChange("");
   setStorage("");
   setPrecioFinal("");
+  setColor("");
   setEditar(false);
   }
 
@@ -563,6 +567,7 @@ const editarCaja = (val)=>{
   setFeesCarrier(val.feescarrier);
   setFechaAsignaCarrier(val.fechaasignacarrier);
   setNombreCarrier(val.nombrecarrier);
+  setColor(val.color);
   setStorage(val.storage);
   var total = (Number(`${val.precio}`)+Number(`${val.fees}`)+Number(`${val.storage}`)-Number(`${val.deposito}`));
   setPrecioFinal(total);
@@ -668,13 +673,34 @@ const editarCaja = (val)=>{
                 <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
             </div>
 
-            <div className="custom-control custom-radio my-auto">
+            <div className="custom-control custom-radio my-auto mx-3">
               <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
                       onChange={(event)=>{
                         setTitulo(event.target.value);
                       }}/>
               <label className="custom-control-label" htmlFor="customRadioInline2">No</label>
             </div>
+            <div className="custom-control custom-radio my-autom mx-3">
+          <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="M"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline2">Mail</label>
+         </div>
+         <div className="custom-control custom-radio my-auto mx-3">
+          <input type="radio" id="customRadioInline3" name="customRadioInline1" className="custom-control-input" value="P"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline3">Pending</label>
+         </div>
+         <div className="custom-control custom-radio my-auto mx-3">
+          <input type="radio" id="customRadioInline4" name="customRadioInline1" className="custom-control-input" value="B"
+                  onChange={(event)=>{
+                    setTitulo(event.target.value);
+                  }}/>
+          <label className="custom-control-label" htmlFor="customRadioInline4">BOS</label>
+         </div>
           </div>
       </div>
       
