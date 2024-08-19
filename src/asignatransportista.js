@@ -41,6 +41,7 @@ function Asigna() {
   const[pagocarrier, setPagoCarrier] = useState();
   const[pagadocarrier, setPagadoCarrier] = useState("");
   const[pagocarrier2, setPagoCarrier2] = useState();
+  const[color, setColor] = useState("");
   
   
   const [subastaList,setSubastaList] = useState([]);
@@ -84,6 +85,7 @@ const limpiarCampos = ()=> {
   setFee("");
   setTitulo("");
   setNotas("");
+  setColor("");
   setFechaFinal("");
   setDeposito("");
   setFechaLlegada("");
@@ -122,6 +124,7 @@ const limpiarCampos = ()=> {
   setTitulo(val.titulo);
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
+  setColor(val.color);
   setDeposito(val.deposito);
   setFechaLlegada(val.fechallegada);
   setFeesCarrier(val.feescarrier);
@@ -226,7 +229,7 @@ const agregarElementoTransportista = ()=> {
     autoTable(doc, {html: '#pedidos-seleccionados',
        margin:{top: 70, right: 30, },
        columns: [{header:'Subasta', dataKey:'subasta'},{header:'Lote', dataKey:'lot'},{header:'Buyer', dataKey:'buyer'},{header:'Pin', dataKey:'pin'},{header:'Marca', dataKey:'marca'}
-        ,{header:'Modelo', dataKey:'modelo'},{header:'Año', dataKey:'anio'},{header:'Fecha Pedido', dataKey:'fechapedido'}]
+        ,{header:'Modelo', dataKey:'modelo'},{header:'Año', dataKey:'anio'},{header:'Color', dataKey:'color'},{header:'Fecha Pedido', dataKey:'fechapedido'}]
       })
     var tTB = document.getElementById("pedidos-seleccionados");
     var atTB = doc.autoTableHtmlToJson(tTB, true);
@@ -262,6 +265,7 @@ const agregarElementoTransportista = ()=> {
             <th scope="col">Marca</th>
             <th scope="col">Modelo</th>
             <th scope="col">Año</th>
+            <th scope="col">Color</th>
             <th scope="col">Fecha Pedido</th>
           </tr>
         </thead>
@@ -276,6 +280,7 @@ const agregarElementoTransportista = ()=> {
                 <td>${val.marca}</td>
                 <td>${val.modelo}</td>
                 <td>${val.anio}</td>
+                <td>${val.color}</td>
                 <td>${moment(val.fecha).format("LL")}</td>
               </tr>`
             })
@@ -425,6 +430,7 @@ const agregarElementoTransportista = ()=> {
                   <th scope="col">Marca</th>
                   <th scope="col">Modelo</th>
                   <th scope="col">Año</th>
+                  <th scope="col">Color</th>                  
                   <th scope="col">Fecha Pedido</th>
                   <th scope="col">Acción</th>
                 </tr>
@@ -442,6 +448,7 @@ const agregarElementoTransportista = ()=> {
                                 <td>{val.marca}</td>
                                 <td>{val.modelo}</td>
                                 <td>{val.anio}</td>
+                                <td>{val.color}</td>
                                 <td>{moment(val.fecha).format("LL")}</td>
                             <td>
                                 <div className="btn-group" role="group" aria-label="Basic example">
@@ -477,7 +484,7 @@ const agregarElementoTransportista = ()=> {
           </table>
           <div className="card-footer text-muted">Pedidos Seleccionados</div>
 
-          <table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '120px'}}>
+          <table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '90px'}}>
               <thead className="sticky-top">
                   <tr>
                     <th scope="col">Subasta</th>
@@ -488,6 +495,7 @@ const agregarElementoTransportista = ()=> {
                     <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
                     <th scope="col">Año</th>
+                    <th scope="col">Color</th>
                     <th scope="col">Fecha Pedido</th>
                     <th scope="col">Acción</th>
                   </tr>
@@ -505,6 +513,7 @@ const agregarElementoTransportista = ()=> {
                                   <td>{val.marca}</td>
                                   <td>{val.modelo}</td>
                                   <td>{val.anio}</td>
+                                  <td>{val.color}</td>
                                   <td>{moment(val.fecha).format('LLL')}</td>
                               <td>
                                   <div className="btn-group" role="group" aria-label="Basic example">
