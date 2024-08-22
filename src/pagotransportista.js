@@ -254,7 +254,8 @@ const selectTransportista = (val)=>{
 
 
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow');
+    doc.save(`${nombretransportista}_fecha_${fechallegada}.pdf`);
+    // doc.output('dataurlnewwindow');
 
   }
 
@@ -357,13 +358,13 @@ const selectTransportista = (val)=>{
 
                   </div>
 
-
+                  
 
 
  <div className="card-footer text-muted">Transportistas Registrados</div>
         </div>
 
-              <table id="tabla-transportistas" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '600px', display: 'inline-block', paddingLeft: '225px'}}>
+              <table id="tabla-transportistas" className="table table-hover" style={{overflowY: 'scroll', maxHeight: '350px', display: 'inline-block', paddingLeft: '225px'}}>
                 <thead className = "sticky-top">
                     <tr>
                       <th scope="col">Nombre</th>
