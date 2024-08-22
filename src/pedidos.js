@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Axios from "axios";
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -50,78 +50,87 @@ function Pedidos() {
 
     const [anioList, setAnioList] = useState([]);
     const [marcaList,setMarcaList] = useState([]);
-   
+    const [modeloList, setModeloList] = useState([]);
+    const [subastaList, setSubastaList] = useState([]);
+    const [subastaSelectList, setSubastaSelectList] = useState([]);
+    const [subastaDirList, setSubastaDirList] = useState([]);
 
+    //const [marcaCompleted, setMarcaCompleted] = useState(false);
+  
    
-
-   
-    function InputWIthSearchAnio(){
-        const [val,setVal]=useState('')
-        const data=[anio]
-       
+    function InputWIthSearchAnio({value, onChange}){
         return(
             <div className="main">
-                <getAnio>
-                <input list="dataanio" onChange={(e)=>setVal(e.target.value)} placeholder="Año" />
+                <input type="dataanio" autoComplete="on" list="dataanio" onChange={onChange} placeholder="Año" value={value}/>
                 <datalist id="dataanio">
-                    {data.map((op)=><option>{op}</option>)}
+                    {anioList.map((op, i)=><option key={i} value={op.anio}></option>)}
                 </datalist>
-                </getAnio>
             </div>
         );
     }
 
-    function InputWIthSearchMarca(){
-        const [val,setVal]=useState('')
-        const data=[marca]
+    const getModeloFromMarca = (value) => {
+      const completed = marcaList.some(d => d.marca === value)
+      if(completed){
 
+        getModelo(value)
+      }
+    }
+
+    const disabled = useMemo(() => {
+      return !marcaList.some(d => d.marca === marca)
+    }, [marca])
+
+    // useEffect(() => {
+    //   const completed = marcaList.some(d => d.marca === marca)
+    //   setMarcaCompleted(completed)
+    // }, [marca])
+
+    function InputWIthSearchMarca({value, onChange}){
         return(
             <div className="main">
-                <input list="datamarca" onChange={(e)=>setVal(e.target.value)} placeholder="Marca" />
+                <input type="datamarca" autoComplete="on" list="datamarca" onChange={onChange} placeholder="Marca" value={value} />
                 <datalist id="datamarca">
-                    {data.map((op)=><option>{op}</option>)}
+                    {marcaList.map((op, i)=><option key={i} value={op.marca}></option>)}
                 </datalist>
             </div>
         );
     }
 
-    function InputWIthSearchModelo(){
-        const [val,setVal]=useState('')
+    function InputWIthSearchModelo({value, onChange, disabled}){
         const data=[modelo]
 
         return(
             <div className="main">
-                <input list="datamodelo" onChange={(e)=>setVal(e.target.value)} placeholder="Modelo" />
+                <input list="datamodelo" onChange={onChange} placeholder="Modelo" value={value} disabled={disabled} />
                 <datalist id="datamodelo">
-                    {data.map((op)=><option>{op}</option>)}
+                    {modeloList.map((op, i)=><option key={i} value={op.modelo}></option>)}
                 </datalist>
             </div>
         );
     }
 
-    function InputWIthSearchSubasta(){
-        const [val,setVal]=useState('')
+    function InputWIthSearchSubasta({value, onChange}){
         const data=[subasta]
 
         return(
             <div className="main">
-                <input list="datasubasta" onChange={(e)=>setVal(e.target.value)} placeholder="Subasta" />
+                <input list="datasubasta" onChange={onChange} placeholder="Subasta" value={value} />
                 <datalist id="datasubasta">
-                    {data.map((op)=><option>{op}</option>)}
+                    {subastaSelectList.map((op, i)=><option key={i} value={op.subasta}></option>)}
                 </datalist>
             </div>
         );
     }
 
-    function InputWIthSearchDireccion(){
-        const [val,setVal]=useState('')
+    function InputWIthSearchDireccion({value, onChange}){
         const data=[direccion]
 
         return(
             <div className="main">
-                <input list="datadireccion" onChange={(e)=>setVal(e.target.value)} placeholder="Direccion Subasta" />
+                <input list="datadireccion" onChange={onChange} placeholder="Direccion Subasta" value={value} />
                 <datalist id="datadireccion">
-                    {data.map((op)=><option>{op}</option>)}
+                    {subastaDirList.map((op, i)=><option key={i} value={op.direccion}></option>)}
                 </datalist>
             </div>
         );
@@ -157,7 +166,17 @@ function Pedidos() {
 //     getModelo();
 //   }, [])
 
+  useEffect(() => {
+    getSubastas();
+  }, [])
 
+  useEffect(() => {
+    getSubastasDireccion();
+  }, [])
+
+  useEffect(() => {
+    getSubastaPedidos();
+  }, [])
 
   const add = ()=> {
     if (!telefono || !nombre || !buyer || !lot || !pin || !anio || !marca || !modelo || !subasta || !fecha || !direccion){
@@ -392,12 +411,30 @@ const editarPedidos = (val)=>{
 
   } 
 
-//   const getModelo = (val) => {
-//     Axios.get(`https://krriers.moveurads.com/modeloautos/${val.modelo}`).then((response)=>{
-//         setModeloList(response.data);
-//     });
+  const getModelo = (value) => {
+      Axios.get(`https://krriers.moveurads.com/modeloautos/${value}`).then((response)=>{
+          setModeloList(response.data);
+      });
 
-//   } 
+  }
+
+  const getSubastas = () => {
+    Axios.get(`https://krriers.moveurads.com/subastas`).then((response)=>{
+      setSubastaList(response.data);
+  });
+  }
+
+  const getSubastasDireccion = () => {
+    Axios.get(`https://krriers.moveurads.com/direccionpedidos`).then((response)=>{
+      setSubastaDirList(response.data);
+  });
+  }
+
+  const getSubastaPedidos = () => {
+    Axios.get(`https://krriers.moveurads.com/subastaspedidos`).then((response)=>{
+      setSubastaSelectList(response.data);
+  });
+  }
  
    useEffect(() => {
     const filteredItems = pedidosList.filter((client) => {
@@ -462,24 +499,27 @@ const editarPedidos = (val)=>{
       <div className="input-group mb-2">
           <span className="input-group-text" id="basic-addon1">Año:</span>
           <InputWIthSearchAnio
-            value={anio} onChange={setAnio}
+            value={anio} onChange={(e)=>setAnio(e.target.value)} 
             ></InputWIthSearchAnio>
                                           
          <span className="input-group-text" id="basic-addon1">Marca:</span>
          <InputWIthSearchMarca
-            value={marca} onChange={setMarca}
+            value={marca} onChange={(e)=>{
+              setMarca(e.target.value)
+              getModeloFromMarca(e.target.value)
+            }}
             ></InputWIthSearchMarca>
 
          <span className="input-group-text" id="basic-addon1">Modelo:</span>
          <InputWIthSearchModelo
-            value={modelo} onChange={setModelo}
+            value={modelo} onChange={(e)=>setModelo(e.target.value)} disabled={disabled}
             ></InputWIthSearchModelo>
         </div>
 
       <div className="input-group mb-2">
           <span className="input-group-text" id="basic-addon1">Subasta:</span>
           <InputWIthSearchSubasta
-            value={subasta} onChange={setSubasta}
+            value={subasta} onChange={(e)=>setSubasta(e.target.value)}
             ></InputWIthSearchSubasta>
       </div>
 
@@ -512,7 +552,8 @@ const editarPedidos = (val)=>{
       <div className="input-group mb-2">
           <span className="input-group-text" id="basic-addon1">Ciudad Subasta:</span>
           <InputWIthSearchDireccion
-            value={direccion} onChange={setDireccion}
+         
+            value={direccion} onChange={(e)=>setDireccion(e.target.value)}
             ></InputWIthSearchDireccion>
          </div>
                            
@@ -531,7 +572,7 @@ const editarPedidos = (val)=>{
   </div>
     
 <table className="table table-borderless table-hover" style={{overflowY: 'scroll', maxHeight: '290px', display: 'inline-block', paddingLeft: '1px'}}>
-    <thead class="sticky-top">
+    <thead className="sticky-top">
         <tr>
           <th scope="col">Lote</th>
           <th scope="col">Nombre</th>
