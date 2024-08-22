@@ -108,6 +108,7 @@ function ReportePedidosCaja() {
           icon: 'success',
           timer:3000
         });
+      
     }).catch(function(error){
       Swal.fire({
         icon: "error",
@@ -132,8 +133,10 @@ function ReportePedidosCaja() {
     autoTable(doc, {html: '#pedidos-table', margin:{top: 30, right:30}})
     
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow');
-
+    // 
+    doc.save(`Pedido_desde_${fechainicial}_hasta_${fechafinalreporte}.pdf`);
+    window.location.reload()
+ 
   }
         
         
