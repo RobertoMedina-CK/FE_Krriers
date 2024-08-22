@@ -498,7 +498,8 @@ function Caja() {
     })
     
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow');
+    // doc.output('dataurlnewwindow');
+    doc.save(`facturaNo.${lot}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
 
     if (subasta === 'Copart')  {
