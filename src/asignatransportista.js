@@ -236,9 +236,9 @@ const agregarElementoTransportista = ()=> {
     var cols =atTB.columns;
     cols.splice(9,1)
    
-    doc.save(`${nombretransportista}.pdf`);
+    doc.save(`${nombretransportista}_fecha_${fechaasignacarrier}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow');
+    // doc.output('dataurlnewwindow');
 
   }
 
@@ -313,6 +313,7 @@ const agregarElementoTransportista = ()=> {
               icon: 'success',
               timer:3000
             });
+            window.location.reload()
           }).catch((err) => {
             Swal.fire({
               icon: "error",
