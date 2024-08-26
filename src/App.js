@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Autos from './autos'
 import Clientes from './clientes'
@@ -14,6 +14,8 @@ import ImprimePedidos from './reppedidos.js'
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
 import PagoTransportista from './pagotransportista.js'
 // import Webhook from './webhook.js'
+import Valida from './valida.js';
+import {getCurrentUser,logout} from './authService.js'
 
 // import Wasa from './wasa.js'
 import { FaHome} from "react-icons/fa";
@@ -50,8 +52,11 @@ function NotFound() {
   );
 }
 
+const user = getCurrentUser()
+
 function App() {
   const logoUrl = './logo.png'; 
+
   return (
 <Router>
 <Navbar bg="dark" expand="lg" 
@@ -68,56 +73,76 @@ function App() {
                         <Nav.Link as={Link} to="/" className="nav-link">
                         <FaHome /> Home
                         </Nav.Link>
-                        <NavDropdown title="Clientes">
-                            <NavDropdown.Item as={Link} to="/caja">
-                               Caja
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/llegada">
-                                Llegada de Autos
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="https://whatsform.com/webhooktest" target="_blank" rel="noreferrer noopener">
-                                Captura Pedidos
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/webhook">
-                                WebHook Test
-                            </NavDropdown.Item>
+                        {
+                            !user?.user &&
+                            <Nav.Link as={Link} to="/login" className="nav-link">
+                            Login
+                            </Nav.Link>
+                        }
+                        {
+                            user?.user &&
+                            <>
+                            <NavDropdown title="Clientes">
+                                <NavDropdown.Item as={Link} to="/caja">
+                                Caja
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/llegada">
+                                    Llegada de Autos
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="https://whatsform.com/webhooktest" target="_blank" rel="noreferrer noopener">
+                                    Captura Pedidos
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/webhook">
+                                    WebHook Test
+                                </NavDropdown.Item>
+                                </NavDropdown>
+                            <NavDropdown title="Transportistas">
+                                <NavDropdown.Item as={Link} to="/asigna">
+                                    Asignación a Transportistas
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/pagotransportista">
+                                    Pago a Transportistas
+                                </NavDropdown.Item>
                             </NavDropdown>
-                        <NavDropdown title="Transportistas">
-                            <NavDropdown.Item as={Link} to="/asigna">
-                                Asignación a Transportistas
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/pagotransportista">
-                                Pago a Transportistas
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown title="Reportes">
-                            <NavDropdown.Item as={Link} to="/pedidosfecha">
-                                Pedidos por fecha
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/pedidossinasignar">
-                                Pedidos sin Asignar
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown title="Mantenimiento a BD">
-                            <NavDropdown.Item as={Link} to="/clientes">
-                                Clientes
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/transportistas">
-                                Transportistas
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/subastas">
-                                Subastas
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/autos">
-                                Autos
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/pedidos">
-                                Pedidos
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={Link} to="/cajeros">
-                                Usuarios
-                            </NavDropdown.Item>
+                            <NavDropdown title="Reportes">
+                                <NavDropdown.Item as={Link} to="/pedidosfecha">
+                                    Pedidos por fecha
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/pedidossinasignar">
+                                    Pedidos sin Asignar
+                                </NavDropdown.Item>
                             </NavDropdown>
+                            <NavDropdown title="Mantenimiento a BD">
+                                <NavDropdown.Item as={Link} to="/clientes">
+                                    Clientes
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/transportistas">
+                                    Transportistas
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/subastas">
+                                    Subastas
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/autos">
+                                    Autos
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/pedidos">
+                                    Pedidos
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/cajeros">
+                                    Usuarios
+                                </NavDropdown.Item>
+                                </NavDropdown>
+                                <Nav.Link as={Link} to="/logout" className="nav-link">
+                                   Logout
+                                </Nav.Link>
+                                 {/* <button onClick={() => {
+                                    logout()
+                                    window.location.reload()
+                                }}>
+                                    Logout
+                                </button> */}
+                            </>
+                        }
                       </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -125,6 +150,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Outlet />}>
                         <Route index element={<GFGHome />} />
+                        <Route path="/login" element={<Valida />} />
                         <Route path="/autos" element={<Autos />} />
                         <Route path="/clientes" element={<Clientes />} />
                         <Route path="/transportistas" element={<Transportistas />} />
@@ -137,6 +163,7 @@ function App() {
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
                         <Route path="/pagotransportista" element={<PagoTransportista />} />
                         <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
+                        <Route path="/logout" element={<Valida />} />
                         {/* <Route path="/webhook" element={<Webhook />} /> */}
                         <Route path="*" element={<NotFound />} />
                     </Route>
