@@ -11,6 +11,7 @@ import Llegada from './llegada.js'
 import Asigna from './asignatransportista.js'
 import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
+import { Button } from "react-bootstrap";
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
 import PagoTransportista from './pagotransportista.js'
 // import Webhook from './webhook.js'
@@ -67,7 +68,7 @@ function App() {
                      width="120" height="50" 
                      alt="Logo" /> 
                 </Navbar.Brand> 
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         <Nav.Link as={Link} to="/" className="nav-link">
@@ -133,14 +134,15 @@ function App() {
                                 </NavDropdown.Item>
                                 </NavDropdown>
                                 <Nav.Link as={Link} to="/logout" className="nav-link">
-                                   Logout
-                                </Nav.Link>
-                                 {/* <button onClick={() => {
+                                 <Button className="btn-dark" style={{width: '10%', marginLeft: '85em'}}                               
+                                  onClick={() => {
                                     logout()
                                     window.location.reload()
-                                }}>
-                                    Logout
-                                </button> */}
+                                    window.location.href = '/';
+                                    return false;
+                                }}>Logout</Button>
+                                </Nav.Link>
+
                             </>
                         }
                       </Nav>
