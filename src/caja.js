@@ -9,9 +9,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import { Portal } from "react-overlays";
 import { jsPDF } from 'jspdf';
+
 import autoTable from 'jspdf-autotable';
+
 import Swal from 'sweetalert2';
+
+
 function Caja() {
+
   const[marca, setMarca] = useState("");
   const[modelo, setModelo] = useState("");
   const[anio, setAnio] = useState("");
@@ -47,15 +52,18 @@ function Caja() {
   const handleDateChange = (date) =>{
     console.log(date)
     setFechaFinal(date);
+
   };
   const CalendarContainer = ({ children }) => {
     const el = document.getElementById("calendar-portal");
   
     return <Portal container={el}>{children}</Portal>;
   };
+
   useEffect(() => {
     getCaja();
   }, [])
+
     
   const update = ()=> {
     const bodyCarga = {
@@ -103,8 +111,11 @@ function Caja() {
         footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
         timer: 3000
       });
+
     })
+
   }
+
   const generapdf = ()=> {
    
     const doc = new jsPDF();
@@ -112,6 +123,7 @@ function Caja() {
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 135,5,60,16);
     doc.text('Invoice', 160, 35,);
+
     const columna1 = ['Nombre', 'Telefono', 'Lote', 'Subasta'];
     const columna2 = ['Modelo', 'Marca', 'Año', 'Color', 'Titulo', 'Notas'];
     const columna3 = ['Precio Base'];
@@ -128,8 +140,11 @@ function Caja() {
     const columna17 = ['Keys Yes [   ]  No  [   ]'];
     const columna18 = ['Title Yes [   ]  No  [   ]  Correo [   ]  Pendiente  [   ]'];
     const columna19 = ['Entregado Yes [   ]  No  [   ]'];
+
     const datos1= [[`${nombre}`,`${telefono}`,`${lot}`,`${direccion}` ]];
+
     const datos2 = [[`${modelo}`,`${marca}`,`${anio}`,`${color}`,`${titulo}`,`${notas}`]];
+
     const datos3 = [["$ "+`${precio}`]];
     const datos5 = [["$ "+`${fees}`,]];
     const datos6 = [["$ "+`${storage}`]];
@@ -137,6 +152,7 @@ function Caja() {
     
     var total = (Number(`${precio}`)+Number(`${fees}`)+Number(`${storage}`)-Number(`${deposito}`));
     const datos4= [["$ "+total]];
+
     const copart = `https://www.copart.com/lot/55108684`;
     
     autoTable(doc, {
@@ -146,12 +162,14 @@ function Caja() {
         body: datos1
         
     })
+
     autoTable(doc, {
         startY:60,
         theme: 'grid',
         head: [columna2],
         body: datos2
     })
+
     autoTable(doc, {
         startY:90,
         theme: 'grid',
@@ -165,12 +183,15 @@ function Caja() {
             fontStyle: 'normal', // normal, bold, italic, normal
             halign: 'right', // left, center, right
             valign: 'top', // top, middle, bottom
+
+
         },
         bodyStyles:{
             cellPadding: 2, // a number, array or object (see margin below)
             fontSize: 14,
             font: "courier", // helvetica, times, courier
             lineColor: 200,
+
             fontStyle: 'normal', // normal, bold, italic, normal
             fillColor: 200, // false for transparent or a color as described below
             textColor: 0,
@@ -192,12 +213,15 @@ function Caja() {
             fontStyle: 'normal', // normal, bold, italic, normal
             halign: 'right', // left, center, right
             valign: 'top', // top, middle, bottom
+
+
         },
         bodyStyles:{
             cellPadding: 2, // a number, array or object (see margin below)
             fontSize: 14,
             font: "courier", // helvetica, times, courier
             lineColor: 200,
+
             fontStyle: 'normal', // normal, bold, italic, normal
             fillColor: 200, // false for transparent or a color as described below
             textColor: 0,
@@ -219,12 +243,15 @@ function Caja() {
             fontStyle: 'normal', // normal, bold, italic, normal
             halign: 'right', // left, center, right
             valign: 'top', // top, middle, bottom
+
+
         },
         bodyStyles:{
             cellPadding: 2, // a number, array or object (see margin below)
             fontSize: 14,
             font: "courier", // helvetica, times, courier
             lineColor: 200,
+
             fontStyle: 'normal', // normal, bold, italic, normal
             fillColor: 200, // false for transparent or a color as described below
             textColor: 0,
@@ -232,6 +259,7 @@ function Caja() {
             valign: 'middle', // top, middle, bottom
             columnWidth: 'auto' // 'auto', 'wrap' or a number
         }
+
     })
     autoTable(doc, {
         startY:150,                
@@ -246,12 +274,15 @@ function Caja() {
             fontStyle: 'normal', // normal, bold, italic, normal
             halign: 'right', // left, center, right
             valign: 'top', // top, middle, bottom
+
+
         },
         bodyStyles:{
             cellPadding: 2, // a number, array or object (see margin below)
             fontSize: 14,
             font: "courier", // helvetica, times, courier
             lineColor: 200,
+
             fontStyle: 'normal', // normal, bold, italic, normal
             fillColor: 200, // false for transparent or a color as described below
             textColor: 0,
@@ -259,7 +290,10 @@ function Caja() {
             valign: 'middle', // top, middle, bottom
             columnWidth: 'auto' // 'auto', 'wrap' or a number
         }
+
     })
+
+
     autoTable(doc, {
         startY:170,                
         
@@ -276,12 +310,15 @@ function Caja() {
             textColor: 255,
             halign: 'center', // left, center, right
             valign: 'top', // top, middle, bottom
+
+
         },
         bodyStyles:{
             cellPadding: 2, // a number, array or object (see margin below)
             fontSize: 25,
             font: "helvetica", // helvetica, times, courier
             lineColor:[0, 163, 108],
+
             fontStyle: 'bold', // normal, bold, italic, normal
             fillColor: 120, // false for transparent or a color as described below
             textColor: 0,
@@ -289,7 +326,9 @@ function Caja() {
             valign: 'middle', // top, middle, bottom
             columnWidth: 'auto' // 'auto', 'wrap' or a number
         }
+
     })
+
     autoTable(doc, {
       startY:200,                
       
@@ -307,7 +346,9 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     
+
     autoTable(doc, {
       startY:230,                
       
@@ -325,6 +366,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:120,                
       
@@ -343,6 +385,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:130,                
       
@@ -361,6 +404,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:144,                
       
@@ -379,6 +423,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:230,                
       
@@ -396,6 +441,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:245,                
       
@@ -413,6 +459,8 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
+
     autoTable(doc, {
       startY:250,                
       
@@ -430,6 +478,7 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
+
     autoTable(doc, {
       startY:255,                
       
@@ -447,9 +496,8 @@ function Caja() {
           valign: 'top', // top, middle, bottom
       },
     })
-
+    
     doc.autoPrint({variant: 'non-conform'});
-    doc.output('dataurlnewwindow');
     // doc.output('dataurlnewwindow');
     doc.save(`facturaNo.${lot}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
@@ -458,6 +506,8 @@ function Caja() {
       window.open(`https://www.copart.com/lot/`+lot, '_blank', 'width = 650, height = 800');
     }  else if (subasta === 'Iaai') { window.open(`https://www.iaai.com/VehicleDetail/`+lot+'~US', '_blank', 'width = 700, height = 850'); }
     
+
+
   }
         
         
@@ -492,8 +542,10 @@ const limpiarCampos = ()=> {
   setColor("");
   setEditar(false);
   }
+
 const editarCaja = (val)=>{
   setEditar(true);
+
   setId(val.id);
   setTelefono(val.telefono);
   setNombre(val.nombre);
@@ -523,6 +575,7 @@ const editarCaja = (val)=>{
  
   
 }
+
   const getCaja = ()=> {
     Axios.get(`https://krriers.moveurads.com/caja`).then((response)=>{
         setCaja(response.data);
@@ -530,6 +583,7 @@ const editarCaja = (val)=>{
         var total = (Number(`${precio}`)+Number(`${fees}`)+Number(`${storage}`)-Number(`${deposito}`));
         setPrecioFinal(total);
     });
+
   } 
   
   const onCajaChange = (lotValue) => {
@@ -540,6 +594,7 @@ const editarCaja = (val)=>{
     setFilteredCaja(filteredItems)
   }
   
+
     return (
       <div className="container"> 
              
@@ -576,6 +631,7 @@ const editarCaja = (val)=>{
           setPrecio(event.target.value);
           setPrecioFinal(Number(`${preciofinal}`)-Number(`${precio}`)+Number(`${event.target.value}`));
           }}
+
          className="form-control" value={precio} placeholder="Precio de flete" aria-label="Username" aria-describedby="basic-addon1"/>
       
          <span className="input-group-text" id="basic-addon1">Storage fees: $</span>
@@ -600,8 +656,10 @@ const editarCaja = (val)=>{
       <div className="input-group mb-3">
          <span className="input-group-text" id="basic-addon1">Notas:</span>
          <input type="text" 
+
          className="form-control" value={notas} placeholder="Notas de Llegada" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
+
       <div className="input-group mb-3">
           <span className="input-group-text" id="basic-addon4">Tiene Titulo:</span>
           <div className="input-group-text">
@@ -615,6 +673,7 @@ const editarCaja = (val)=>{
                       />
                 <label className="custom-control-label" htmlFor="customRadioInline1">Si</label>
             </div>
+
             <div className="custom-control custom-radio my-auto mx-3">
               <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="N"
                       onChange={(event)=>{
@@ -665,6 +724,7 @@ const editarCaja = (val)=>{
               dropdownMode="select"
               popperPlacement="top-start"
               popperContainer={CalendarContainer}
+
               />
           
         </div>
@@ -702,6 +762,7 @@ const editarCaja = (val)=>{
         </tr>
       </thead>
       <tbody>
+
     {
       filteredCaja.map((val,key)=>{
                 return <tr key={val.id}>
@@ -718,6 +779,7 @@ const editarCaja = (val)=>{
                           <button type="button" 
                           onClick={()=>{
                             editarCaja(val);
+
                             }}   
                           className="btn btn-outline-primary">Seleccionar</button>
                           </div>
@@ -725,12 +787,19 @@ const editarCaja = (val)=>{
                 </tr>
                      
               })
+
             }
+
                    
       </tbody>
 </table>
 </div>
+
 // 
+
+
 );
 }
+
 export default Caja;
+
