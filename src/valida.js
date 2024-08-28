@@ -43,8 +43,16 @@ const editarCajero = (val)=>{
   setPassword(val.password);  
 }
 
+const bodyCarga = {
+ 
+    nombre:nombre,
+    password:password
+  }
+
+
 const getCajeros = ()=> {
-    Axios.get(`https://krriers.moveurads.com/cajeros`).then((response)=>{
+
+    Axios.get(`https://krriers.moveurads.com/cajerosauth`, bodyCarga).then((response)=>{
         setCajeros(response.data);
         setFilteredCajeros(response.data);
     });
@@ -52,14 +60,13 @@ const getCajeros = ()=> {
 } 
 
 const valida = ()=> {
-    console.log('validar')
     login(nombre, password);
-    getCajeros();
+    getCajeros(nombre, password);
     const user = getCurrentUser();
+    window.location.reload();
     if(user?.user) {
         navigate('/');
     }
-    window.location.reload();
 }
 
 
@@ -108,7 +115,9 @@ return (
         <div className="card-footer text-muted">
               {
                    <div>
-                      <button className='btn btn-outline-warning m-2' onClick={() => {valida()}}>Validar</button> 
+                      <button className='btn btn-outline-warning m-2' onClick={() => {valida()
+                        window.location.href = '/';
+                      }}>Validar</button> 
                       <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
                   </div>
               }
@@ -125,5 +134,4 @@ return (
 }
 
 export default Valida;
-
 
