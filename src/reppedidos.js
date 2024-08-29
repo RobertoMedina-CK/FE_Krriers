@@ -204,7 +204,7 @@ const editarCaja = (val)=>{
 }
 
   const getCaja = ()=> {
-    Axios.get(`https://krriers.moveurads.com/caja`).then((response)=>{
+    Axios.get(`https://krriers.moveurads.com/cajareporte`).then((response)=>{
         setCaja(response.data);
         setFilteredCaja(response.data);
       });
