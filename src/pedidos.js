@@ -46,9 +46,8 @@ function Pedidos() {
     const[feescarrier, setFeesCarrier] = useState("");
     const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
     const[nombrecarrier, setNombreCarrier] = useState("");
+    const[pagocarrier, setPagoCarrier] = useState();
     const[editar, setEditar] = useState(false);
-
-    const[select, setSelect] = useState(false);
       
     const [pedidosList,setPedidos] = useState([]);
     const [filteredPedidos, setFilteredPedidos] = useState([]);
@@ -359,7 +358,7 @@ function Pedidos() {
 
   const limpiarCampos = ()=> {
  
-  setId("");
+  setId();
   setTelefono("");
   setNombre("");
   setBuyer("");
@@ -383,7 +382,7 @@ function Pedidos() {
   setFeesCarrier("");
   setFechaAsignaCarrier("");
   setNombreCarrier("");
-  setSelect(false);
+  setEditar(false);
   }
 
 
@@ -993,42 +992,7 @@ const editarPedidos = (val)=>{
             dropdownMode="select"
             popperPlacement="top-start"
             popperContainer={CalendarContainer}
-          />
-        
-            {/* <div className="dropdown mx-3">
-              <button className="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Color
-             </button>
-           <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button className="dropdown-item" type="button">Black</button>
-              <button className="dropdown-item" type="button">2Tone</button>
-              <button className="dropdown-item" type="button">Beige</button>
-              <button className="dropdown-item" type="button">Blue</button>
-              <button className="dropdown-item" type="button">Brown</button>
-              <button className="dropdown-item" type="button">Burgundy</button>
-              <button className="dropdown-item" type="button">Burned</button>
-              <button className="dropdown-item" type="button">Champagne</button>
-              <button className="dropdown-item" type="button">Charcoal</button>
-              <button className="dropdown-item" type="button">Cream</button>
-              <button className="dropdown-item" type="button">Gold</button>
-              <button className="dropdown-item" type="button">Gray</button>
-              <button className="dropdown-item" type="button">Green</button>
-              <button className="dropdown-item" type="button">Marron</button>
-              <button className="dropdown-item" type="button">Navy</button>
-              <button className="dropdown-item" type="button">Orange</button>
-              <button className="dropdown-item" type="button">Peweter</button>
-              <button className="dropdown-item" type="button">Purple</button>
-              <button className="dropdown-item" type="button">Red</button>
-              <button className="dropdown-item" type="button">Tan</button>
-              <button className="dropdown-item" type="button">Teal</button>
-              <button className="dropdown-item" type="button">Turquoise</button>
-              <button className="dropdown-item" type="button">White</button>
-              <button className="dropdown-item" type="button">Yellow</button>
-            </div>
-           </div> */}
-       
-       
-       
+          />     
         </div>
        
                            
