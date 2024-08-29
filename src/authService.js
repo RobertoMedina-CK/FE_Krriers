@@ -1,9 +1,22 @@
+import Axios from "axios";
+
 const getCurrentUser = () => {
     return JSON.parse(localStorage.getItem('user'))
 }
 
-const login = (username, password) => {
-    localStorage.setItem('user', JSON.stringify({user: username, password: password}))
+const login = async (nombre, password) => {
+
+    const bodyCarga = {
+
+        nombre:nombre,
+        password:password
+      }
+    const response = await Axios.post(`https://krriers.moveurads.com/cajerosauth`, bodyCarga);
+    console.log(response)
+    localStorage.setItem('user', JSON.stringify(response.data))
+    if(response.data && response.data.length > 0){
+        return response.data
+    }
 }
 
 const logout = () => 
@@ -13,7 +26,7 @@ const logout = () =>
             //check something in local storage so you can know
             // if you should reload or not 
     
-            window.location.reload();
+            //window.location.√();
         }
         return 'you were logout';
     };
