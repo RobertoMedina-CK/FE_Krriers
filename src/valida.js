@@ -23,9 +23,9 @@ function Valida() {
   const [filteredCajeros, setFilteredCajeros] = useState([]);
 
 
-  useEffect(() => {
-    getCajeros();
-  }, [])
+//   useEffect(() => {
+//     getCajeros();
+//   }, [])
 
     
   
@@ -43,30 +43,35 @@ const editarCajero = (val)=>{
   setPassword(val.password);  
 }
 
-const bodyCarga = {
+// const bodyCarga = {
  
-    nombre:nombre,
-    password:password
-  }
+//     nombre:nombre,
+//     password:password
+//   }
 
 
-const getCajeros = ()=> {
+// const getCajeros = ()=> {
 
-    Axios.get(`https://krriers.moveurads.com/cajerosauth`, bodyCarga).then((response)=>{
-        setCajeros(response.data);
-        setFilteredCajeros(response.data);
-    });
+//     Axios.get(`https://krriers.moveurads.com/cajerosauth`, bodyCarga).then((response)=>{
+//         setCajeros(response.data);
+//         setFilteredCajeros(response.data);
+//     });
 
-} 
+// } 
 
-const valida = ()=> {
-    login(nombre, password);
-    getCajeros(nombre, password);
+const valida = async ()=> {
+    await login(nombre, password);
+    //getCajeros();
     const user = getCurrentUser();
-    window.location.reload();
-    if(user?.user) {
+    if(user && user[0]?.id) {
         navigate('/');
-    }
+        window.location.reload();
+    } else Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Usuario y/o contraseña invalido.",
+        timer: 5000
+      });
 }
 
 
@@ -116,7 +121,6 @@ return (
               {
                    <div>
                       <button className='btn btn-outline-warning m-2' onClick={() => {valida()
-                        window.location.href = '/';
                       }}>Validar</button> 
                       <button className='btn btn-outline-dark m-2' onClick={limpiarCampos}>Cancelar</button>
                   </div>
