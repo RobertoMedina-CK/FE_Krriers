@@ -147,9 +147,15 @@ const selectTransportista = (val)=>{
   setNombreTransportista(val.nombre);
   setDot(val.dot);
   setMargen(val.margen);
-  setPagoCarrier2(1-(Number(val.margen/100)));
-  
-    
+  const perc = 1-(Number(val.margen/100))
+  setPagoCarrier2(perc);
+
+  const newSubastaList = subastaList.map((el) => {
+    console.log(el.precio, perc, el.feescarrier)
+    return {...el, pagocarrier: (Number(el.precio)*perc) + Number(el.feescarrier)}
+  })
+  console.log(newSubastaList)
+  setSubastaList(newSubastaList);
 
 }
 
