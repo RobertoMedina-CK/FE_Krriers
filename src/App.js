@@ -54,6 +54,7 @@ function NotFound() {
 }
 
 const user = getCurrentUser()
+console.log(user)
 
 function App() {
   const logoUrl = './logo.png'; 
@@ -70,18 +71,18 @@ function App() {
                 </Navbar.Brand> 
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="ml-auto">
+                    <Nav className="me-auto">
                         <Nav.Link as={Link} to="/" className="nav-link">
                         <FaHome /> Home
                         </Nav.Link>
                         {
-                            !user?.user &&
+                            !user &&
                             <Nav.Link as={Link} to="/login" className="nav-link">
                             Login
                             </Nav.Link>
                         }
                         {
-                            user?.user &&
+                            user && user[0]?.id &&
                             <>
                             <NavDropdown title="Clientes">
                                 <NavDropdown.Item as={Link} to="/caja">
@@ -133,19 +134,21 @@ function App() {
                                     Usuarios
                                 </NavDropdown.Item>
                                 </NavDropdown>
-                                <Nav.Link as={Link} to="/logout" className="nav-link">
-                                 <Button className="btn-dark" style={{width: '10%', marginLeft: '85em'}}                               
-                                  onClick={() => {
-                                    logout()
-                                    window.location.reload()
-                                    window.location.href = '/';
-                                    return false;
-                                }}>Logout</Button>
-                                </Nav.Link>
-
+                                
                             </>
                         }
                       </Nav>
+                      {
+                        user && user[0]?.id &&
+                      <Nav>
+                            <Button className="btn-dark" style={{width: '100%'}}                               
+                            onClick={() => {
+                            logout()
+                            window.location.reload()
+                            return false;
+                        }}>Logout</Button>
+                        </Nav>
+                      }
                 </Navbar.Collapse>
             </Navbar>
             <div className="container-fluid mt-4">
