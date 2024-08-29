@@ -14,6 +14,8 @@ import autoTable from 'jspdf-autotable';
 
 import Swal from 'sweetalert2';
 
+import {getCurrentUser} from './authService'
+
 
 function Caja() {
 
@@ -45,6 +47,7 @@ function Caja() {
   const [storage, setStorage] = useState("");
   const [preciofinal, setPrecioFinal] = useState("");
   const [color, setColor] = useState("");
+  const [cajero, setCajero] = useState("");
  
  
  
@@ -62,6 +65,8 @@ function Caja() {
 
   useEffect(() => {
     getCaja();
+    const user = getCurrentUser()
+    setCajero(user[0]?.nombre ?? '')
   }, [])
 
     
@@ -91,7 +96,8 @@ function Caja() {
       nombrecarrier:nombrecarrier,
       storage:storage,
       preciofinal:preciofinal,
-      color:color
+      color:color,
+      cajero:cajero
     }
     Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
         getCaja();
