@@ -30,6 +30,7 @@ function Asigna() {
   const[notas, setNotas] = useState("");
   const[fechafinal, setFechaFinal] = useState("");
   const[id, setId] = useState();
+  const[idt, setIdT] = useState();
   const[deposito, setDeposito] = useState("");
   const[fechallegada, setFechaLlegada] = useState("");
   const[feescarrier, setFeesCarrier] = useState("");
@@ -143,6 +144,7 @@ const limpiarCampos = ()=> {
 const selectTransportista = (val)=>{
   
   setIdTransportista(val.id);
+  setIdT(val.id);
   setTelefonoTransportista(val.telefono);
   setNombreTransportista(val.nombre);
   setDot(val.dot);
@@ -230,7 +232,7 @@ const agregarElementoTransportista = ()=> {
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 190,5,60,18);
     doc.text(`Pedidos asignados al Transportista`, 100, 50);
-    doc.text(`${nombretransportista}`, 110, 60);
+    doc.text(`${nombretransportista} el ${fechaasignacarrier}  `, 100, 60);
     
     autoTable(doc, {html: '#pedidos-seleccionados',
        margin:{top: 70, right: 30, },
@@ -242,7 +244,7 @@ const agregarElementoTransportista = ()=> {
     var cols =atTB.columns;
     cols.splice(9,1)
    
-    doc.save(`${nombretransportista}_fecha_${fechaasignacarrier}.pdf`);
+    doc.save(`${nombretransportista}${fechaasignacarrier}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
     // doc.output('dataurlnewwindow');
 
@@ -331,6 +333,24 @@ const agregarElementoTransportista = ()=> {
           })
       }
     })
+
+    const params = {
+      id: id,
+      nombrecarrier: nombretransportista,
+      fechaasignacarrier: fechaasignacarrier,
+      telefonotransportista: telefonotransportista
+      
+    }
+
+    
+    Axios.post("https://hook.us1.make.com/gi61wipte1j5fdx7bd4b5cp9vooz960s", 
+      params
+    ).then(() => {
+      console.log('Success')
+    }).catch((err) => {
+      console.error('Error hook', err)
+    })
+
   }
 
     return (
