@@ -128,7 +128,7 @@ function ReportePedidosCaja() {
     var logo = new Image();
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 135,5,60,18);
-    doc.text('Reporte de Pedidos por Fecha', 40, 15);
+    doc.text('Reporte de Pedidos Vigentes por Fecha', 15, 15);
 
     autoTable(doc, {html: '#pedidos-table', margin:{top: 30, right:30}})
     
@@ -233,7 +233,7 @@ const editarCaja = (val)=>{
              
     <div className="card text-center">
      <div className="card-header">
-      REPORTE DE PEDIDOS POR FECHA KRRIERS
+      REPORTE DE PEDIDOS VIGENTES POR FECHA KRRIERS
     </div>
     <div className="card-body">
       <div className="input-group mb-3">
