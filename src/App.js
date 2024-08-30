@@ -11,6 +11,7 @@ import Llegada from './llegada.js'
 import Asigna from './asignatransportista.js'
 import Pedidos from './pedidos.js'
 import ImprimePedidos from './reppedidos.js'
+import ImprimePedidosFinalizados from './repfinalizados.js'
 import { Button } from "react-bootstrap";
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
 import PagoTransportista from './pagotransportista.js'
@@ -94,9 +95,6 @@ function App() {
                                 <NavDropdown.Item as={Link} to="https://whatsform.com/webhooktest" target="_blank" rel="noreferrer noopener">
                                     Captura Pedidos
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/webhook">
-                                    WebHook Test
-                                </NavDropdown.Item>
                                 </NavDropdown>
                             <NavDropdown title="Transportistas">
                                 <NavDropdown.Item as={Link} to="/asigna">
@@ -109,6 +107,9 @@ function App() {
                             <NavDropdown title="Reportes">
                                 <NavDropdown.Item as={Link} to="/pedidosfecha">
                                     Pedidos por fecha
+                                </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/pedidosfechafinalizados">
+                                    Pedidos finalizados por fecha
                                 </NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/pedidossinasignar">
                                     Pedidos sin Asignar
@@ -166,6 +167,7 @@ function App() {
                         <Route path="/caja" element={<Caja />} />
                         <Route path="/pedidos" element={<Pedidos />} />
                         <Route path="/pedidosfecha" element={<ImprimePedidos />} />
+                        <Route path="/pedidosfechafinalizados" element={<ImprimePedidosFinalizados />} />
                         <Route path="/pagotransportista" element={<PagoTransportista />} />
                         <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
                         <Route path="/logout" element={<Valida />} />
