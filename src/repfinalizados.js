@@ -343,4 +343,3 @@ const editarCaja = (val)=>{
 
 export default ReportePedidosFinalizados;
 
-
