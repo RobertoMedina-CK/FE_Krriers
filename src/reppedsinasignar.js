@@ -25,6 +25,7 @@ function ReportePedidosCaja() {
   const[telefono, setTelefono] = useState("");
   const[nombre, setNombre] = useState("");
   const[lot, setLot] = useState("");
+  const[estado, setEstado] = useState("");
   const[pin, setPin] = useState("");
   const[subasta, setSubasta] = useState("");
   const[direccion, setDireccion] = useState("");
@@ -44,9 +45,11 @@ function ReportePedidosCaja() {
   const [filteredCaja, setFilteredCaja] = useState([]);
   const [storage, setStorage] = useState("");
   const [preciofinal, setPrecioFinal] = useState("");
+  const [estadoList,setEstadoList] = useState([]);
 
   const [fechainicial, setFechaInicial] = useState("");
   const [fechafinalreporte, setFechaFinalReporte] = useState("");
+  const [filteredEstado, setFilteredEstado] = useState([]);
  
   
   const handleDateChange = (date) =>{
@@ -55,73 +58,12 @@ function ReportePedidosCaja() {
 
   };
 
-  const handleDateChange2 = (date) =>{
-    console.log(date)
-    setFechaFinalReporte(date);
-
-  };
-  const CalendarContainer = ({ children }) => {
-    const el = document.getElementById("calendar-portal");
   
-    return <Portal container={el}>{children}</Portal>;
-  };
-
   useEffect(() => {
     getCaja();
   }, [])
 
     
-  const update = ()=> {
-   
-    const bodyCarga = {
-      id:id,
-      telefono:telefono,
-      nombre:nombre,
-      buyer:buyer,
-      lot:lot,
-      pin:pin,
-      marca:marca,
-      modelo:modelo,
-      anio:anio,
-      subasta:subasta,
-      direccion:direccion,
-      fecha:fecha,
-      precio:precio,
-      fees:fees,
-      titulo:titulo,
-      notas:notas,
-      fechafinal:fechafinal,
-      deposito:deposito,
-      fechallegada:fechallegada,
-      feescarrier:feescarrier,
-      fechaasignacarrier:fechaasignacarrier,
-      nombrecarrier:nombrecarrier,
-      storage:storage,
-      preciofinal:preciofinal
-    } 
-    Axios.put(`https://krriers.moveurads.com/caja`,bodyCarga).then(()=>{
-        getCaja();
-        limpiarCampos();
-        Swal.fire({
-          title: "<strong>Actualización Exitosa!!!</strong>",
-          html: "<i>El Lote <strong>"+lot+"</strong> fue Actualizado con Exito!!!</i>",
-          icon: 'success',
-          timer:3000
-        });
-      
-    }).catch(function(error){
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No se logró Actualizar el Lote!",
-        footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Error de Servidor":JSON.parse(JSON.stringify(error)).message,
-        timer: 3000
-      });
-
-    })
-
-  }
-
   const generapdf = ()=> {
    
     const doc = new jsPDF({orientation: 'l'});
@@ -139,74 +81,11 @@ function ReportePedidosCaja() {
  
   }
         
-        
-   
-const limpiarCampos = ()=> {
-    
-  setId("");
-  setTelefono("");
-  setNombre("");
-  setBuyer("");
-  setLot("");
-  setPin("");
-  setMarca("");
-  setModelo("");
-  setAnio("");
-  setSubasta("");
-  setDireccion("");
-  setFecha("");
-  setPrecio("");
-  setFee("");
-  setTitulo("");
-  setNotas("");
-  setFechaFinal("");
-  setDeposito("");
-  setFechaLlegada("");
-  setFeesCarrier("");
-  setFechaAsignaCarrier("");
-  setNombreCarrier("");
-  handleDateChange("");
-  setStorage("");
-  setPrecioFinal("");
-  setEditar(false);
-  }
-
-const editarCaja = (val)=>{
-  setEditar(true);
-
-  setId(val.id);
-  setTelefono(val.telefono);
-  setNombre(val.nombre);
-  setBuyer(val.buyer);
-  setLot(val.lot);
-  setPin(val.pin);
-  setMarca(val.marca);
-  setModelo(val.modelo);
-  setAnio(val.anio);
-  setSubasta(val.subasta);
-  setDireccion(val.direccion);
-  setFecha(val.fecha);
-  setPrecio(val.precio);
-  setFee(val.fees);
-  setTitulo(val.titulo);
-  setNotas(val.notas);
-  setFechaFinal(val.fechafinal);
-  setDeposito(val.deposito);
-  setFechaLlegada(val.fechallegada);
-  setFeesCarrier(val.feescarrier);
-  setFechaAsignaCarrier(val.fechaasignacarrier);
-  setNombreCarrier(val.nombrecarrier);
-  setStorage(val.storage);
-  var total = (Number(`${val.precio}`)+Number(`${val.fees}`)+Number(`${val.storage}`)-Number(`${val.deposito}`));
-  setPrecioFinal(total);
- 
-  
-}
-
-  const getCaja = ()=> {
+ const getCaja = ()=> {
     Axios.get(`https://krriers.moveurads.com/caja`).then((response)=>{
         setCaja(response.data);
         setFilteredCaja(response.data);
+        setFilteredEstado(response.data);
       });
 
   } 
@@ -227,6 +106,13 @@ const editarCaja = (val)=>{
   
 }
 
+const onEstadoChange = (estadoValue) => {
+  estadoValue = estadoValue.toLowerCase();
+  const filteredItems =filteredCaja.filter((client) => {
+    return client.estado?.toLowerCase().includes(estadoValue)
+  })
+  setFilteredEstado(filteredItems);
+  }
 
     return (
       <div className="container"> 
@@ -256,6 +142,16 @@ const editarCaja = (val)=>{
           }}
          className="form-control" value={fechafinalreporte} placeholder="Fecha Final Reporte" aria-label="Username" aria-describedby="basic-addon1"/>
    </div>
+   <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Estado:</span>
+          <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          onEstadoChange(event.target.value);
+          setEstado(event.target.value);
+        }}
+         className="form-control"  value={estado} placeholder="Estado" aria-label="Username" aria-describedby="basic-addon1"/>
+  </div>
    
       
     <div className="card-footer text-muted">
@@ -291,17 +187,15 @@ const editarCaja = (val)=>{
         </tr>
       </thead>
     <tbody>
-
-
     {
-      filteredCaja.map((val,key)=>{
+      filteredEstado.map((val,key)=>{
      if (fechainicial === "" && fechafinalreporte === ""){ 
                   return <tr key={val.id}>
                         <th scope="row">{val.nombre}</th>
                         <td>{val.telefono}</td>
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
-                        <td>{val.subasta}</td>
+                        <td>{val.direccion}</td>
                         <td>{moment(val.fecha).format("LL")}</td>
                         <td>$ {val.fees}</td>
                         <td>$ {val.deposito}</td>
@@ -310,13 +204,13 @@ const editarCaja = (val)=>{
                         <td>$ {val.preciofinal}</td>
                       </tr>
                      
-                } else if (val.fecha >= fechainicial && val.fecha <= fechafinalreporte){ 
+                } else if ((val.fecha >= fechainicial && val.fecha <= fechafinalreporte)){ 
                   return <tr key={val.id}>
                         <th scope="row">{val.nombre}</th>
                         <td>{val.telefono}</td>
                         <td>{val.buyer}</td>
                         <td>{val.lot}</td>
-                        <td>{val.subasta}</td>
+                        <td>{val.direccion}</td>
                         <td>{moment(val.fecha).format("LL")}</td>
                         <td>$ {val.fees}</td>
                         <td>$ {val.deposito}</td>
@@ -328,8 +222,7 @@ const editarCaja = (val)=>{
                 }
               }
             )
-
-            }
+}
 
                    
       </tbody>
