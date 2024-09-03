@@ -225,6 +225,39 @@ const agregarElementoTransportista = ()=> {
     setFilteredTransportistas(filteredItemsTransportista)
   }
 
+  const getFileUrl = async () => {
+    const body = {
+      fileName: `${nombretransportista}${fechaasignacarrier}.pdf`,
+      fileType: 'pdf',
+    }
+
+    const response = await Axios.post(`https://krriers.moveurads.com/whatsappFile`, body)
+    const {signedUrl} = await response.json()
+
+    return signedUrl
+  }
+
+  const uploadFile = async (signedUrl, file) => {
+    const res = await Axios.put(signedUrl, file)
+
+    return res
+  }
+
+  const handleSubmit = async (file) => {
+    const signedUrl = await getFileUrl()
+
+    try {
+      await uploadFile(signedUrl, file)
+    }
+    catch (err) {
+      console.log(err)
+      alert('There was an error uploading your file.')
+      throw err
+    }
+    alert('Upload success. Check out your Space.')
+  }
+
+
   const generapdf = ()=> {
    
     const doc = new jsPDF({orientation: 'l'});
@@ -246,6 +279,7 @@ const agregarElementoTransportista = ()=> {
    
     doc.save(`${nombretransportista}${fechaasignacarrier}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
+    handleSubmit(doc)
     // doc.output('dataurlnewwindow');
 
   }
@@ -351,6 +385,9 @@ const agregarElementoTransportista = ()=> {
       console.error('Error hook', err)
     })
 
+
+
+    
   }
 
     return (
@@ -449,13 +486,13 @@ const agregarElementoTransportista = ()=> {
         <table id="tabla-pedidos-no-seleccionados" className="table  table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '10px'}}>
             <thead className="sticky-top">
                 <tr>
+                  <th scope="col">Nombre</th>
                   <th scope="col">Subasta</th>
                   <th scope="col">Lote</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Buyer</th>
                   <th scope="col">PIN</th>
-                  <th scope="col">Marca</th>
+                  <th scope="col">Buyer</th>
                   <th scope="col">Modelo</th>
+                  <th scope="col">Marca</th>
                   <th scope="col">Año</th>
                   <th scope="col">Color</th>                  
                   <th scope="col">Fecha Pedido</th>
@@ -467,13 +504,13 @@ const agregarElementoTransportista = ()=> {
             {
               filteredAsigna.map((val,key)=>{
                         return <tr key={val.id}>
-                                <th scope="row">{val.direccion}</th>
+                                <th scope="row">{val.nombre}</th>
+                                <td>{val.direccion}</td>
                                 <td>{val.lot}</td>
-                                <td>{val.nombre}</td>
-                                <td>{val.buyer}</td>
                                 <td>{val.pin}</td>
-                                <td>{val.marca}</td>
+                                <td>{val.buyer}</td>
                                 <td>{val.modelo}</td>
+                                <td>{val.marca}</td>
                                 <td>{val.anio}</td>
                                 <td>{val.color}</td>
                                 <td>{moment(val.fecha).format("LL")}</td>
@@ -514,13 +551,13 @@ const agregarElementoTransportista = ()=> {
           <table id='pedidos-seleccionados' className="table table-hover" style={{overflowY: 'scroll', maxHeight: '300px', display: 'inline-block', paddingLeft: '90px'}}>
               <thead className="sticky-top">
                   <tr>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Subasta</th>
                     <th scope="col">Lote</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Buyer</th>
                     <th scope="col">PIN</th>
-                    <th scope="col">Marca</th>
+                    <th scope="col">Buyer</th>
                     <th scope="col">Modelo</th>
+                    <th scope="col">Marca</th>
                     <th scope="col">Año</th>
                     <th scope="col">Color</th>
                     <th scope="col">Fecha Pedido</th>
@@ -532,13 +569,13 @@ const agregarElementoTransportista = ()=> {
               {
                 subastaList.map((val,index)=>{
                           return <tr key={val.id}>
-                                  <th scope="row">{val.direccion}</th>
+                                  <th scope="row">{val.nombre}</th>
+                                  <td>{val.direccion}</td>
                                   <td>{val.lot}</td>
-                                  <td>{val.nombre}</td>
-                                  <td>{val.buyer}</td>
                                   <td>{val.pin}</td>
-                                  <td>{val.marca}</td>
+                                  <td>{val.buyer}</td>
                                   <td>{val.modelo}</td>
+                                  <td>{val.marca}</td>
                                   <td>{val.anio}</td>
                                   <td>{val.color}</td>
                                   <td>{moment(val.fecha).format('LLL')}</td>
