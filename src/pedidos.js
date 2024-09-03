@@ -30,6 +30,7 @@ function Pedidos() {
     const[buyer, setBuyer] = useState("");
     const[telefono, setTelefono] = useState("");
     const[nombre, setNombre] = useState("");
+    const[estado, setEstado] = useState("");
     const[lot, setLot] = useState("");
     const[color, setColor] = useState("");
     const[pin, setPin] = useState("");
@@ -241,7 +242,8 @@ function Pedidos() {
       fechallegada:fechallegada,
       feescarrier:feescarrier,
       fechaasignacarrier:fechaasignacarrier,
-      nombrecarrier:nombrecarrier
+      nombrecarrier:nombrecarrier,
+      estado: estado
     }
 
       
@@ -294,7 +296,8 @@ function Pedidos() {
       fechallegada:fechallegada,
       feescarrier:feescarrier,
       fechaasignacarrier:fechaasignacarrier,
-      nombrecarrier:nombrecarrier
+      nombrecarrier:nombrecarrier,
+      estado: estado
     }
 
     Axios.put(`https://krriers.moveurads.com/pedidosabc`,bodyCargaPut).then(()=>{
@@ -380,6 +383,7 @@ function Pedidos() {
   setDeposito("");
   setFechaLlegada("");
   setFeesCarrier("");
+  setEstado("");
   setFechaAsignaCarrier("");
   setNombreCarrier("");
   setEditar(false);
@@ -413,6 +417,7 @@ const editarPedidos = (val)=>{
     setFeesCarrier(val.feescarrier);
     setFechaAsignaCarrier(val.fechaasignacarrier);
     setNombreCarrier(val.nombrecarrier);
+    setEstado(val.estado);
   }
 
   const generapdf = ()=> {
@@ -959,6 +964,20 @@ const editarPedidos = (val)=>{
              }} 
             clear={() => {setSubasta("")}}
           ></InputWIthSearchSubasta>
+          <span className="input-group-text" id="basic-addon1">Estado:</span>
+         <input type="text" 
+         maxLength={45}
+         onChange={(event)=>{
+          setEstado(event.target.value);
+          }}
+         className="form-control" value={estado} placeholder="Estado" aria-label="Username" aria-describedby="basic-addon1"/>
+          <span className="input-group-text" id="basic-addon1">Notas:</span>
+         <input type="text" 
+         maxLength={100}
+         onChange={(event)=>{
+          setNotas(event.target.value);
+          }}
+         className="form-control" value={notas} placeholder="Notas" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
 
       
