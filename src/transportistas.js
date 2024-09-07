@@ -247,6 +247,7 @@ const editarTransportista = (val)=>{
     <thead class="sticky-top">
         <tr>
           <th scope="col">Nombre</th>
+          <th scope="col">Numero Interno</th>
           <th scope="col">Telefono</th>
           <th scope="col">Dot</th>
           <th scope="col">Margen</th>
@@ -261,6 +262,7 @@ const editarTransportista = (val)=>{
       filteredTransportistas.map((val,key)=>{
                 return <tr key={val.id}>
                         <th scope="row">{val.nombre}</th>
+                        <td>{val.id}</td>
                         <td>{val.telefono}</td>
                         <td>{val.dot}</td>
                         <td>{val.margen}</td>
