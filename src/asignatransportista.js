@@ -227,18 +227,29 @@ const agregarElementoTransportista = ()=> {
 
   const getFileUrl = async () => {
     const body = {
-      fileName: `${nombretransportista}${fechaasignacarrier}.pdf`,
+      fileName: `${idt}${fechaasignacarrier}.pdf`,
       fileType: 'pdf',
     }
 
-    const response = await Axios.post(`https://krriers.moveurads.com/whatsappFile`, body)
+    const response = await fetch(`https://krriers.moveurads.com/whatsappFile`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {'Content-Type': 'application/jason'},
+    })
+    
     const {signedUrl} = await response.json()
-
-    return signedUrl
+   return signedUrl
   }
 
   const uploadFile = async (signedUrl, file) => {
-    const res = await Axios.put(signedUrl, file)
+    const res = await fetch(signedUrl, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': 'pdf',
+        'x-amz-acl': 'public-read',
+      }
+    })
 
     return res
   }
@@ -265,7 +276,7 @@ const agregarElementoTransportista = ()=> {
     logo.src = 'logo.png';
     doc.addImage(logo, 'PNG', 190,5,60,18);
     doc.text(`Pedidos asignados al Transportista`, 100, 50);
-    doc.text(`${nombretransportista} el ${fechaasignacarrier}  `, 100, 60);
+    doc.text(`${nombretransportista} No. ${idt} el ${fechaasignacarrier}  `, 100, 60);
     
     autoTable(doc, {html: '#pedidos-seleccionados',
        margin:{top: 70, right: 30, },
@@ -277,10 +288,12 @@ const agregarElementoTransportista = ()=> {
     var cols =atTB.columns;
     cols.splice(9,1)
    
-    doc.save(`${nombretransportista}${fechaasignacarrier}.pdf`);
+    const docPDF = doc.output('datauri').split('base64,')[1]
+    console.log(docPDF);
+    doc.save(`${idt}${fechaasignacarrier}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
-    handleSubmit(doc)
-    // doc.output('dataurlnewwindow');
+    handleSubmit(docPDF)
+    doc.output('dataurlnewwindow');
 
   }
 
@@ -369,7 +382,7 @@ const agregarElementoTransportista = ()=> {
     })
 
     const params = {
-      id: id,
+      id: idt,
       nombrecarrier: nombretransportista,
       fechaasignacarrier: fechaasignacarrier,
       telefonotransportista: telefonotransportista
