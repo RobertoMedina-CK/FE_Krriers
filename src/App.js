@@ -14,6 +14,7 @@ import ImprimePedidos from './reppedidos.js'
 import ImprimePedidosFinalizados from './repfinalizados.js'
 import { Button } from "react-bootstrap";
 import ImprimePedidosSinAsignar from './reppedsinasignar.js'
+import SubeFile from './uploadfile.js'
 import PagoTransportista from './pagotransportista.js'
 // import Webhook from './webhook.js'
 import Valida from './valida.js';
@@ -103,6 +104,9 @@ function App() {
                                 <NavDropdown.Item as={Link} to="/pagotransportista">
                                     Pago a Transportistas
                                 </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/subefile">
+                                    Up Load files Transportistas
+                                </NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="Reportes">
                                 <NavDropdown.Item as={Link} to="/pedidosfecha">
@@ -170,6 +174,7 @@ function App() {
                         <Route path="/pedidosfechafinalizados" element={<ImprimePedidosFinalizados />} />
                         <Route path="/pagotransportista" element={<PagoTransportista />} />
                         <Route path="/pedidossinasignar" element={<ImprimePedidosSinAsignar />} />
+                        <Route path="/subefile" element={<SubeFile />} />
                         <Route path="/logout" element={<Valida />} />
                         {/* <Route path="/webhook" element={<Webhook />} /> */}
                         <Route path="*" element={<NotFound />} />
