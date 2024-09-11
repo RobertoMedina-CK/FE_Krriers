@@ -288,7 +288,7 @@ const agregarElementoTransportista = ()=> {
     var cols =atTB.columns;
     cols.splice(9,1)
    
-    const docPDF = doc.output('datauri').split('base64,')[1]
+    const docPDF = doc.output(`${idt}${fechaasignacarrier}.pdf`)
     console.log(docPDF);
     doc.save(`${idt}${fechaasignacarrier}.pdf`);
     doc.autoPrint({variant: 'non-conform'});
