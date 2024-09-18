@@ -284,6 +284,7 @@ function Asigna() {
     doc.save(`${idt}${fechaasignacarrier}.pdf`);
     doc.autoPrint({ variant: "non-conform" });
     handleSubmit(pdfFile);
+    getFileUrl();
     doc.output("dataurlnewwindow");
   };
 
