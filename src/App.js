@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Autos from "./autos";
 import Clientes from "./clientes";
 import Caja from "./caja.js";
+import CajaExtras from "./cajaextras.js";
 import Subastas from "./subastas";
 import Transportistas from "./transportistas.js";
 import Cajeros from "./cajeros.js";
@@ -82,6 +83,9 @@ function App() {
                 <NavDropdown title="Clientes">
                   <NavDropdown.Item as={Link} to="/caja">
                     Caja
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/cajaextras">
+                    Caja Cargos Extras
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to="/llegada">
                     Llegada de Autos
@@ -167,6 +171,7 @@ function App() {
             <Route path="/llegada" element={<Llegada />} />
             <Route path="/asigna" element={<Asigna />} />
             <Route path="/caja" element={<Caja />} />
+            <Route path="/cajaextras" element={<CajaExtras />} />
             <Route path="/pedidos" element={<Pedidos />} />
             <Route path="/pedidosfecha" element={<ImprimePedidos />} />
             <Route
