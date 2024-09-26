@@ -370,7 +370,9 @@ const editarLlegada = (val)=>{
                         <td>{val.fees}</td>
                         <td>{val.titulo}</td>
                         <td>$ {val.feescarrier}</td>
-                        <td>{moment(val.fechallegada).format("LL")}</td>
+                        <td>
+                        {val.fechallegada && moment(val.fechallegada).format("LL")}
+                        </td>
                         <td>{val.notas}</td>
                         <td>
                         <div className="btn-group" role="group" aria-label="Basic example">
