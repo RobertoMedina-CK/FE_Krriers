@@ -128,7 +128,8 @@ function Caja() {
     doc.addImage(logo, "PNG", 135, 5, 60, 16);
     doc.text("Invoice", 160, 35);
 
-    const columna1 = ["Nombre", "Telefono", "Lote", "Subasta"];
+    const columna1 = ["Nombre", "Telefono", "Lote", "Dirección Subasta"];
+    const columna12 = ["Transportista", "Buyer No.", "Subasta", "Fecha Llegada", "Fecha Invoice"];
     const columna2 = ["Modelo", "Marca", "Año", "Color", "Titulo", "Notas"];
     const columna3 = ["Precio Base"];
     const columna5 = ["Extra Fees"];
@@ -141,7 +142,7 @@ function Caja() {
     const columna10 = [
       "No nos hacemos responsables por catalizadores, títulos, llaves y/o partes sueltas que la subasta no entregue, daños ocasionados por el uso de Montacargas en la maniobra de carga y descarga, tampoco por daños presentes en el vehículo al momento de la carga o partes que se vuelen en el traslado Se requiere el pago total en los próximos 5 días hábiles posteriores a la llegada a nuestras instalaciones, posterior a los 5 días se cobrará multa de $ 150.00 USD mas $ 5.00 USD diarios por concepto de Storage, Al undécimo día hábil posterior el vehículo serña retirado de nuestras instalaciones con un Cargo adicional de $ 150.00 mas $ 20.00 dólares díarios",
     ];
-    const columna16 = ["Customer Signature"];
+    const columna16 = ["Customer Name/Signature"];
     const columna20 = ["Signature"];
     const columna17 = ["Keys Yes [   ]  No  [   ]"];
     const columna18 = [
@@ -150,15 +151,20 @@ function Caja() {
     const columna19 = ["Entregado Yes [   ]  No  [   ]"];
 
     const datos1 = [[`${nombre}`, `${telefono}`, `${lot}`, `${direccion}`]];
-
+    const fechahoy = new Date();
+    const fechaarrived = fechallegada;
     const datos2 = [
       [`${modelo}`, `${marca}`, `${anio}`, `${color}`, `${titulo}`, `${notas}`],
     ];
 
+    const datos8 = [
+      [`${nombrecarrier}`, `${buyer}`, `${subasta}`, `${fechaarrived}`, `${fechahoy.toLocaleDateString()}`],
+    ];
     const datos3 = [["$ " + `${precio}`]];
     const datos5 = [["$ " + `${fees}`]];
     const datos6 = [["$ " + `${storage}`]];
     const datos7 = [["$ -" + `${deposito}`]];
+   
 
     var total =
       Number(`${precio}`) +
@@ -184,7 +190,14 @@ function Caja() {
     });
 
     autoTable(doc, {
-      startY: 90,
+      startY: 80,
+      theme: "grid",
+      head: [columna12],
+      body: datos8,
+    });
+
+    autoTable(doc, {
+      startY: 100,
       theme: "grid",
       head: [columna3],
       body: datos3,
@@ -212,7 +225,7 @@ function Caja() {
       },
     });
     autoTable(doc, {
-      startY: 110,
+      startY: 120,
       theme: "grid",
       head: [columna5],
       body: datos5,
@@ -240,7 +253,7 @@ function Caja() {
       },
     });
     autoTable(doc, {
-      startY: 130,
+      startY: 140,
       theme: "grid",
       head: [columna6],
       body: datos6,
@@ -268,7 +281,7 @@ function Caja() {
       },
     });
     autoTable(doc, {
-      startY: 150,
+      startY: 160,
       theme: "grid",
       head: [columna7],
       body: datos7,
@@ -297,7 +310,7 @@ function Caja() {
     });
 
     autoTable(doc, {
-      startY: 170,
+      startY: 180,
 
       head: [columna4],
       body: datos4,
@@ -329,7 +342,7 @@ function Caja() {
     });
 
     autoTable(doc, {
-      startY: 200,
+      startY: 210,
 
       head: [columna10],
       margin: { left: 25 },
@@ -347,7 +360,7 @@ function Caja() {
     });
 
     autoTable(doc, {
-      startY: 230,
+      startY: 235,
 
       head: [columna16],
       margin: { left: 140 },
@@ -422,7 +435,7 @@ function Caja() {
     });
 
     autoTable(doc, {
-      startY: 230,
+      startY: 235,
 
       head: [columna20],
       margin: { left: 60 },
