@@ -32,6 +32,7 @@ function Llegada() {
   const[fechafinal, setFechaFinal] = useState("");
   const[id, setId] = useState();
   const[deposito, setDeposito] = useState("");
+  const[pagocarrier, setPagoCarrier] = useState("");
   const[fechallegada, setFechaLlegada] = useState("");
   const[feescarrier, setFeesCarrier] = useState("");
   const[fechaasignacarrier, setFechaAsignaCarrier] = useState("");
@@ -79,6 +80,7 @@ function Llegada() {
       deposito:deposito,
       fechallegada:fechallegada,
       feescarrier:feescarrier,
+      pagocarrier:pagocarrier,
       fechaasignacarrier:fechaasignacarrier,
       nombrecarrier:nombrecarrier
     }
@@ -147,6 +149,7 @@ const limpiarCampos = ()=> {
   setFeesCarrier("");
   setFechaAsignaCarrier("");
   setNombreCarrier("");
+  setPagoCarrier("");
   handleDateChange("");
   setEditar(false);
   }
@@ -172,6 +175,7 @@ const editarLlegada = (val)=>{
   setNotas(val.notas);
   setFechaFinal(val.fechafinal);
   setDeposito(val.deposito);
+  setPagoCarrier(val.pagocarrier);
   setFechaLlegada(val.fechallegada);
   setFeesCarrier(val.feescarrier);
   setFechaAsignaCarrier(val.fechaasignacarrier);
@@ -233,6 +237,14 @@ const editarLlegada = (val)=>{
           setFeesCarrier(event.target.value);
           }}
          className="form-control" value={feescarrier} placeholder="Fees pagados por Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
+
+        <span className="input-group-text" id="basic-addon1">Pago al Transportista: $</span>
+         <input type="text" 
+         maxLength={10}
+         onChange={(event)=>{
+          setPagoCarrier(event.target.value);
+          }}
+         className="form-control" value={pagocarrier} placeholder="Pago al Transportista" aria-label="Username" aria-describedby="basic-addon1"/>
       </div>
       
       <div className="input-group mb-3">
